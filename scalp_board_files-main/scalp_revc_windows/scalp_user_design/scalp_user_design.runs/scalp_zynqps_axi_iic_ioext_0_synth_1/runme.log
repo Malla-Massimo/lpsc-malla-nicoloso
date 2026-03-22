@@ -1,0 +1,614 @@
+
+*** Running vivado
+    with args -log scalp_zynqps_axi_iic_ioext_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source scalp_zynqps_axi_iic_ioext_0.tcl
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Mar 10 21:56:26 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source scalp_zynqps_axi_iic_ioext_0.tcl -notrace
+create_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 529.152 ; gain = 218.445
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows'.
+WARNING: [IP_Flow 19-3656] If you move the project, the path for repository 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows' may become invalid. A better location for the repository would be in a path adjacent to the project. (Current project location is 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/scalp_zynqps_axi_iic_ioext_0_synth_1'.)
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+WARNING: [IP_Flow 19-4995] The host OS only allows 260 characters in a normal path. The IP cache path is more than 80 characters. If you experience issues with IP caching, please consider changing the IP cache to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. 
+Current IP cache path is c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.cache/ip 
+Command: synth_design -top scalp_zynqps_axi_iic_ioext_0 -part xc7z015clg485-2 -incremental_mode off -mode out_of_context
+Starting synth_design
+INFO: [IP_Flow 19-2162] IP 'scalp_zynqps_axi_iic_ioext_0' is locked:
+* IP definition 'AXI IIC (2.1)' for IP 'scalp_zynqps_axi_iic_ioext_0' (customized with software release 2023.2) has a different revision in the IP Catalog. * This IP has board specific outputs. Current project board 'unset' and the board 'hepia-cores.ch:scalp_node:part0:0.2' used to customize the IP 'scalp_zynqps_axi_iic_ioext_0' do not match.
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z015'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z015'
+INFO: [Device 21-403] Loading part xc7z015clg485-2
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 32192
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1312.617 ; gain = 540.078
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'scalp_zynqps_axi_iic_ioext_0' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/synth/scalp_zynqps_axi_iic_ioext_0.vhd:91]
+	Parameter C_FAMILY bound to: zynq - type: string 
+	Parameter C_S_AXI_ADDR_WIDTH bound to: 9 - type: integer 
+	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_IIC_FREQ bound to: 100000 - type: integer 
+	Parameter C_TEN_BIT_ADR bound to: 0 - type: integer 
+	Parameter C_GPO_WIDTH bound to: 1 - type: integer 
+	Parameter C_S_AXI_ACLK_FREQ_HZ bound to: 125000000 - type: integer 
+	Parameter C_SCL_INERTIAL_DELAY bound to: 0 - type: integer 
+	Parameter C_SDA_INERTIAL_DELAY bound to: 0 - type: integer 
+	Parameter C_SDA_LEVEL bound to: 1 - type: integer 
+	Parameter C_SMBUS_PMBUS_HOST bound to: 0 - type: integer 
+	Parameter C_DISABLE_SETUP_VIOLATION_CHECK bound to: 0 - type: integer 
+	Parameter C_STATIC_TIMING_REG_WIDTH bound to: 0 - type: integer 
+	Parameter C_TIMING_REG_WIDTH bound to: 32 - type: integer 
+	Parameter C_DEFAULT_VALUE bound to: 8'b00000000 
+INFO: [Synth 8-3491] module 'axi_iic' declared at 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:6792' bound to instance 'U0' of component 'axi_iic' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/synth/scalp_zynqps_axi_iic_ioext_0.vhd:184]
+INFO: [Synth 8-638] synthesizing module 'axi_iic' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:6866]
+INFO: [Synth 8-638] synthesizing module 'iic' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:6167]
+INFO: [Synth 8-638] synthesizing module 'axi_ipif_ssp1' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:5631]
+INFO: [Synth 8-638] synthesizing module 'axi_lite_ipif' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2948]
+INFO: [Synth 8-638] synthesizing module 'slave_attachment' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2341]
+INFO: [Synth 8-638] synthesizing module 'address_decoder' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1775]
+INFO: [Synth 8-638] synthesizing module 'pselect_f' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized0' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized0' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized1' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized1' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized2' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized2' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized3' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized3' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized4' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized4' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized5' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized5' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized6' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized6' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized7' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized7' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized8' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized8' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized9' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized9' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized10' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized10' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized11' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized11' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized12' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized12' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized13' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized13' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized14' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized14' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized15' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized15' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized16' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized16' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized17' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized17' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized18' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized18' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized19' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized19' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized20' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized20' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized21' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized21' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized22' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized22' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized23' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized23' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized24' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized24' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized25' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized25' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized26' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized26' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized27' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized27' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized28' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized28' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized29' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized29' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized30' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized30' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized31' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized31' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized32' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized32' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized33' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized33' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized34' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized34' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-638] synthesizing module 'pselect_f__parameterized35' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'pselect_f__parameterized35' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1534]
+INFO: [Synth 8-256] done synthesizing module 'address_decoder' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:1775]
+INFO: [Synth 8-226] default block is never used [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2550]
+INFO: [Synth 8-256] done synthesizing module 'slave_attachment' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2341]
+INFO: [Synth 8-256] done synthesizing module 'axi_lite_ipif' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/66ea/hdl/axi_lite_ipif_v3_0_vh_rfs.vhd:2948]
+INFO: [Synth 8-638] synthesizing module 'interrupt_control' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/d8cc/hdl/interrupt_control_v3_1_vh_rfs.vhd:257]
+INFO: [Synth 8-256] done synthesizing module 'interrupt_control' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/d8cc/hdl/interrupt_control_v3_1_vh_rfs.vhd:257]
+INFO: [Synth 8-638] synthesizing module 'soft_reset' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:109]
+INFO: [Synth 8-113] binding component instance 'RST_FLOPS' to cell 'FDRSE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:240]
+INFO: [Synth 8-113] binding component instance 'RST_FLOPS' to cell 'FDRSE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:240]
+INFO: [Synth 8-113] binding component instance 'RST_FLOPS' to cell 'FDRSE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:240]
+INFO: [Synth 8-113] binding component instance 'RST_FLOPS' to cell 'FDRSE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:240]
+INFO: [Synth 8-113] binding component instance 'FF_WRACK' to cell 'FDRSE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:263]
+INFO: [Synth 8-256] done synthesizing module 'soft_reset' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:109]
+INFO: [Synth 8-256] done synthesizing module 'axi_ipif_ssp1' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:5631]
+INFO: [Synth 8-638] synthesizing module 'reg_interface' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:1627]
+INFO: [Synth 8-256] done synthesizing module 'reg_interface' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:1627]
+INFO: [Synth 8-638] synthesizing module 'filter' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:4949]
+INFO: [Synth 8-638] synthesizing module 'debounce' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:1254]
+INFO: [Synth 8-638] synthesizing module 'cdc_sync' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:514]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:545]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:554]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:564]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:574]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:584]
+INFO: [Synth 8-256] done synthesizing module 'cdc_sync' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+INFO: [Synth 8-256] done synthesizing module 'debounce' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:1254]
+INFO: [Synth 8-256] done synthesizing module 'filter' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:4949]
+INFO: [Synth 8-638] synthesizing module 'iic_control' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:2864]
+INFO: [Synth 8-638] synthesizing module 'upcnt_n' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:670]
+INFO: [Synth 8-256] done synthesizing module 'upcnt_n' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:670]
+INFO: [Synth 8-638] synthesizing module 'shift8' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:830]
+INFO: [Synth 8-256] done synthesizing module 'shift8' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:830]
+INFO: [Synth 8-638] synthesizing module 'upcnt_n__parameterized0' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:670]
+INFO: [Synth 8-256] done synthesizing module 'upcnt_n__parameterized0' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:670]
+INFO: [Synth 8-256] done synthesizing module 'iic_control' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:2864]
+INFO: [Synth 8-638] synthesizing module 'SRL_FIFO' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:376]
+INFO: [Synth 8-3491] module 'FDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49383' bound to instance 'Data_Exists_DFF' of component 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:470]
+INFO: [Synth 8-6157] synthesizing module 'FDR' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49383]
+INFO: [Synth 8-6155] done synthesizing module 'FDR' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49383]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-6157] synthesizing module 'MUXCY_L' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872]
+INFO: [Synth 8-6155] done synthesizing module 'MUXCY_L' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-6157] synthesizing module 'XORCY' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315]
+INFO: [Synth 8-6155] done synthesizing module 'XORCY' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-6157] synthesizing module 'FDRE' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396]
+INFO: [Synth 8-6155] done synthesizing module 'FDRE' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-6157] synthesizing module 'SRL16E' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334]
+INFO: [Synth 8-6155] done synthesizing module 'SRL16E' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-256] done synthesizing module 'SRL_FIFO' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:376]
+INFO: [Synth 8-638] synthesizing module 'dynamic_master' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:5171]
+INFO: [Synth 8-256] done synthesizing module 'dynamic_master' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:5171]
+INFO: [Synth 8-638] synthesizing module 'SRL_FIFO__parameterized0' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:376]
+INFO: [Synth 8-3491] module 'FDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49383' bound to instance 'Data_Exists_DFF' of component 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:470]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'MUXCY_L' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:104872' bound to instance 'MUXCY_L_I' of component 'MUXCY_L' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:487]
+INFO: [Synth 8-3491] module 'XORCY' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:171315' bound to instance 'XORCY_I' of component 'XORCY' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:494]
+INFO: [Synth 8-3491] module 'FDRE' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:49396' bound to instance 'FDRE_I' of component 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:500]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-3491] module 'SRL16E' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165334' bound to instance 'SRL16E_I' of component 'SRL16E' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:511]
+INFO: [Synth 8-256] done synthesizing module 'SRL_FIFO__parameterized0' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:376]
+INFO: [Synth 8-256] done synthesizing module 'iic' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:6167]
+INFO: [Synth 8-256] done synthesizing module 'axi_iic' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:6866]
+INFO: [Synth 8-256] done synthesizing module 'scalp_zynqps_axi_iic_ioext_0' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/synth/scalp_zynqps_axi_iic_ioext_0.vhd:91]
+INFO: [Synth 8-6014] Unused sequential element ro_a_reg was removed.  [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:2223]
+INFO: [Synth 8-6014] Unused sequential element sda_cout_reg_d1_reg was removed.  [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:3614]
+INFO: [Synth 8-6014] Unused sequential element gen_stop_and_scl_hi_reg was removed.  [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:3835]
+INFO: [Synth 8-6014] Unused sequential element dynamic_MSMS_d_reg was removed.  [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ipshared/0f29/hdl/axi_iic_v2_1_vh_rfs.vhd:5232]
+INFO: [Synth 8-7129] Port Cr[0] in module dynamic_master is either unconnected or has no load
+INFO: [Synth 8-7129] Port Cr[1] in module dynamic_master is either unconnected or has no load
+INFO: [Synth 8-7129] Port Cr[2] in module dynamic_master is either unconnected or has no load
+INFO: [Synth 8-7129] Port Cr[4] in module dynamic_master is either unconnected or has no load
+INFO: [Synth 8-7129] Port Cr[6] in module dynamic_master is either unconnected or has no load
+INFO: [Synth 8-7129] Port Cr[7] in module dynamic_master is either unconnected or has no load
+INFO: [Synth 8-7129] Port Adr[0] in module iic_control is either unconnected or has no load
+INFO: [Synth 8-7129] Port Ten_adr[7] in module iic_control is either unconnected or has no load
+INFO: [Synth 8-7129] Port Ten_adr[6] in module iic_control is either unconnected or has no load
+INFO: [Synth 8-7129] Port Ten_adr[5] in module iic_control is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_aclk in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_resetn in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[31] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[30] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[29] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[28] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[27] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[26] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[25] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[24] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[23] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[22] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[21] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[20] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[19] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[18] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[17] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[16] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[15] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[14] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[13] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[12] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[11] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[10] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[9] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[8] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[7] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[6] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[5] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[4] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[3] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[2] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[1] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[0] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port scndry_resetn in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port Rst in module debounce is either unconnected or has no load
+INFO: [Synth 8-7129] Port Stable in module debounce is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Addr[0] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[0] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[1] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[2] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[3] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[4] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[5] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[6] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[7] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[8] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[9] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[10] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[11] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[12] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[13] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[14] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[15] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[16] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[17] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[18] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[19] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_Data[20] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_WrCE[1] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_WrCE[3] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_WrCE[5] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_WrCE[6] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IIC_WrCE[7] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[0] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[1] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[2] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[3] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[4] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[5] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[6] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Data_i2c[7] in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port reg_empty in module reg_interface is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[0] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[1] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[2] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[3] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[4] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[5] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[6] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[7] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[8] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[9] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[10] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[11] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[12] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[13] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[14] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[15] in module soft_reset is either unconnected or has no load
+INFO: [Synth 8-7129] Port Bus2IP_Data[16] in module soft_reset is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1456.375 ; gain = 683.836
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1456.375 ; gain = 683.836
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1456.375 ; gain = 683.836
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1456.375 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 44 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/scalp_zynqps_axi_iic_ioext_0_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/scalp_zynqps_axi_iic_ioext_0_ooc.xdc] for cell 'U0'
+Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/scalp_zynqps_axi_iic_ioext_0_board.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/scalp_zynqps_axi_iic_ioext_0_board.xdc] for cell 'U0'
+Parsing XDC File [C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/scalp_zynqps_axi_iic_ioext_0_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/scalp_zynqps_axi_iic_ioext_0_synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1537.648 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 32 instances were transformed.
+  FDR => FDRE: 15 instances
+  FDRSE => FDRSE (FDRE, LUT4, VCC): 5 instances
+  MUXCY_L => MUXCY: 12 instances
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.030 . Memory (MB): peak = 1537.648 ; gain = 0.000
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1537.648 ; gain = 765.109
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z015clg485-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1537.648 ; gain = 765.109
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1537.648 ; gain = 765.109
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'slave_attachment'
+INFO: [Synth 8-802] inferred FSM for state register 'scl_state_reg' in module 'iic_control'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'iic_control'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 iSTATE2 |                             0001 |                               00
+                  iSTATE |                             0010 |                               01
+                 iSTATE0 |                             0100 |                               10
+                 iSTATE1 |                             1000 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'slave_attachment'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    idle |                              000 |                              000
+                  header |                              101 |                              001
+              ack_header |                              110 |                              010
+                rcv_data |                              100 |                              011
+                ack_data |                              011 |                              100
+               xmit_data |                              010 |                              101
+                wait_ack |                              001 |                              110
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'iic_control'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                scl_idle |                       0000000001 |                             0000
+              start_wait |                       0000000010 |                             0001
+                   start |                       0000000100 |                             0010
+              start_edge |                       0000001000 |                             0011
+            scl_low_edge |                       0000010000 |                             0100
+                 scl_low |                       0000100000 |                             0101
+           scl_high_edge |                       0001000000 |                             0110
+                scl_high |                       0010000000 |                             0111
+               stop_edge |                       0100000000 |                             1000
+               stop_wait |                       1000000000 |                             1001
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'scl_state_reg' using encoding 'one-hot' in module 'iic_control'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1537.648 ; gain = 765.109
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   11 Bit       Adders := 2     
+	   2 Input    8 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 2     
++---XORs : 
+	   2 Input      1 Bit         XORs := 20    
++---Registers : 
+	               32 Bit    Registers := 1     
+	               11 Bit    Registers := 10    
+	                9 Bit    Registers := 2     
+	                8 Bit    Registers := 8     
+	                7 Bit    Registers := 1     
+	                4 Bit    Registers := 3     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 143   
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 5     
+	   2 Input   11 Bit        Muxes := 2     
+	  10 Input   10 Bit        Muxes := 1     
+	   2 Input   10 Bit        Muxes := 13    
+	   2 Input    9 Bit        Muxes := 1     
+	   3 Input    9 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 4     
+	   4 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 6     
+	  21 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 4     
+	   3 Input    2 Bit        Muxes := 1     
+	   4 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 105   
+	   4 Input    1 Bit        Muxes := 3     
+	   7 Input    1 Bit        Muxes := 3     
+	   3 Input    1 Bit        Muxes := 1     
+	  10 Input    1 Bit        Muxes := 10    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 160 (col length:60)
+BRAMs: 190 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-3332] Sequential element (X_IIC/FILTER_I/SCL_DEBOUNCE/INPUT_DOUBLE_REGS/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5) is unused and will be removed from module axi_iic.
+INFO: [Synth 8-3332] Sequential element (X_IIC/FILTER_I/SCL_DEBOUNCE/INPUT_DOUBLE_REGS/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6) is unused and will be removed from module axi_iic.
+INFO: [Synth 8-3332] Sequential element (X_IIC/FILTER_I/SDA_DEBOUNCE/INPUT_DOUBLE_REGS/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5) is unused and will be removed from module axi_iic.
+INFO: [Synth 8-3332] Sequential element (X_IIC/FILTER_I/SDA_DEBOUNCE/INPUT_DOUBLE_REGS/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6) is unused and will be removed from module axi_iic.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1537.648 ; gain = 765.109
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1650.301 ; gain = 877.762
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 1736.883 ; gain = 964.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 1736.883 ; gain = 964.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |CARRY4  |    10|
+|2     |LUT1    |     7|
+|3     |LUT2    |    50|
+|4     |LUT3    |    49|
+|5     |LUT4    |    83|
+|6     |LUT5    |    68|
+|7     |LUT6    |   200|
+|8     |MUXCY_L |     9|
+|9     |MUXF7   |     3|
+|10    |SRL16E  |    18|
+|11    |XORCY   |    12|
+|12    |FDR     |    11|
+|13    |FDRE    |   336|
+|14    |FDSE    |    38|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:20 ; elapsed = 00:00:30 . Memory (MB): peak = 1951.836 ; gain = 1098.023
+Synthesis Optimization Complete : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1951.836 ; gain = 1179.297
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1951.836 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 45 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1964.590 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 14 instances were transformed.
+  (MUXCY,XORCY) => CARRY4: 3 instances
+  FDR => FDRE: 11 instances
+
+Synth Design complete | Checksum: a8caa6b7
+INFO: [Common 17-83] Releasing license: Synthesis
+309 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:43 . Memory (MB): peak = 1964.590 ; gain = 1418.223
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1964.590 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/scalp_zynqps_axi_iic_ioext_0_synth_1/scalp_zynqps_axi_iic_ioext_0.dcp' has been generated.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP scalp_zynqps_axi_iic_ioext_0, cache-ID = 40548d14e13ddac5
+INFO: [Coretcl 2-1174] Renamed 24 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1964.590 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/scalp_zynqps_axi_iic_ioext_0_synth_1/scalp_zynqps_axi_iic_ioext_0.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file scalp_zynqps_axi_iic_ioext_0_utilization_synth.rpt -pb scalp_zynqps_axi_iic_ioext_0_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 10 21:57:22 2026...

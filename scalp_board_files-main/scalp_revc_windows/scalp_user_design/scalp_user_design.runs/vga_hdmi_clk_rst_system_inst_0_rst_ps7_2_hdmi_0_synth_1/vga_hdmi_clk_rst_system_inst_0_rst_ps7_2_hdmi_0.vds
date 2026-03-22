@@ -1,0 +1,311 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Tue Mar 10 21:56:26 2026
+# Process ID         : 29444
+# Current directory  : C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1
+# Command line       : vivado.exe -log vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.tcl
+# Log file           : C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.vds
+# Journal file       : C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1\vivado.jou
+# Running On         : ma2s
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) i7-14700K
+# CPU Frequency      : 3418 MHz
+# CPU Physical cores : 20
+# CPU Logical cores  : 28
+# Host memory        : 68447 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 72742 MB
+# Available Virtual  : 44740 MB
+#-----------------------------------------------------------
+source vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.tcl -notrace
+create_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 528.301 ; gain = 222.164
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows'.
+WARNING: [IP_Flow 19-3656] If you move the project, the path for repository 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows' may become invalid. A better location for the repository would be in a path adjacent to the project. (Current project location is 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1'.)
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+WARNING: [IP_Flow 19-4995] The host OS only allows 260 characters in a normal path. The IP cache path is more than 80 characters. If you experience issues with IP caching, please consider changing the IP cache to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. 
+Current IP cache path is c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.cache/ip 
+Command: synth_design -top vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0 -part xc7z015clg485-2 -incremental_mode off -mode out_of_context
+Starting synth_design
+INFO: [IP_Flow 19-2162] IP 'vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0' is locked:
+* IP definition 'Processor System Reset (5.0)' for IP 'vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0' (customized with software release 2023.2) has a different revision in the IP Catalog. * This IP has board specific outputs. Current project board 'unset' and the board 'hepia-cores.ch:scalp_node:part0:0.2' used to customize the IP 'vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0' do not match.
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z015'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z015'
+INFO: [Device 21-403] Loading part xc7z015clg485-2
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 29924
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1312.773 ; gain = 541.336
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/synth/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.vhd:74]
+	Parameter C_FAMILY bound to: zynq - type: string 
+	Parameter C_EXT_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_AUX_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_EXT_RESET_HIGH bound to: 1'b0 
+	Parameter C_AUX_RESET_HIGH bound to: 1'b0 
+	Parameter C_NUM_BUS_RST bound to: 1 - type: integer 
+	Parameter C_NUM_PERP_RST bound to: 1 - type: integer 
+	Parameter C_NUM_INTERCONNECT_ARESETN bound to: 1 - type: integer 
+	Parameter C_NUM_PERP_ARESETN bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'proc_sys_reset' declared at 'c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1271' bound to instance 'U0' of component 'proc_sys_reset' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/synth/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.vhd:129]
+INFO: [Synth 8-638] synthesizing module 'proc_sys_reset' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1330]
+	Parameter INIT bound to: 1'b1 
+INFO: [Synth 8-113] binding component instance 'FDRE_inst' to cell 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1399]
+	Parameter INIT bound to: 1'b1 
+INFO: [Synth 8-113] binding component instance 'FDRE_BSR' to cell 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1415]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_BSR_N' to cell 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1441]
+	Parameter INIT bound to: 1'b1 
+INFO: [Synth 8-113] binding component instance 'FDRE_PER' to cell 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1464]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_PER_N' to cell 'FDRE' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1488]
+INFO: [Synth 8-638] synthesizing module 'lpf' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:821]
+INFO: [Synth 8-3491] module 'SRL16' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165318' bound to instance 'POR_SRL_I' of component 'SRL16' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:873]
+INFO: [Synth 8-6157] synthesizing module 'SRL16' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165318]
+INFO: [Synth 8-6155] done synthesizing module 'SRL16' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:165318]
+INFO: [Synth 8-638] synthesizing module 'cdc_sync' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:514]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:545]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:554]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:564]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:574]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6' to cell 'FDR' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:584]
+INFO: [Synth 8-256] done synthesizing module 'cdc_sync' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+INFO: [Synth 8-256] done synthesizing module 'lpf' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:821]
+INFO: [Synth 8-638] synthesizing module 'sequence_psr' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:304]
+INFO: [Synth 8-638] synthesizing module 'upcnt_n' [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:126]
+INFO: [Synth 8-256] done synthesizing module 'upcnt_n' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:126]
+INFO: [Synth 8-256] done synthesizing module 'sequence_psr' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:304]
+INFO: [Synth 8-256] done synthesizing module 'proc_sys_reset' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ipshared/408c/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1330]
+INFO: [Synth 8-256] done synthesizing module 'vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0' (0#1) [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/synth/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.vhd:74]
+INFO: [Synth 8-7129] Port prmry_aclk in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_resetn in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[1] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port prmry_vect_in[0] in module cdc_sync is either unconnected or has no load
+INFO: [Synth 8-7129] Port scndry_resetn in module cdc_sync is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1434.938 ; gain = 663.500
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1434.938 ; gain = 663.500
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1434.938 ; gain = 663.500
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1434.938 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 13 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_ooc.xdc] for cell 'U0'
+Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_board.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_board.xdc] for cell 'U0'
+Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.xdc] for cell 'U0'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1508.941 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 13 instances were transformed.
+  FDR => FDRE: 12 instances
+  SRL16 => SRL16E: 1 instance 
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1508.941 ; gain = 0.000
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1508.941 ; gain = 737.504
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z015clg485-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1508.941 ; gain = 737.504
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1508.941 ; gain = 737.504
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1508.941 ; gain = 737.504
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    6 Bit       Adders := 1     
++---Registers : 
+	                6 Bit    Registers := 1     
+	                3 Bit    Registers := 3     
+	                1 Bit    Registers := 14    
++---Muxes : 
+	   2 Input    6 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 160 (col length:60)
+BRAMs: 190 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_EXT.ACT_LO_EXT/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5) is unused and will be removed from module proc_sys_reset.
+WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_EXT.ACT_LO_EXT/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6) is unused and will be removed from module proc_sys_reset.
+WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5) is unused and will be removed from module proc_sys_reset.
+WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6) is unused and will be removed from module proc_sys_reset.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1508.941 ; gain = 737.504
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1624.484 ; gain = 853.047
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1624.633 ; gain = 853.195
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1653.238 ; gain = 881.801
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------+------+
+|      |Cell  |Count |
++------+------+------+
+|1     |LUT1  |     5|
+|2     |LUT2  |     9|
+|3     |LUT3  |     1|
+|4     |LUT4  |     6|
+|5     |LUT5  |     3|
+|6     |LUT6  |     1|
+|7     |SRL16 |     1|
+|8     |FDR   |     8|
+|9     |FDRE  |    28|
+|10    |FDSE  |     4|
++------+------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 4 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:23 . Memory (MB): peak = 1883.594 ; gain = 1038.152
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 1883.594 ; gain = 1112.156
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1883.594 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 9 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1887.363 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 9 instances were transformed.
+  FDR => FDRE: 8 instances
+  SRL16 => SRL16E: 1 instance 
+
+Synth Design complete | Checksum: 90581ed9
+INFO: [Common 17-83] Releasing license: Synthesis
+54 Infos, 6 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:37 . Memory (MB): peak = 1887.363 ; gain = 1340.758
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1887.363 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.dcp' has been generated.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0, cache-ID = b7da3ca476f0a528
+INFO: [Coretcl 2-1174] Renamed 6 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1887.363 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_synth_1/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_utilization_synth.rpt -pb vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 10 21:57:16 2026...
