@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1'
+HD_PWD='C:/lpsc/proj/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

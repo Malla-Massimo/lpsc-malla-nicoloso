@@ -3,22 +3,22 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Tue Mar 10 21:57:45 2026
-# Process ID         : 36600
-# Current directory  : C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1
+# Start of session at: Sun Mar 22 14:04:27 2026
+# Process ID         : 10744
+# Current directory  : C:/lpsc/proj/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1
 # Command line       : vivado.exe -log scalp_user_design.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source scalp_user_design.tcl
-# Log file           : C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.vds
-# Journal file       : C:/master/lpsc/scalp_board_files-main/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1\vivado.jou
-# Running On         : ma2s
+# Log file           : C:/lpsc/proj/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.vds
+# Journal file       : C:/lpsc/proj/scalp_revc_windows/scalp_user_design/scalp_user_design.runs/synth_1\vivado.jou
+# Running On         : LAPTOP-CHKLS7CN
 # Platform           : Windows Server 2016 or Windows 10
 # Operating System   : 26200
-# Processor Detail   : Intel(R) Core(TM) i7-14700K
-# CPU Frequency      : 3418 MHz
-# CPU Physical cores : 20
-# CPU Logical cores  : 28
-# Host memory        : 68447 MB
-# Swap memory        : 4294 MB
-# Total Virtual      : 72742 MB
-# Available Virtual  : 46121 MB
+# Processor Detail   : 11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz
+# CPU Frequency      : 2803 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 16962 MB
+# Swap memory        : 7784 MB
+# Total Virtual      : 24746 MB
+# Available Virtual  : 11054 MB
 #-----------------------------------------------------------
 source scalp_user_design.tcl -notrace
