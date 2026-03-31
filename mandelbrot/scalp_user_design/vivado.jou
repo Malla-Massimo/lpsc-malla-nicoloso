@@ -3,12 +3,12 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Tue Mar 10 19:21:01 2026
-# Process ID         : 32572
-# Current directory  : C:/MA_LPSC/scalp_tp0/scalp_user_design
-# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent31748 C:\MA_LPSC\scalp_tp0\scalp_user_design\scalp_user_design.xpr
-# Log file           : C:/MA_LPSC/scalp_tp0/scalp_user_design/vivado.log
-# Journal file       : C:/MA_LPSC/scalp_tp0/scalp_user_design\vivado.jou
+# Start of session at: Tue Mar 31 18:58:11 2026
+# Process ID         : 22532
+# Current directory  : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent32156 C:\MA_LPSC\lpsc-malla-nicoloso\mandelbrot\scalp_user_design\scalp_user_design.xpr
+# Log file           : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/vivado.log
+# Journal file       : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design\vivado.jou
 # Running On         : LAPTOP-E00F6MUN
 # Platform           : Windows Server 2016 or Windows 10
 # Operating System   : 26200
@@ -17,10 +17,14 @@
 # CPU Physical cores : 16
 # CPU Logical cores  : 22
 # Host memory        : 33832 MB
-# Swap memory        : 2700 MB
-# Total Virtual      : 36533 MB
-# Available Virtual  : 19716 MB
+# Swap memory        : 2147 MB
+# Total Virtual      : 35980 MB
+# Available Virtual  : 16403 MB
 #-----------------------------------------------------------
 start_gui
-open_project C:/MA_LPSC/scalp_tp0/scalp_user_design/scalp_user_design.xpr
+open_project C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.xpr
 update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 11
+wait_on_run impl_1
+open_run impl_1

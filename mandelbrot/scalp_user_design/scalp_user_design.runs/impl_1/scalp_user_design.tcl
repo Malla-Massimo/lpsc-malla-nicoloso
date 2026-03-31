@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "C:/MA_LPSC/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.tcl"
+  variable script "C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.tcl"
   variable category "vivado_impl"
 }
 
@@ -114,24 +114,24 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/MA_LPSC/scalp_user_design/scalp_user_design.cache/wt [current_project]
-  set_property parent.project_path C:/MA_LPSC/scalp_user_design/scalp_user_design.xpr [current_project]
-  set_property ip_repo_paths C:/scalp_revc_windows [current_project]
+  set_property webtalk.parent_dir C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.cache/wt [current_project]
+  set_property parent.project_path C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.xpr [current_project]
+  set_property ip_repo_paths C:/MA_LPSC/lpsc-malla-nicoloso/scalp_revc_windows [current_project]
   update_ip_catalog
-  set_property ip_output_repo C:/MA_LPSC/scalp_user_design/scalp_user_design.cache/ip [current_project]
+  set_property ip_output_repo C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/MA_LPSC/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.dcp
+  add_files -quiet C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.dcp
   set_msg_config -source 4 -id {BD 41-1661} -limit 0
   set_param project.isImplRun true
-  add_files C:/MA_LPSC/scalp_zynqps/scalp_zynqps.bd
+  add_files C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/scalp_zynqps.bd
   set_param project.isImplRun false
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/MA_LPSC/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/debug.xdc
-  read_xdc C:/MA_LPSC/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc
-  read_xdc C:/MA_LPSC/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/timing_constraints.xdc
+  read_xdc C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/debug.xdc
+  read_xdc C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc
+  read_xdc C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/timing_constraints.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
