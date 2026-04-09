@@ -4,7 +4,3 @@
 
 **NICOLOSO Matthias** [**matthias.nicoloso@master.hes-so.ch**](mailto:matthias.nicoloso@master.hes-so.ch)
 
-
-
-test
-
