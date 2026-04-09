@@ -2,10 +2,10 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-// Date        : Tue Mar 10 19:00:36 2026
-// Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim
-//               c:/MA_LPSC/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0/vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_sim_netlist.v
+// Date        : Thu Apr  9 17:03:48 2026
+// Host        : ma2s running 64-bit major release  (build 9200)
+// Command     : write_verilog -force -mode funcsim -rename_top vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0 -prefix
+//               vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_ vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_sim_netlist.v
 // Design      : vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -32,7 +32,7 @@ module vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0
   wire locked;
   wire resetn;
 
-  vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_clk_wiz inst
+  vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_clk_wiz inst
        (.clk_hdmi(clk_hdmi),
         .clk_in1(clk_in1),
         .clk_vga(clk_vga),
@@ -40,7 +40,7 @@ module vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0
         .resetn(resetn));
 endmodule
 
-module vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_clk_wiz
+module vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_clk_wiz
    (clk_vga,
     clk_hdmi,
     resetn,

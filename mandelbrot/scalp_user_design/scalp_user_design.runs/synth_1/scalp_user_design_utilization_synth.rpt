@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-| Date         : Tue Mar 31 19:00:30 2026
-| Host         : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
+| Date         : Thu Apr  9 18:47:39 2026
+| Host         : ma2s running 64-bit major release  (build 9200)
 | Command      : report_utilization -file scalp_user_design_utilization_synth.rpt -pb scalp_user_design_utilization_synth.pb
 | Design       : scalp_user_design
 | Device       : xc7z015clg485-2
@@ -31,15 +31,15 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*             |  489 |     0 |          0 |     46200 |  1.06 |
-|   LUT as Logic          |  489 |     0 |          0 |     46200 |  1.06 |
+| Slice LUTs*             |  516 |     0 |          0 |     46200 |  1.12 |
+|   LUT as Logic          |  516 |     0 |          0 |     46200 |  1.12 |
 |   LUT as Memory         |    0 |     0 |          0 |     14400 |  0.00 |
-| Slice Registers         |  707 |     0 |          0 |     92400 |  0.77 |
-|   Register as Flip Flop |  707 |     0 |          0 |     92400 |  0.77 |
+| Slice Registers         |  769 |     0 |          0 |     92400 |  0.83 |
+|   Register as Flip Flop |  769 |     0 |          0 |     92400 |  0.83 |
 |   Register as Latch     |    0 |     0 |          0 |     92400 |  0.00 |
 | F7 Muxes                |    0 |     0 |          0 |     23100 |  0.00 |
 | F8 Muxes                |    0 |     0 |          0 |     11550 |  0.00 |
-| Unique Control Sets     |   34 |       |          0 |     11550 |  0.29 |
+| Unique Control Sets     |   36 |       |          0 |     11550 |  0.31 |
 +-------------------------+------+-------+------------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 Warning! LUT value is adjusted to account for LUT combining.
@@ -60,9 +60,9 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
-| 161   |          Yes |           - |        Reset |
-| 2     |          Yes |         Set |            - |
-| 544   |          Yes |       Reset |            - |
+| 137   |          Yes |           - |        Reset |
+| 1     |          Yes |         Set |            - |
+| 631   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -73,9 +73,9 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 |     Site Type     | Used | Fixed | Prohibited | Available | Util% |
 +-------------------+------+-------+------------+-----------+-------+
 | Block RAM Tile    |    1 |     0 |          0 |        95 |  1.05 |
-|   RAMB36/FIFO*    |    0 |     0 |          0 |        95 |  0.00 |
-|   RAMB18          |    2 |     0 |          0 |       190 |  1.05 |
-|     RAMB18E1 only |    2 |       |            |           |       |
+|   RAMB36/FIFO*    |    1 |     0 |          0 |        95 |  1.05 |
+|     RAMB36E1 only |    1 |       |            |           |       |
+|   RAMB18          |    0 |     0 |          0 |       190 |  0.00 |
 +-------------------+------+-------+------------+-----------+-------+
 * Note: Each Block RAM Tile only has one FIFO logic available and therefore can accommodate only one FIFO36E1 or one FIFO18E1. However, if a FIFO18E1 occupies a Block RAM Tile, that tile can still accommodate a RAMB18E1
 
@@ -157,48 +157,49 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-----------+------+---------------------+
 |  Ref Name | Used | Functional Category |
 +-----------+------+---------------------+
-| FDRE      |  544 |        Flop & Latch |
-| LUT4      |  172 |                 LUT |
-| FDCE      |  161 |        Flop & Latch |
-| LUT6      |  152 |                 LUT |
-| LUT5      |  147 |                 LUT |
-| LUT3      |  115 |                 LUT |
-| LUT2      |   58 |                 LUT |
+| FDRE      |  631 |        Flop & Latch |
+| LUT4      |  178 |                 LUT |
+| LUT3      |  153 |                 LUT |
+| LUT6      |  151 |                 LUT |
+| LUT5      |  150 |                 LUT |
+| FDCE      |  137 |        Flop & Latch |
+| LUT2      |   63 |                 LUT |
 | CARRY4    |   14 |          CarryLogic |
-| LUT1      |   11 |                 LUT |
+| LUT1      |   12 |                 LUT |
 | OBUF      |   10 |                  IO |
 | IBUF      |   10 |                  IO |
 | OSERDESE2 |    8 |                  IO |
 | OBUFT     |    4 |                  IO |
 | OBUFDS    |    4 |                  IO |
-| RAMB18E1  |    2 |        Block Memory |
-| FDSE      |    2 |        Flop & Latch |
+| RAMB36E1  |    1 |        Block Memory |
+| FDSE      |    1 |        Flop & Latch |
 +-----------+------+---------------------+
 
 
 8. Black Boxes
 --------------
 
-+-------------------------------------------------+------+
-|                     Ref Name                    | Used |
-+-------------------------------------------------+------+
-| vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0 |    1 |
-| vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0 |    1 |
-| vga_hdmi_clk_rst_system_inst_0_rst_ps7_1_vga_0  |    1 |
-| scalp_zynqps_xbar_0                             |    1 |
-| scalp_zynqps_system_ila_0_0                     |    1 |
-| scalp_zynqps_sys_clock_0                        |    1 |
-| scalp_zynqps_scalp_axi_link_firmwareid_0        |    1 |
-| scalp_zynqps_scalp_axi_link_cplx_num_regs_0     |    1 |
-| scalp_zynqps_rst_ps7_0_125M_0                   |    1 |
-| scalp_zynqps_processing_system7_0_0             |    1 |
-| scalp_zynqps_axi_intc_0_0                       |    1 |
-| scalp_zynqps_axi_iic_ioext_0                    |    1 |
-| scalp_zynqps_axi_gpio_switches_0                |    1 |
-| scalp_zynqps_axi_gpio_reset_btn_0               |    1 |
-| scalp_zynqps_axi_gpio_joystick_0                |    1 |
-| scalp_zynqps_auto_pc_0                          |    1 |
-+-------------------------------------------------+------+
++-------------------------------------------------------+------+
+|                        Ref Name                       | Used |
++-------------------------------------------------------+------+
+| vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0       |    1 |
+| vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0       |    1 |
+| vga_hdmi_clk_rst_system_inst_0_rst_ps7_1_vga_0        |    1 |
+| scalp_zynqps_system_ila_0_0                           |    1 |
+| scalp_zynqps_sys_clock_0                              |    1 |
+| scalp_zynqps_scalp_axi_link_firmwareid_0              |    1 |
+| scalp_zynqps_scalp_axi_link_cplx_num_regs_0           |    1 |
+| scalp_zynqps_rst_ps7_0_125M_0                         |    1 |
+| scalp_zynqps_ps7_0_axi_periph_upgraded_ipi_imp_xbar_0 |    1 |
+| scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0           |    1 |
+| scalp_zynqps_processing_system7_0_0                   |    1 |
+| scalp_zynqps_clk_wiz_0_0                              |    1 |
+| scalp_zynqps_axi_intc_0_0                             |    1 |
+| scalp_zynqps_axi_iic_ioext_0                          |    1 |
+| scalp_zynqps_axi_gpio_switches_0                      |    1 |
+| scalp_zynqps_axi_gpio_reset_btn_0                     |    1 |
+| scalp_zynqps_axi_gpio_joystick_0                      |    1 |
++-------------------------------------------------------+------+
 
 
 9. Instantiated Netlists

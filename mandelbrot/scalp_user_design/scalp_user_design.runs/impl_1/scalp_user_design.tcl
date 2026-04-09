@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.tcl"
+  variable script "C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.tcl"
   variable category "vivado_impl"
 }
 
@@ -105,33 +105,35 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param general.usePosixSpawnForFork 1
-  set_param chipscope.maxJobs 5
-  set_param runs.launchOptions { -jobs 11  }
+  set_param chipscope.maxJobs 7
+  set_param runs.launchOptions { -jobs 14  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7z015clg485-2
-  set_property board_part hepia-cores.ch:scalp_node:part0:0.2 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.cache/wt [current_project]
-  set_property parent.project_path C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.xpr [current_project]
-  set_property ip_repo_paths C:/MA_LPSC/lpsc-malla-nicoloso/scalp_revc_windows [current_project]
+  set_property webtalk.parent_dir C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.cache/wt [current_project]
+  set_property parent.project_path C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.xpr [current_project]
+  set_property ip_repo_paths {
+  C:/lpsc/scalp_revc_windows
+  C:/lpsc/mandelbrot/files/ip_repo
+} [current_project]
   update_ip_catalog
-  set_property ip_output_repo C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.cache/ip [current_project]
+  set_property ip_output_repo C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.dcp
+  add_files -quiet C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.dcp
   set_msg_config -source 4 -id {BD 41-1661} -limit 0
   set_param project.isImplRun true
-  add_files C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/scalp_zynqps.bd
+  add_files C:/lpsc/mandelbrot/scalp_zynqps/scalp_zynqps.bd
   set_param project.isImplRun false
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/debug.xdc
-  read_xdc C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc
-  read_xdc C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/timing_constraints.xdc
+  read_xdc C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/debug.xdc
+  read_xdc C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc
+  read_xdc C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/timing_constraints.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
@@ -291,35 +293,4 @@ OPTRACE "route_design write_checkpoint" END { }
 
 OPTRACE "route_design misc" END { }
 OPTRACE "Phase: Route Design" END { }
-OPTRACE "Phase: Write Bitstream" START { ROLLUP_AUTO }
-OPTRACE "write_bitstream setup" START { }
-start_step write_bitstream
-set ACTIVE_STEP write_bitstream
-set rc [catch {
-  create_msg_db write_bitstream.pb
-OPTRACE "read constraints: write_bitstream" START { }
-OPTRACE "read constraints: write_bitstream" END { }
-  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
-  catch { write_mem_info -force -no_partial_mmi scalp_user_design.mmi }
-OPTRACE "write_bitstream setup" END { }
-OPTRACE "write_bitstream" START { }
-  write_bitstream -force scalp_user_design.bit 
-OPTRACE "write_bitstream" END { }
-OPTRACE "write_bitstream misc" START { }
-OPTRACE "read constraints: write_bitstream_post" START { }
-OPTRACE "read constraints: write_bitstream_post" END { }
-  catch {write_debug_probes -quiet -force scalp_user_design}
-  catch {file copy -force scalp_user_design.ltx debug_nets.ltx}
-  close_msg_db -file write_bitstream.pb
-} RESULT]
-if {$rc} {
-  step_failed write_bitstream
-  return -code error $RESULT
-} else {
-  end_step write_bitstream
-  unset ACTIVE_STEP 
-}
-
-OPTRACE "write_bitstream misc" END { }
-OPTRACE "Phase: Write Bitstream" END { }
 OPTRACE "impl_1" END { }

@@ -442,6 +442,10 @@ architecture arch of scalp_user_design is
     -- Clocks
     -- Processing system clock
     signal Clk125xC                : std_logic         := '0';
+    
+    signal clk_100MHz : std_logic;
+    signal pll_locked : std_logic;
+        
     -- Processing system pll locked
     signal Clk125PllLockedxS       : std_logic         := '0';
     -- Vga and Hdmi clocks
@@ -520,6 +524,8 @@ begin
                 Clk125RstxRO        => Clk125RstxR,
                 Clk125RstxRNAO      => Clk125RstxRNA,
                 Clk125PllLockedxSO  => Clk125PllLockedxS,
+                Clk100              => clk_100MHz,
+                Clk100_locked       => pll_locked,
                 -- DDR interface
                 DDR_addr            => DDRAddrxDIO,
                 DDR_ba              => DDRBankAddrxDIO,
@@ -562,8 +568,57 @@ begin
     end block PSxB;
 
     PLxB : block is
+        -- SECOND PLL INSTANCE
+        component clk_wiz_0
+        port (
+            clk_in1  : in  std_logic;
+            clk_out1 : out std_logic;
+            locked   : out std_logic
+        );
+        end component;
+        
+        -- DECLARE SIGNALS FOR THE RAM 
+        signal ram_data_in   : std_logic_vector(31 downto 0) := (others => '0');
+        signal ram_data_out  : std_logic_vector(31 downto 0);
+        signal ram_wr_addr   : std_logic_vector(9 downto 0)  := (others => '0');
+        signal ram_rd_addr   : std_logic_vector(9 downto 0)  := (others => '0');
+        signal ram_we        : std_logic_vector(3 downto 0)  := (others => '1');
+            
+        signal v_addr_write : unsigned(9 downto 0) := (others => '0');
+        
     begin  -- block PLxB
 
+    
+         -- RAM INITIALISTION
+        BRAM_SDP_MACRO_inst : BRAM_SDP_MACRO
+        generic map (
+          BRAM_SIZE => "36Kb", -- Target BRAM, "18Kb" or "36Kb" 
+          DEVICE => "7SERIES", -- Target device: "VIRTEX5", "VIRTEX6", "7SERIES", "SPARTAN6" 
+          WRITE_WIDTH => 32,    -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
+          READ_WIDTH => 32,     -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
+          DO_REG => 0, -- Optional output register (0 or 1)
+          INIT_FILE => "NONE",
+          SIM_COLLISION_CHECK => "ALL", -- Collision check enable "ALL", "WARNING_ONLY", 
+                                        -- "GENERATE_X_ONLY" or "NONE"       
+          SRVAL => X"000000000000000000", --  Set/Reset value for port output
+          WRITE_MODE => "WRITE_FIRST", -- Specify "READ_FIRST" for same clock or synchronous clocks
+                                       --  Specify "WRITE_FIRST for asynchrononous clocks on ports
+          INIT => X"000000000000000000" --  Initial values on output port
+          )
+      port map (
+          DO => ram_data_out,    -- Output read data port, width defined by READ_WIDTH parameter
+          DI => ram_data_in,     -- Input write data port, width defined by WRITE_WIDTH parameter
+          RDADDR => ram_rd_addr, -- Input read address, width defined by read port depth
+          RDCLK => HdmiVgaClocksxC.VgaxC,   -- 1-bit input read clock
+          RDEN => '1',     -- 1-bit input read port enable
+          REGCE => '1',   -- 1-bit input read output register enable
+          RST => Clk125RstxR,       -- 1-bit input reset 
+          WE => ram_we,         -- Input write enable, width defined by write port depth
+          WRADDR => ram_wr_addr, -- Input write address, width defined by write port depth
+          WRCLK => clk_100MHz,   -- 1-bit input write clock
+          WREN => '1'      -- 1-bit input write port enable
+       );
+       
         ScalpFirmwareIDxI : entity work.scalp_firmwareid
             generic map (
                 C_REGS_ADDR_SIZE => C_REGS_ADDR_SIZE,
@@ -885,43 +940,107 @@ begin
                     WRADDR => BramAddrxD,
                     WRCLK  => ClpxNumRegsAxixD.ClockxC.ClkxC,
                     WREN   => '1');
-
-            SwissFlagxP : process (HdmiVgaClocksxC.PllLockedxS,
-                                   HdmiVgaClocksxC.VgaResetxRNA,
-                                   HdmiVgaClocksxC.VgaxC) is
-            begin  -- process SwissFlagxP
-                if (HdmiVgaClocksxC.PllLockedxS = '0') or (HdmiVgaClocksxC.VgaResetxRNA = '0') then
-                    PixelxD <= C_HDMI_VGA_PIX_IDLE;
-                elsif rising_edge(HdmiVgaClocksxC.VgaxC) then
-                    if VgaPixCountersxD.VidOnxS = '1' then
-                        PixelxD.RxD <= CDCPatternPortsxD(0).RegxD((C_VGA_PIXELS_SIZE - 1) downto (C_VGA_PIXEL_SIZE * 2));
-                        PixelxD.GxD <= CDCPatternPortsxD(0).RegxD(((C_VGA_PIXEL_SIZE * 2) - 1) downto (C_VGA_PIXEL_SIZE));
-                        PixelxD.BxD <= CDCPatternPortsxD(0).RegxD((C_VGA_PIXEL_SIZE - 1) downto 0);
-
-                        if (to_integer(unsigned(VgaPixCountersxD.HxD)) >= 288) and
-                            (to_integer(unsigned(VgaPixCountersxD.HxD)) < 432) then
-                            if (to_integer(unsigned(VgaPixCountersxD.VxD)) >= 144) and
-                                (to_integer(unsigned(VgaPixCountersxD.VxD)) < 576) then
-                                PixelxD.RxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXELS_SIZE - 1) downto (C_VGA_PIXEL_SIZE * 2));
-                                PixelxD.GxD <= CDCPatternPortsxD(1).RegxD(((C_VGA_PIXEL_SIZE * 2) - 1) downto (C_VGA_PIXEL_SIZE));
-                                PixelxD.BxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXEL_SIZE - 1) downto 0);
-                            end if;
+                
+                 
+            ---------------------------------------------------------------------------
+            -- 1. WRITER PROCESS: Fill the RAM with the Swiss Flag
+            ---------------------------------------------------------------------------
+            SwissFlagToRamxP : process(clk_100MHz)
+                variable x, y : integer;
+            begin
+                if rising_edge(clk_100MHz) then
+                    if pll_locked = '1' then
+                        -- Convert linear address (0-1023) to 2D coordinates (0-31)
+                        x := to_integer(v_addr_write mod 32);
+                        y := to_integer(v_addr_write / 32);
+        
+                        -- Determine color based on shape (Relative to 32x32)
+                        -- Background (Red)
+                        ram_data_in <= PatternPortsxD(0).RegxD; 
+        
+                        -- Vertical bar of the cross
+                        if (x >= 12 and x < 20) and (y >= 6 and y < 26) then
+                            ram_data_in <= PatternPortsxD(1).RegxD;
+                        -- Horizontal bar of the cross
+                        elsif (x >= 6 and x < 26) and (y >= 12 and y < 20) then
+                            ram_data_in <= PatternPortsxD(1).RegxD;
                         end if;
-
-                        if (to_integer(unsigned(VgaPixCountersxD.HxD)) >= 144) and
-                            (to_integer(unsigned(VgaPixCountersxD.HxD)) < 576) then
-                            if (to_integer(unsigned(VgaPixCountersxD.VxD)) >= 288) and
-                                (to_integer(unsigned(VgaPixCountersxD.VxD)) < 432) then
-                                PixelxD.RxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXELS_SIZE - 1) downto (C_VGA_PIXEL_SIZE * 2));
-                                PixelxD.GxD <= CDCPatternPortsxD(1).RegxD(((C_VGA_PIXEL_SIZE * 2) - 1) downto (C_VGA_PIXEL_SIZE));
-                                PixelxD.BxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXEL_SIZE - 1) downto 0);
-                            end if;
+        
+                        -- Apply write address and increment
+                        ram_wr_addr <= std_logic_vector(v_addr_write);
+                        v_addr_write <= v_addr_write + 1;
+                    end if;
+                end if;
+            end process SwissFlagToRamxP;
+            
+            ---------------------------------------------------------------------------
+            -- 2. READER PROCESS: Read RAM and send to HDMI
+            ---------------------------------------------------------------------------
+            DisplayRamxP : process(HdmiVgaClocksxC.VgaxC)
+            begin
+                if rising_edge(HdmiVgaClocksxC.VgaxC) then
+                    if (HdmiVgaClocksxC.PllLockedxS = '0') or (HdmiVgaClocksxC.VgaResetxRNA = '0') then
+                        PixelxD <= C_HDMI_VGA_PIX_IDLE;
+                    elsif VgaPixCountersxD.VidOnxS = '1' then
+                        
+                        -- Check if the HDMI beam is inside our 32x32 display window
+                        if (unsigned(VgaPixCountersxD.HxD) < 32) and (unsigned(VgaPixCountersxD.VxD) < 32) then
+                            -- Calculate address: (Y * 32) + X
+                            -- Concatenating VxD(4..0) and HxD(4..0) is mathmatically (Y*32 + X)
+                            ram_rd_addr <= std_logic_vector(unsigned(VgaPixCountersxD.VxD(4 downto 0)) & 
+                                                           unsigned(VgaPixCountersxD.HxD(4 downto 0)));
+                            
+                            -- Assign RAM data to the Pixel output
+                            PixelxD.RxD <= ram_data_out(23 downto 16);
+                            PixelxD.GxD <= ram_data_out(15 downto 8);
+                            PixelxD.BxD <= ram_data_out(7 downto 0);
+                        else
+                            -- Outside the 32x32 box, show a default color (e.g. background from Reg0)
+                            PixelxD.RxD <= PatternPortsxD(0).RegxD(23 downto 16);
+                            PixelxD.GxD <= PatternPortsxD(0).RegxD(15 downto 8);
+                            PixelxD.BxD <= PatternPortsxD(0).RegxD(7 downto 0);
                         end if;
                     else
                         PixelxD <= C_HDMI_VGA_PIX_IDLE;
                     end if;
                 end if;
-            end process SwissFlagxP;
+            end process DisplayRamxP;
+--            SwissFlagxP : process (HdmiVgaClocksxC.PllLockedxS,
+--                                   HdmiVgaClocksxC.VgaResetxRNA,
+--                                   HdmiVgaClocksxC.VgaxC) is
+--            begin  -- process SwissFlagxP
+--                if (HdmiVgaClocksxC.PllLockedxS = '0') or (HdmiVgaClocksxC.VgaResetxRNA = '0') then
+--                    PixelxD <= C_HDMI_VGA_PIX_IDLE;
+--                elsif rising_edge(HdmiVgaClocksxC.VgaxC) then
+--                    if VgaPixCountersxD.VidOnxS = '1' then
+--                        PixelxD.RxD <= CDCPatternPortsxD(0).RegxD((C_VGA_PIXELS_SIZE - 1) downto (C_VGA_PIXEL_SIZE * 2));
+--                        PixelxD.GxD <= CDCPatternPortsxD(0).RegxD(((C_VGA_PIXEL_SIZE * 2) - 1) downto (C_VGA_PIXEL_SIZE));
+--                        PixelxD.BxD <= CDCPatternPortsxD(0).RegxD((C_VGA_PIXEL_SIZE - 1) downto 0);
+
+--                        if (to_integer(unsigned(VgaPixCountersxD.HxD)) >= 288) and
+--                            (to_integer(unsigned(VgaPixCountersxD.HxD)) < 432) then
+--                            if (to_integer(unsigned(VgaPixCountersxD.VxD)) >= 144) and
+--                                (to_integer(unsigned(VgaPixCountersxD.VxD)) < 576) then
+--                                PixelxD.RxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXELS_SIZE - 1) downto (C_VGA_PIXEL_SIZE * 2));
+--                                PixelxD.GxD <= CDCPatternPortsxD(1).RegxD(((C_VGA_PIXEL_SIZE * 2) - 1) downto (C_VGA_PIXEL_SIZE));
+--                                PixelxD.BxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXEL_SIZE - 1) downto 0);
+--                            end if;
+--                        end if;
+
+--                        if (to_integer(unsigned(VgaPixCountersxD.HxD)) >= 144) and
+--                            (to_integer(unsigned(VgaPixCountersxD.HxD)) < 576) then
+--                            if (to_integer(unsigned(VgaPixCountersxD.VxD)) >= 288) and
+--                                (to_integer(unsigned(VgaPixCountersxD.VxD)) < 432) then
+--                                PixelxD.RxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXELS_SIZE - 1) downto (C_VGA_PIXEL_SIZE * 2));
+--                                PixelxD.GxD <= CDCPatternPortsxD(1).RegxD(((C_VGA_PIXEL_SIZE * 2) - 1) downto (C_VGA_PIXEL_SIZE));
+--                                PixelxD.BxD <= CDCPatternPortsxD(1).RegxD((C_VGA_PIXEL_SIZE - 1) downto 0);
+--                            end if;
+--                        end if;
+--                    else
+--                        PixelxD <= C_HDMI_VGA_PIX_IDLE;
+--                    end if;
+--                end if;
+--            end process SwissFlagxP;
 
         end block ImGenxB;
 

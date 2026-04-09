@@ -2,18 +2,19 @@
 <Root MajorVersion="0" MinorVersion="43">
   <CompositeFile CompositeFileTopName="scalp_zynqps" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1711520026"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1711520026"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1711520026"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1711520026"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1775750277"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1775750277"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1775750277"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1775750277"/>
+    <Generation Name="INSTANTIATION_TEMPLATE" State="GENERATED" Timestamp="1775750277"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
-      <File Name="synth/scalp_zynqps.vhd" Type="VHDL">
+      <File Name="synth\scalp_zynqps.vhd" Type="VHDL">
         <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <ProcessingOrder Val="NORMAL"/>
       </File>
-      <File Name="sim/scalp_zynqps.vhd" Type="VHDL">
+      <File Name="sim\scalp_zynqps.vhd" Type="VHDL">
         <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SIMULATION"/>
@@ -27,7 +28,7 @@
         <UsedIn Val="OUT_OF_CONTEXT"/>
         <ProcessingOrder Val="NORMAL"/>
       </File>
-      <File Name="hw_handoff/scalp_zynqps.hwh" Type="HwHandoff">
+      <File Name="hw_handoff\scalp_zynqps.hwh" Type="HwHandoff">
         <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="HW_HANDOFF"/>
@@ -39,33 +40,48 @@
         <UsedIn Val="HW_HANDOFF"/>
         <ProcessingOrder Val="NORMAL"/>
       </File>
-      <File Name="synth/scalp_zynqps.hwdef">
+      <File Name="synth\scalp_zynqps.hwdef">
         <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="HW_HANDOFF"/>
         <ProcessingOrder Val="NORMAL"/>
       </File>
-      <File Name="sim/scalp_zynqps.protoinst">
+      <File Name="sim\scalp_zynqps.protoinst">
         <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SIMULATION"/>
         <ProcessingOrder Val="NORMAL"/>
       </File>
+      <File Name="scalp_zynqps.vho" Type="VhdlTemplate">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <ProcessingOrder Val="NORMAL"/>
+      </File>
+      <File Name="scalp_zynqps.veo" Type="VTemplate">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <ProcessingOrder Val="NORMAL"/>
+      </File>
+      <File Name="scalp_zynqps_sv.sveo" Type="SystemVerilogTemplate">
+        <Properties IsEditable="false" IsVisible="true" IsNetlistSimulation="false" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <ProcessingOrder Val="NORMAL"/>
+      </File>
     </FileCollection>
     <BlockContainerCollection>
       <BlockContainer InstPath="/vga_hdmi_clk_rst_sys_0" IsPR="false" State="Generated">
-        <ActiveVariantSynth FileName="bd/vga_hdmi_clk_rst_system_inst_0/vga_hdmi_clk_rst_system_inst_0.bd"/>
-        <ActiveVariantSim FileName="bd/vga_hdmi_clk_rst_system_inst_0/vga_hdmi_clk_rst_system_inst_0.bd"/>
+        <ActiveVariantSynth FileName="bd\vga_hdmi_clk_rst_system_inst_0\vga_hdmi_clk_rst_system_inst_0.bd"/>
+        <ActiveVariantSim FileName="bd\vga_hdmi_clk_rst_system_inst_0\vga_hdmi_clk_rst_system_inst_0.bd"/>
         <VariantsCollection>
-          <BDFile BDFilePath="bd/vga_hdmi_clk_rst_system_inst_0/vga_hdmi_clk_rst_system_inst_0.bd" BDFileset="vga_hdmi_clk_rst_system_inst_0" BDSourceFile="../scalp_user_design/scalp_user_design.srcs/sources_1/bd/vga_hdmi_clk_rst_system/vga_hdmi_clk_rst_system.bd" BDSourceFileset="sources_1" BDVariantType="ALL"/>
+          <BDFile BDFilePath="bd\vga_hdmi_clk_rst_system_inst_0\vga_hdmi_clk_rst_system_inst_0.bd" BDFileset="vga_hdmi_clk_rst_system_inst_0" BDSourceFile="..\scalp_user_design\scalp_user_design.srcs\sources_1\bd\vga_hdmi_clk_rst_system\vga_hdmi_clk_rst_system.bd" BDSourceFileset="sources_1" BDVariantType="ALL"/>
         </VariantsCollection>
       </BlockContainer>
     </BlockContainerCollection>
     <ReferenceCollection>
       <ModuleReference TargetName="vga_hdmi_clk_rst_system" Type="Block Design" SubInstancePath="scalp_zynqps_vga_hdmi_clk_rst_system_0">
-        <TopFile Name="../scalp_user_design/scalp_user_design.srcs/sources_1/bd/vga_hdmi_clk_rst_system/vga_hdmi_clk_rst_system.bd"/>
+        <TopFile Name="..\scalp_user_design\scalp_user_design.srcs\sources_1\bd\vga_hdmi_clk_rst_system\vga_hdmi_clk_rst_system.bd"/>
         <FileCollection>
-          <File Name="../scalp_user_design/scalp_user_design.srcs/sources_1/bd/vga_hdmi_clk_rst_system/vga_hdmi_clk_rst_system.bd"/>
+          <File Name="..\scalp_user_design\scalp_user_design.srcs\sources_1\bd\vga_hdmi_clk_rst_system\vga_hdmi_clk_rst_system.bd"/>
         </FileCollection>
       </ModuleReference>
     </ReferenceCollection>
