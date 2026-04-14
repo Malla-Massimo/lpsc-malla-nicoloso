@@ -137,8 +137,7 @@ scalp_zynqps your_instance_name (
   .SAxiMstCplxNumRegsClkxCO(SAxiMstCplxNumRegsClkxCO), // output wire SAxiMstCplxNumRegsClkxCO
   .SAxiMstCplxNumRegsRstxRANO(SAxiMstCplxNumRegsRstxRANO), // output wire SAxiMstCplxNumRegsRstxRANO
   .VgaHdmiClkPllLockedxSO(VgaHdmiClkPllLockedxSO), // output wire VgaHdmiClkPllLockedxSO
-  .Clk100(Clk100), // output wire Clk100
-  .Clk100_locked(Clk100_locked) // output wire Clk100_locked
+  .Clk100xCO(Clk100xCO) // output wire Clk100xCO
 );
 // INST_TAG_END ------  End cut for INSTANTIATION Template  ------
 

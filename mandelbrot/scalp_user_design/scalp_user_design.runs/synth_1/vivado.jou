@@ -3,22 +3,22 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Thu Apr  9 18:46:59 2026
-# Process ID         : 39328
-# Current directory  : C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1
+# Start of session at: Tue Apr 14 18:37:09 2026
+# Process ID         : 20628
+# Current directory  : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1
 # Command line       : vivado.exe -log scalp_user_design.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source scalp_user_design.tcl
-# Log file           : C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.vds
-# Journal file       : C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1\vivado.jou
-# Running On         : ma2s
+# Log file           : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1/scalp_user_design.vds
+# Journal file       : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/synth_1\vivado.jou
+# Running On         : LAPTOP-E00F6MUN
 # Platform           : Windows Server 2016 or Windows 10
 # Operating System   : 26200
-# Processor Detail   : Intel(R) Core(TM) i7-14700K
-# CPU Frequency      : 3418 MHz
-# CPU Physical cores : 20
-# CPU Logical cores  : 28
-# Host memory        : 68447 MB
-# Swap memory        : 30505 MB
-# Total Virtual      : 98953 MB
-# Available Virtual  : 63070 MB
+# Processor Detail   : Intel(R) Core(TM) Ultra 7 155H
+# CPU Frequency      : 2995 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 22
+# Host memory        : 33832 MB
+# Swap memory        : 2978 MB
+# Total Virtual      : 36811 MB
+# Available Virtual  : 12387 MB
 #-----------------------------------------------------------
 source scalp_user_design.tcl -notrace

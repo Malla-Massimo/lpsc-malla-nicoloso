@@ -2,8 +2,8 @@
 --Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
---Date        : Thu Apr  9 17:57:42 2026
---Host        : ma2s running 64-bit major release  (build 9200)
+--Date        : Tue Apr 14 18:05:58 2026
+--Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 --Command     : generate_target scalp_zynqps.bd
 --Design      : scalp_zynqps
 --Purpose     : IP block netlist
@@ -1786,8 +1786,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps is
   port (
-    Clk100 : out STD_LOGIC;
-    Clk100_locked : out STD_LOGIC;
+    Clk100xCO : out STD_LOGIC;
     Clk125PllLockedxS : out STD_LOGIC;
     Clk125RstxRNAO : out STD_LOGIC_VECTOR ( 0 to 0 );
     Clk125RstxRO : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -1873,7 +1872,7 @@ entity scalp_zynqps is
     aximm_mst_firmwareid_if_wvalid : out STD_LOGIC
   );
   attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of scalp_zynqps : entity is "scalp_zynqps,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=scalp_zynqps,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=29,numReposBlks=19,numNonXlnxBlks=2,numHierBlks=10,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=1,bdsource=USER,synth_mode=Hierarchical}";
+  attribute CORE_GENERATION_INFO of scalp_zynqps : entity is "scalp_zynqps,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=scalp_zynqps,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=28,numReposBlks=18,numNonXlnxBlks=2,numHierBlks=10,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=1,bdsource=USER,synth_mode=Hierarchical}";
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of scalp_zynqps : entity is "scalp_zynqps.hwdef";
 end scalp_zynqps;
@@ -2173,7 +2172,8 @@ architecture STRUCTURE of scalp_zynqps is
     resetn : in STD_LOGIC;
     clk_in1 : in STD_LOGIC;
     clk_125 : out STD_LOGIC;
-    locked : out STD_LOGIC
+    locked : out STD_LOGIC;
+    clk_100 : out STD_LOGIC
   );
   end component scalp_zynqps_sys_clock_0;
   component scalp_zynqps_axi_iic_ioext_0 is
@@ -2232,14 +2232,6 @@ architecture STRUCTURE of scalp_zynqps is
     gpio_io_i : in STD_LOGIC_VECTOR ( 4 downto 0 )
   );
   end component scalp_zynqps_axi_gpio_joystick_0;
-  component scalp_zynqps_clk_wiz_0_0 is
-  port (
-    resetn : in STD_LOGIC;
-    clk_in1 : in STD_LOGIC;
-    clk_out1 : out STD_LOGIC;
-    locked : out STD_LOGIC
-  );
-  end component scalp_zynqps_clk_wiz_0_0;
   signal \^clk125plllockedxs\ : STD_LOGIC;
   signal \^clk125rstxrnao\ : STD_LOGIC_VECTOR ( 0 to 0 );
   signal axi_gpio_0_ip2intc_irpt : STD_LOGIC;
@@ -2661,13 +2653,6 @@ axi_intc_0: component scalp_zynqps_axi_intc_0_0
       s_axi_wstrb(3 downto 0) => ps7_0_axi_periph_M01_AXI_WSTRB(3 downto 0),
       s_axi_wvalid => ps7_0_axi_periph_M01_AXI_WVALID
     );
-clk_wiz_0: component scalp_zynqps_clk_wiz_0_0
-     port map (
-      clk_in1 => sys_clock_clk_126,
-      clk_out1 => Clk100,
-      locked => Clk100_locked,
-      resetn => processing_system7_0_FCLK_RESET0_N
-    );
 gnd_constant: component scalp_zynqps_gnd_constant_0
      port map (
       dout(0) => gnd_constant_dout(0)
@@ -3030,6 +3015,7 @@ scalp_axi_link_firmwareid: component scalp_zynqps_scalp_axi_link_firmwareid_0
     );
 sys_clock: component scalp_zynqps_sys_clock_0
      port map (
+      clk_100 => Clk100xCO,
       clk_125 => sys_clock_clk_126,
       clk_in1 => processing_system7_0_FCLK_CLK0,
       locked => \^clk125plllockedxs\,

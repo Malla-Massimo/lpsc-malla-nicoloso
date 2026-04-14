@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
--- Date        : Thu Apr  9 17:03:20 2026
--- Host        : ma2s running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top scalp_zynqps_sys_clock_0 -prefix
---               scalp_zynqps_sys_clock_0_ scalp_zynqps_sys_clock_0_sim_netlist.vhdl
+-- Date        : Tue Apr 14 18:10:16 2026
+-- Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
+-- Command     : write_vhdl -force -mode funcsim
+--               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/ip/scalp_zynqps_sys_clock_0/scalp_zynqps_sys_clock_0_sim_netlist.vhdl
 -- Design      : scalp_zynqps_sys_clock_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -15,16 +15,18 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
-entity scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_wiz is
+entity scalp_zynqps_sys_clock_0_clk_wiz is
   port (
     clk_125 : out STD_LOGIC;
+    clk_100 : out STD_LOGIC;
     resetn : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
-end scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_wiz;
+end scalp_zynqps_sys_clock_0_clk_wiz;
 
-architecture STRUCTURE of scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_wiz is
+architecture STRUCTURE of scalp_zynqps_sys_clock_0_clk_wiz is
+  signal clk_100_scalp_zynqps_sys_clock_0 : STD_LOGIC;
   signal clk_125_scalp_zynqps_sys_clock_0 : STD_LOGIC;
   signal clk_in1_scalp_zynqps_sys_clock_0 : STD_LOGIC;
   signal clkfbout_buf_scalp_zynqps_sys_clock_0 : STD_LOGIC;
@@ -34,7 +36,6 @@ architecture STRUCTURE of scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_
   signal NLW_mmcm_adv_inst_CLKFBSTOPPED_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED : STD_LOGIC;
-  signal NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKOUT2_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED : STD_LOGIC;
@@ -50,6 +51,7 @@ architecture STRUCTURE of scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_
   attribute BOX_TYPE of clkf_buf : label is "PRIMITIVE";
   attribute BOX_TYPE of clkin1_bufg : label is "PRIMITIVE";
   attribute BOX_TYPE of clkout1_buf : label is "PRIMITIVE";
+  attribute BOX_TYPE of clkout2_buf : label is "PRIMITIVE";
   attribute BOX_TYPE of mmcm_adv_inst : label is "PRIMITIVE";
 begin
 clkf_buf: unisim.vcomponents.BUFG
@@ -67,6 +69,11 @@ clkout1_buf: unisim.vcomponents.BUFG
       I => clk_125_scalp_zynqps_sys_clock_0,
       O => clk_125
     );
+clkout2_buf: unisim.vcomponents.BUFG
+     port map (
+      I => clk_100_scalp_zynqps_sys_clock_0,
+      O => clk_100
+    );
 mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
@@ -79,7 +86,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT0_USE_FINE_PS => false,
-      CLKOUT1_DIVIDE => 1,
+      CLKOUT1_DIVIDE => 10,
       CLKOUT1_DUTY_CYCLE => 0.500000,
       CLKOUT1_PHASE => 0.000000,
       CLKOUT1_USE_FINE_PS => false,
@@ -129,7 +136,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKINSTOPPED => NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED,
       CLKOUT0 => clk_125_scalp_zynqps_sys_clock_0,
       CLKOUT0B => NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED,
-      CLKOUT1 => NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED,
+      CLKOUT1 => clk_100_scalp_zynqps_sys_clock_0,
       CLKOUT1B => NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED,
       CLKOUT2 => NLW_mmcm_adv_inst_CLKOUT2_UNCONNECTED,
       CLKOUT2B => NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED,
@@ -169,6 +176,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_sys_clock_0 is
   port (
     clk_125 : out STD_LOGIC;
+    clk_100 : out STD_LOGIC;
     resetn : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
@@ -179,8 +187,9 @@ end scalp_zynqps_sys_clock_0;
 
 architecture STRUCTURE of scalp_zynqps_sys_clock_0 is
 begin
-inst: entity work.scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_wiz
+inst: entity work.scalp_zynqps_sys_clock_0_clk_wiz
      port map (
+      clk_100 => clk_100,
       clk_125 => clk_125,
       clk_in1 => clk_in1,
       locked => locked,

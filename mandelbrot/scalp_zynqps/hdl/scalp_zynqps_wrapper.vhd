@@ -2,8 +2,8 @@
 --Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
---Date        : Thu Apr  9 17:57:43 2026
---Host        : ma2s running 64-bit major release  (build 9200)
+--Date        : Tue Apr 14 18:05:58 2026
+--Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 --Command     : generate_target scalp_zynqps_wrapper.bd
 --Design      : scalp_zynqps_wrapper
 --Purpose     : IP block netlist
@@ -14,8 +14,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_wrapper is
   port (
-    Clk100 : out STD_LOGIC;
-    Clk100_locked : out STD_LOGIC;
+    Clk100xCO : out STD_LOGIC;
     Clk125PllLockedxS : out STD_LOGIC;
     Clk125RstxRNAO : out STD_LOGIC_VECTOR ( 0 to 0 );
     Clk125RstxRO : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -184,8 +183,7 @@ architecture STRUCTURE of scalp_zynqps_wrapper is
     SAxiMstCplxNumRegsClkxCO : out STD_LOGIC;
     SAxiMstCplxNumRegsRstxRANO : out STD_LOGIC;
     VgaHdmiClkPllLockedxSO : out STD_LOGIC;
-    Clk100 : out STD_LOGIC;
-    Clk100_locked : out STD_LOGIC
+    Clk100xCO : out STD_LOGIC
   );
   end component scalp_zynqps;
   component IOBUF is
@@ -219,8 +217,7 @@ IoExtIICxDIO_sda_iobuf: component IOBUF
     );
 scalp_zynqps_i: component scalp_zynqps
      port map (
-      Clk100 => Clk100,
-      Clk100_locked => Clk100_locked,
+      Clk100xCO => Clk100xCO,
       Clk125PllLockedxS => Clk125PllLockedxS,
       Clk125RstxRNAO(0) => Clk125RstxRNAO(0),
       Clk125RstxRO(0) => Clk125RstxRO(0),

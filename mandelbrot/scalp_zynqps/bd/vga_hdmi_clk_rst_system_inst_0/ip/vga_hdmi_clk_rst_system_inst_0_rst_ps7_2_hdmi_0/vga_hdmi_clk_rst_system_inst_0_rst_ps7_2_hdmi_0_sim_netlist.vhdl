@@ -2,11 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
--- Date        : Thu Apr  9 17:03:48 2026
--- Host        : ma2s running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0 -prefix
---               vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_
---               vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_sim_netlist.vhdl
+-- Date        : Tue Apr 14 18:11:30 2026
+-- Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
+-- Command     : write_vhdl -force -mode funcsim
+--               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0/vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_sim_netlist.vhdl
 -- Design      : vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -23,6 +22,8 @@ entity vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_upcnt_n is
     seq_cnt_en : in STD_LOGIC;
     slowest_sync_clk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_upcnt_n : entity is "upcnt_n";
 end vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_upcnt_n;
 
 architecture STRUCTURE of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_upcnt_n is
@@ -189,6 +190,8 @@ entity vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_xpm_cdc_single is
   attribute DEST_SYNC_FF of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_xpm_cdc_single : entity is 4;
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_xpm_cdc_single : entity is 0;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_xpm_cdc_single : entity is "xpm_cdc_single";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_xpm_cdc_single : entity is 0;
   attribute SRC_INPUT_REG : integer;
@@ -359,6 +362,8 @@ entity vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_lpf is
     ext_reset_in : in STD_LOGIC;
     aux_reset_in : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_lpf : entity is "lpf";
 end vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_lpf;
 
 architecture STRUCTURE of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_lpf is
@@ -602,6 +607,8 @@ entity vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_sequence_psr is
     lpf_int : in STD_LOGIC;
     slowest_sync_clk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_sequence_psr : entity is "sequence_psr";
 end vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_sequence_psr;
 
 architecture STRUCTURE of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_sequence_psr is
@@ -940,6 +947,8 @@ entity vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_proc_sys_reset is
   attribute C_NUM_PERP_ARESETN of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_proc_sys_reset : entity is 1;
   attribute C_NUM_PERP_RST : integer;
   attribute C_NUM_PERP_RST of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_proc_sys_reset : entity is 1;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_proc_sys_reset : entity is "proc_sys_reset";
 end vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_proc_sys_reset;
 
 architecture STRUCTURE of vga_hdmi_clk_rst_system_inst_0_rst_ps7_2_hdmi_0_proc_sys_reset is

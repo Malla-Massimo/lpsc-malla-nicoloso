@@ -136,8 +136,7 @@ COMPONENT scalp_zynqps
     SAxiMstCplxNumRegsClkxCO : OUT STD_LOGIC;
     SAxiMstCplxNumRegsRstxRANO : OUT STD_LOGIC;
     VgaHdmiClkPllLockedxSO : OUT STD_LOGIC;
-    Clk100 : OUT STD_LOGIC;
-    Clk100_locked : OUT STD_LOGIC
+    Clk100xCO : OUT STD_LOGIC
   );
 END COMPONENT;
 -- COMP_TAG_END ------  End cut for COMPONENT Declaration  ------
@@ -231,8 +230,7 @@ your_instance_name : scalp_zynqps
     SAxiMstCplxNumRegsClkxCO => SAxiMstCplxNumRegsClkxCO,
     SAxiMstCplxNumRegsRstxRANO => SAxiMstCplxNumRegsRstxRANO,
     VgaHdmiClkPllLockedxSO => VgaHdmiClkPllLockedxSO,
-    Clk100 => Clk100,
-    Clk100_locked => Clk100_locked
+    Clk100xCO => Clk100xCO
   );
 -- INST_TAG_END ------  End cut for INSTANTIATION Template  ------
 

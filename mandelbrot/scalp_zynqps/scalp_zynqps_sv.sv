@@ -160,9 +160,7 @@ module scalp_zynqps_sv (
   (* X_INTERFACE_IGNORE = "true" *)
   output wire VgaHdmiClkPllLockedxSO,
   (* X_INTERFACE_IGNORE = "true" *)
-  output wire Clk100,
-  (* X_INTERFACE_IGNORE = "true" *)
-  output wire Clk100_locked
+  output wire Clk100xCO
 );
 
   // interface wire assignments
@@ -255,8 +253,7 @@ module scalp_zynqps_sv (
     .SAxiMstCplxNumRegsClkxCO(SAxiMstCplxNumRegsClkxCO),
     .SAxiMstCplxNumRegsRstxRANO(SAxiMstCplxNumRegsRstxRANO),
     .VgaHdmiClkPllLockedxSO(VgaHdmiClkPllLockedxSO),
-    .Clk100(Clk100),
-    .Clk100_locked(Clk100_locked)
+    .Clk100xCO(Clk100xCO)
   );
 
 endmodule

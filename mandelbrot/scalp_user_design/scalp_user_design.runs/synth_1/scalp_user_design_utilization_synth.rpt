@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-| Date         : Thu Apr  9 18:47:39 2026
-| Host         : ma2s running 64-bit major release  (build 9200)
+| Date         : Tue Apr 14 18:38:15 2026
+| Host         : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 | Command      : report_utilization -file scalp_user_design_utilization_synth.rpt -pb scalp_user_design_utilization_synth.pb
 | Design       : scalp_user_design
 | Device       : xc7z015clg485-2
@@ -193,7 +193,6 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | scalp_zynqps_ps7_0_axi_periph_upgraded_ipi_imp_xbar_0 |    1 |
 | scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0           |    1 |
 | scalp_zynqps_processing_system7_0_0                   |    1 |
-| scalp_zynqps_clk_wiz_0_0                              |    1 |
 | scalp_zynqps_axi_intc_0_0                             |    1 |
 | scalp_zynqps_axi_iic_ioext_0                          |    1 |
 | scalp_zynqps_axi_gpio_switches_0                      |    1 |

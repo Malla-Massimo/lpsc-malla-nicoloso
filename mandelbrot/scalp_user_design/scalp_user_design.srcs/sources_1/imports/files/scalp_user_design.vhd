@@ -444,7 +444,6 @@ architecture arch of scalp_user_design is
     signal Clk125xC                : std_logic         := '0';
     
     signal clk_100MHz : std_logic;
-    signal pll_locked : std_logic;
         
     -- Processing system pll locked
     signal Clk125PllLockedxS       : std_logic         := '0';
@@ -524,8 +523,7 @@ begin
                 Clk125RstxRO        => Clk125RstxR,
                 Clk125RstxRNAO      => Clk125RstxRNA,
                 Clk125PllLockedxSO  => Clk125PllLockedxS,
-                Clk100              => clk_100MHz,
-                Clk100_locked       => pll_locked,
+                Clk100xCO           => clk_100MHz,
                 -- DDR interface
                 DDR_addr            => DDRAddrxDIO,
                 DDR_ba              => DDRBankAddrxDIO,
@@ -949,7 +947,7 @@ begin
                 variable x, y : integer;
             begin
                 if rising_edge(clk_100MHz) then
-                    if pll_locked = '1' then
+                    if Clk125PllLockedxS = '1' then
                         -- Convert linear address (0-1023) to 2D coordinates (0-31)
                         x := to_integer(v_addr_write mod 32);
                         y := to_integer(v_addr_write / 32);

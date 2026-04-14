@@ -1,7 +1,7 @@
 -------------------------------------
 | Tool Version : Vivado v.2025.2
-| Date         : Thu Apr  9 18:48:31 2026
-| Host         : ma2s
+| Date         : Tue Apr 14 18:39:38 2026
+| Host         : LAPTOP-E00F6MUN
 | Design       : design_1
 | Device       : xc7z015-clg485-2--
 -------------------------------------

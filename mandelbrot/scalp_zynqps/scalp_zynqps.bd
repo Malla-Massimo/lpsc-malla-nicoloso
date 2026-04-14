@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x2208BB4D550FE30",
+      "boundary_crc": "0xAAC59670ABA5104D",
       "device": "xc7z015clg485-2",
       "name": "scalp_zynqps",
       "pfm_name": "hepia:scalp:scalp_zynq_user_pltfm:1.0",
@@ -37,8 +37,7 @@
       "rst_ps7_0_125M": "",
       "sys_clock": "",
       "axi_iic_ioext": "",
-      "axi_gpio_joystick": "",
-      "clk_wiz_0": ""
+      "axi_gpio_joystick": ""
     },
     "interface_ports": {
       "DDR": {
@@ -973,11 +972,11 @@
       "VgaHdmiClkPllLockedxSO": {
         "direction": "O"
       },
-      "Clk100": {
+      "Clk100xCO": {
         "direction": "O",
         "parameters": {
           "CLK_DOMAIN": {
-            "value": "/clk_wiz_0_clk_out1",
+            "value": "/sys_clock_clk_out1",
             "value_src": "ip_prop"
           },
           "FREQ_HZ": {
@@ -989,9 +988,6 @@
             "value_src": "ip_prop"
           }
         }
-      },
-      "Clk100_locked": {
-        "direction": "O"
       }
     },
     "components": {
@@ -2890,7 +2886,8 @@
         "ip_revision": "2",
         "xci_name": "scalp_zynqps_scalp_axi_link_firmwareid_0",
         "xci_path": "ip\\scalp_zynqps_scalp_axi_link_firmwareid_0\\scalp_zynqps_scalp_axi_link_firmwareid_0.xci",
-        "inst_hier_path": "scalp_axi_link_firmwareid"
+        "inst_hier_path": "scalp_axi_link_firmwareid",
+        "has_run_ip_tcl": "true"
       },
       "ps7_0_axi_periph": {
         "vlnv": "xilinx.com:ip:axi_interconnect:2.1",
@@ -4181,7 +4178,8 @@
         "ip_revision": "2",
         "xci_name": "scalp_zynqps_scalp_axi_link_cplx_num_regs_0",
         "xci_path": "ip\\scalp_zynqps_scalp_axi_link_cplx_num_regs_0\\scalp_zynqps_scalp_axi_link_cplx_num_regs_0.xci",
-        "inst_hier_path": "scalp_axi_link_cplx_num_regs"
+        "inst_hier_path": "scalp_axi_link_cplx_num_regs",
+        "has_run_ip_tcl": "true"
       },
       "vga_hdmi_clk_rst_sys_0": {
         "parameters": {
@@ -4427,16 +4425,16 @@
             "value": "true"
           },
           "CLKOUT2_JITTER": {
-            "value": "149.891"
+            "value": "124.615"
           },
           "CLKOUT2_PHASE_ERROR": {
-            "value": "95.888"
+            "value": "96.948"
           },
           "CLKOUT2_REQUESTED_OUT_FREQ": {
             "value": "100.000"
           },
           "CLKOUT2_USED": {
-            "value": "false"
+            "value": "true"
           },
           "CLKOUT3_JITTER": {
             "value": "100.399"
@@ -4466,7 +4464,7 @@
             "value": "clk_125"
           },
           "CLK_OUT2_PORT": {
-            "value": "clk_out2"
+            "value": "clk_100"
           },
           "CLK_OUT3_PORT": {
             "value": "clk_out3"
@@ -4484,7 +4482,7 @@
             "value": "8.000"
           },
           "MMCM_CLKOUT1_DIVIDE": {
-            "value": "1"
+            "value": "10"
           },
           "MMCM_CLKOUT2_DIVIDE": {
             "value": "1"
@@ -4496,7 +4494,7 @@
             "value": "1"
           },
           "NUM_OUT_CLKS": {
-            "value": "1"
+            "value": "2"
           },
           "PRIM_SOURCE": {
             "value": "Global_buffer"
@@ -4536,22 +4534,6 @@
           },
           "C_INTERRUPT_PRESENT": {
             "value": "1"
-          }
-        }
-      },
-      "clk_wiz_0": {
-        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
-        "ip_revision": "17",
-        "xci_name": "scalp_zynqps_clk_wiz_0_0",
-        "xci_path": "ip\\scalp_zynqps_clk_wiz_0_0_1\\scalp_zynqps_clk_wiz_0_0.xci",
-        "inst_hier_path": "clk_wiz_0",
-        "has_run_ip_tcl": "true",
-        "parameters": {
-          "RESET_PORT": {
-            "value": "resetn"
-          },
-          "RESET_TYPE": {
-            "value": "ACTIVE_LOW"
           }
         }
       }
@@ -4703,18 +4685,6 @@
           }
         }
       },
-      "clk_wiz_0_clk_out1": {
-        "ports": [
-          "clk_wiz_0/clk_out1",
-          "Clk100"
-        ]
-      },
-      "clk_wiz_0_locked": {
-        "ports": [
-          "clk_wiz_0/locked",
-          "Clk100_locked"
-        ]
-      },
       "gnd_constant_dout": {
         "ports": [
           "gnd_constant/dout",
@@ -4735,7 +4705,6 @@
         "ports": [
           "processing_system7_0/FCLK_RESET0_N",
           "vga_hdmi_clk_rst_sys_0/PsResetxRN",
-          "clk_wiz_0/resetn",
           "rst_ps7_0_125M/ext_reset_in",
           "sys_clock/resetn"
         ]
@@ -4815,13 +4784,18 @@
           "SAxiMstCplxNumRegsRstxRANO"
         ]
       },
+      "sys_clock_clk_100": {
+        "ports": [
+          "sys_clock/clk_100",
+          "Clk100xCO"
+        ]
+      },
       "sys_clock_clk_126": {
         "ports": [
           "sys_clock/clk_125",
           "scalp_axi_link_firmwareid/SAxiSlvClkxCI",
           "Clk125xCO",
           "scalp_axi_link_cplx_num_regs/SAxiSlvClkxCI",
-          "clk_wiz_0/clk_in1",
           "axi_gpio_joystick/s_axi_aclk",
           "axi_gpio_reset_btn/s_axi_aclk",
           "axi_gpio_switches/s_axi_aclk",
