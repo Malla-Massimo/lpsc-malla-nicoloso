@@ -585,37 +585,57 @@ begin
         signal v_addr_write : unsigned(9 downto 0) := (others => '0');
         
     begin  -- block PLxB
-
     
+    COMPONENT blk_mem_gen_0
+      PORT (
+        clka : IN STD_LOGIC;
+        ena : IN STD_LOGIC;
+        wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+        addra : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        dina : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        douta : OUT STD_LOGIC_VECTOR(15 DOWNTO 0) 
+      );
+    END COMPONENT;
+    
+    BRAM : blk_mem_gen_0
+        PORT MAP (
+        clka => clka,
+        ena => ena,
+        wea => wea,
+        addra => addra,
+        dina => dina,
+        douta => douta
+        );
+  
          -- RAM INITIALISTION
-        BRAM_SDP_MACRO_inst : BRAM_SDP_MACRO
-        generic map (
-          BRAM_SIZE => "36Kb", -- Target BRAM, "18Kb" or "36Kb" 
-          DEVICE => "7SERIES", -- Target device: "VIRTEX5", "VIRTEX6", "7SERIES", "SPARTAN6" 
-          WRITE_WIDTH => 32,    -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
-          READ_WIDTH => 32,     -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
-          DO_REG => 0, -- Optional output register (0 or 1)
-          INIT_FILE => "NONE",
-          SIM_COLLISION_CHECK => "ALL", -- Collision check enable "ALL", "WARNING_ONLY", 
-                                        -- "GENERATE_X_ONLY" or "NONE"       
-          SRVAL => X"000000000000000000", --  Set/Reset value for port output
-          WRITE_MODE => "WRITE_FIRST", -- Specify "READ_FIRST" for same clock or synchronous clocks
-                                       --  Specify "WRITE_FIRST for asynchrononous clocks on ports
-          INIT => X"000000000000000000" --  Initial values on output port
-          )
-      port map (
-          DO => ram_data_out,    -- Output read data port, width defined by READ_WIDTH parameter
-          DI => ram_data_in,     -- Input write data port, width defined by WRITE_WIDTH parameter
-          RDADDR => ram_rd_addr, -- Input read address, width defined by read port depth
-          RDCLK => HdmiVgaClocksxC.VgaxC,   -- 1-bit input read clock
-          RDEN => '1',     -- 1-bit input read port enable
-          REGCE => '1',   -- 1-bit input read output register enable
-          RST => Clk125RstxR,       -- 1-bit input reset 
-          WE => ram_we,         -- Input write enable, width defined by write port depth
-          WRADDR => ram_wr_addr, -- Input write address, width defined by write port depth
-          WRCLK => clk_100MHz,   -- 1-bit input write clock
-          WREN => '1'      -- 1-bit input write port enable
-       );
+--        BRAM_SDP_MACRO_inst : BRAM_SDP_MACRO
+--        generic map (
+--          BRAM_SIZE => "36Kb", -- Target BRAM, "18Kb" or "36Kb" 
+--          DEVICE => "7SERIES", -- Target device: "VIRTEX5", "VIRTEX6", "7SERIES", "SPARTAN6" 
+--          WRITE_WIDTH => 32,    -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
+--          READ_WIDTH => 32,     -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
+--          DO_REG => 0, -- Optional output register (0 or 1)
+--          INIT_FILE => "NONE",
+--          SIM_COLLISION_CHECK => "ALL", -- Collision check enable "ALL", "WARNING_ONLY", 
+--                                        -- "GENERATE_X_ONLY" or "NONE"       
+--          SRVAL => X"000000000000000000", --  Set/Reset value for port output
+--          WRITE_MODE => "WRITE_FIRST", -- Specify "READ_FIRST" for same clock or synchronous clocks
+--                                       --  Specify "WRITE_FIRST for asynchrononous clocks on ports
+--          INIT => X"000000000000000000" --  Initial values on output port
+--          )
+--      port map (
+--          DO => ram_data_out,    -- Output read data port, width defined by READ_WIDTH parameter
+--          DI => ram_data_in,     -- Input write data port, width defined by WRITE_WIDTH parameter
+--          RDADDR => ram_rd_addr, -- Input read address, width defined by read port depth
+--          RDCLK => HdmiVgaClocksxC.VgaxC,   -- 1-bit input read clock
+--          RDEN => '1',     -- 1-bit input read port enable
+--          REGCE => '1',   -- 1-bit input read output register enable
+--          RST => Clk125RstxR,       -- 1-bit input reset 
+--          WE => ram_we,         -- Input write enable, width defined by write port depth
+--          WRADDR => ram_wr_addr, -- Input write address, width defined by write port depth
+--          WRCLK => clk_100MHz,   -- 1-bit input write clock
+--          WREN => '1'      -- 1-bit input write port enable
+--       );
        
         ScalpFirmwareIDxI : entity work.scalp_firmwareid
             generic map (
@@ -886,7 +906,7 @@ begin
             -- attribute keep of BramAddrxD              : signal is "true";
             -- attribute mark_debug of BramWexD          : signal is "true";
             -- attribute keep of BramWexD                : signal is "true";
-
+        
         begin  -- block ImGenxB
 
             BramSDPMacro1xI : BRAM_SDP_MACRO
@@ -938,8 +958,7 @@ begin
                     WRADDR => BramAddrxD,
                     WRCLK  => ClpxNumRegsAxixD.ClockxC.ClkxC,
                     WREN   => '1');
-                
-                 
+                      
             ---------------------------------------------------------------------------
             -- 1. WRITER PROCESS: Fill the RAM with the Swiss Flag
             ---------------------------------------------------------------------------
