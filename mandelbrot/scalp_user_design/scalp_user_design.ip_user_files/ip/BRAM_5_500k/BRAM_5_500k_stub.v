@@ -2,8 +2,8 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-// Date        : Tue Apr 14 19:38:37 2026
-// Host        : LAPTOP-CHKLS7CN running 64-bit major release  (build 9200)
+// Date        : Sat Apr 18 18:02:11 2026
+// Host        : ma2s running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               c:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.gen/sources_1/ip/BRAM_5_500k/BRAM_5_500k_stub.v
 // Design      : BRAM_5_500k

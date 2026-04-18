@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc rfile:../../../scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc rfile:../../../scalp_user_design.srcs/constrs_1/imports/files/scalp_firmware.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN AA19 [get_ports UsbVbusPwrFaultxSI]
 set_property src_info {type:XDC file:1 line:12 export:INPUT save:INPUT read:READ} [current_design]

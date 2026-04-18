@@ -575,68 +575,95 @@ begin
         );
         end component;
         
-        -- DECLARE SIGNALS FOR THE RAM 
-        signal ram_data_in   : std_logic_vector(31 downto 0) := (others => '0');
-        signal ram_data_out  : std_logic_vector(31 downto 0);
-        signal ram_wr_addr   : std_logic_vector(9 downto 0)  := (others => '0');
-        signal ram_rd_addr   : std_logic_vector(9 downto 0)  := (others => '0');
-        signal ram_we        : std_logic_vector(3 downto 0)  := (others => '1');
-            
-        signal v_addr_write : unsigned(9 downto 0) := (others => '0');
-        
-    begin  -- block PLxB
+    type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
+    constant COLOR_PALETTE : color_pattern := (
+    -- Greyscale / Basics
+    0  => x"000000", -- Black
+    1  => x"404040", -- Dark Grey
+    2  => x"808080", -- Grey
+    3  => x"C0C0C0", -- Light Grey
+    4  => x"FFFFFF", -- White
     
-    COMPONENT blk_mem_gen_0
+    -- Reds / Oranges
+    5  => x"FF0000", -- Red
+    6  => x"800000", -- Maroon
+    7  => x"FF4500", -- Orange Red
+    8  => x"FFA500", -- Orange
+    
+    -- Greens
+    9  => x"00FF00", -- Lime
+    10 => x"008000", -- Green
+    11 => x"006400", -- Dark Green
+    12 => x"ADFF2F", -- Green Yellow
+    
+    -- Blues
+    13 => x"0000FF", -- Blue
+    14 => x"000080", -- Navy
+    15 => x"00BFFF", -- Deep Sky Blue
+    16 => x"1E90FF", -- Dodger Blue
+    
+    -- Yellows / Purples / Cyans
+    17 => x"FFFF00", -- Yellow
+    18 => x"FFD700", -- Gold
+    19 => x"FF00FF", -- Magenta
+    20 => x"800080", -- Purple
+    21 => x"4B0082", -- Indigo
+    22 => x"00FFFF", -- Cyan
+    23 => x"008080", -- Teal
+    
+    -- Custom Artistic / Pastels
+    24 => x"FFC0CB", -- Pink
+    25 => x"F0E68C", -- Khaki
+    26 => x"E6E6FA", -- Lavender
+    27 => x"FFFACD", -- Lemon Chiffon
+    28 => x"20B2AA", -- Light Sea Green
+    29 => x"FF6347", -- Tomato
+    30 => x"7FFFD4", -- Aquamarine
+    31 => x"DEB887", -- Burly Wood
+    others => x"000000"
+);
+        
+        -- DECLARE SIGNALS FOR THE RAM 
+        signal ram_data_in   : std_logic_vector(4 downto 0) := (others => '0');
+        signal ram_data_out  : std_logic_vector(4 downto 0) := (others => '0');
+        signal ram_wr_addr   : std_logic_vector(18 downto 0)  := (others => '0');
+        signal ram_rd_addr   : std_logic_vector(18 downto 0)  := (others => '0');
+        signal ram_we        : std_logic_vector(1 downto 0)  := (others => '1');
+        signal color_buffer : std_logic_vector(23 downto 0) := (others => '0');
+        signal write_done : std_logic := '0';
+        signal write_done_sync1 : std_logic := '0';
+        signal write_done_sync2 : std_logic := '0';
+    
+    component BRAM_5_500k is
       PORT (
         clka : IN STD_LOGIC;
         ena : IN STD_LOGIC;
         wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-        addra : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        dina : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-        douta : OUT STD_LOGIC_VECTOR(15 DOWNTO 0) 
+        addra : IN STD_LOGIC_VECTOR(18 DOWNTO 0);
+        dina : IN STD_LOGIC_VECTOR(4 DOWNTO 0);
+        clkb : IN STD_LOGIC;
+        enb : IN STD_LOGIC;
+        addrb : IN STD_LOGIC_VECTOR(18 DOWNTO 0);
+        doutb : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
       );
-    END COMPONENT;
+      end component BRAM_5_500k;
+         
+    begin  -- block PLxB
+        
+      -- Initialize BRAM
+     BRAM_Instance : BRAM_5_500k
+    port map (
+        clka  => clk_100MHz,                --100 Mhz clk
+        ena   => '1',                       -- Permanently enabled
+        wea   => "1",                       -- Write enable (vector size 1)
+        addra => ram_wr_addr,               -- Adresse input 
+        dina  => ram_data_in,               -- Input data
+        clkb  => HdmiVgaClocksxC.VgaxC,     -- Clk Out
+        enb   => '1',                       -- Permanently enabled
+        addrb => ram_rd_addr,               -- Address read
+        doutb => ram_data_out               -- Data out
+    );
     
-    BRAM : blk_mem_gen_0
-        PORT MAP (
-        clka => clka,
-        ena => ena,
-        wea => wea,
-        addra => addra,
-        dina => dina,
-        douta => douta
-        );
-  
-         -- RAM INITIALISTION
---        BRAM_SDP_MACRO_inst : BRAM_SDP_MACRO
---        generic map (
---          BRAM_SIZE => "36Kb", -- Target BRAM, "18Kb" or "36Kb" 
---          DEVICE => "7SERIES", -- Target device: "VIRTEX5", "VIRTEX6", "7SERIES", "SPARTAN6" 
---          WRITE_WIDTH => 32,    -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
---          READ_WIDTH => 32,     -- Valid values are 1-72 (37-72 only valid when BRAM_SIZE="36Kb")
---          DO_REG => 0, -- Optional output register (0 or 1)
---          INIT_FILE => "NONE",
---          SIM_COLLISION_CHECK => "ALL", -- Collision check enable "ALL", "WARNING_ONLY", 
---                                        -- "GENERATE_X_ONLY" or "NONE"       
---          SRVAL => X"000000000000000000", --  Set/Reset value for port output
---          WRITE_MODE => "WRITE_FIRST", -- Specify "READ_FIRST" for same clock or synchronous clocks
---                                       --  Specify "WRITE_FIRST for asynchrononous clocks on ports
---          INIT => X"000000000000000000" --  Initial values on output port
---          )
---      port map (
---          DO => ram_data_out,    -- Output read data port, width defined by READ_WIDTH parameter
---          DI => ram_data_in,     -- Input write data port, width defined by WRITE_WIDTH parameter
---          RDADDR => ram_rd_addr, -- Input read address, width defined by read port depth
---          RDCLK => HdmiVgaClocksxC.VgaxC,   -- 1-bit input read clock
---          RDEN => '1',     -- 1-bit input read port enable
---          REGCE => '1',   -- 1-bit input read output register enable
---          RST => Clk125RstxR,       -- 1-bit input reset 
---          WE => ram_we,         -- Input write enable, width defined by write port depth
---          WRADDR => ram_wr_addr, -- Input write address, width defined by write port depth
---          WRCLK => clk_100MHz,   -- 1-bit input write clock
---          WREN => '1'      -- 1-bit input write port enable
---       );
-       
         ScalpFirmwareIDxI : entity work.scalp_firmwareid
             generic map (
                 C_REGS_ADDR_SIZE => C_REGS_ADDR_SIZE,
@@ -966,26 +993,27 @@ begin
                 variable x, y : integer;
             begin
                 if rising_edge(clk_100MHz) then
-                    if Clk125PllLockedxS = '1' then
-                        -- Convert linear address (0-1023) to 2D coordinates (0-31)
-                        x := to_integer(v_addr_write mod 32);
-                        y := to_integer(v_addr_write / 32);
+                    if Clk125PllLockedxS = '1' and write_done = '0' then
+                        -- Convert linear address 5x(720x720) to 2D coordinates (0-31)
+                        x := to_integer(unsigned(ram_wr_addr) mod 720);
+                        y := to_integer(unsigned(ram_wr_addr) / 720);
         
-                        -- Determine color based on shape (Relative to 32x32)
                         -- Background (Red)
-                        ram_data_in <= PatternPortsxD(0).RegxD; 
+                        ram_data_in <= "00101"; 
         
                         -- Vertical bar of the cross
-                        if (x >= 12 and x < 20) and (y >= 6 and y < 26) then
-                            ram_data_in <= PatternPortsxD(1).RegxD;
+                        if (x >= 330 and x < 390) then
+                            ram_data_in <= "00100";
                         -- Horizontal bar of the cross
-                        elsif (x >= 6 and x < 26) and (y >= 12 and y < 20) then
-                            ram_data_in <= PatternPortsxD(1).RegxD;
+                        elsif (y >= 330 and y < 390) then
+                            ram_data_in <= "00100";
                         end if;
-        
-                        -- Apply write address and increment
-                        ram_wr_addr <= std_logic_vector(v_addr_write);
-                        v_addr_write <= v_addr_write + 1;
+                        
+                       if unsigned(ram_wr_addr) = 720*720 - 1 then
+                            write_done <= '1';
+                        else
+                            ram_wr_addr <= std_logic_vector(unsigned(ram_wr_addr) + 1);
+                        end if;
                     end if;
                 end if;
             end process SwissFlagToRamxP;
@@ -994,34 +1022,38 @@ begin
             -- 2. READER PROCESS: Read RAM and send to HDMI
             ---------------------------------------------------------------------------
             DisplayRamxP : process(HdmiVgaClocksxC.VgaxC)
+                variable idx : integer range 0 to 31;
             begin
+
+                
                 if rising_edge(HdmiVgaClocksxC.VgaxC) then
+                    
                     if (HdmiVgaClocksxC.PllLockedxS = '0') or (HdmiVgaClocksxC.VgaResetxRNA = '0') then
                         PixelxD <= C_HDMI_VGA_PIX_IDLE;
                     elsif VgaPixCountersxD.VidOnxS = '1' then
                         
-                        -- Check if the HDMI beam is inside our 32x32 display window
-                        if (unsigned(VgaPixCountersxD.HxD) < 32) and (unsigned(VgaPixCountersxD.VxD) < 32) then
-                            -- Calculate address: (Y * 32) + X
-                            -- Concatenating VxD(4..0) and HxD(4..0) is mathmatically (Y*32 + X)
-                            ram_rd_addr <= std_logic_vector(unsigned(VgaPixCountersxD.VxD(4 downto 0)) & 
-                                                           unsigned(VgaPixCountersxD.HxD(4 downto 0)));
+                        -- Check if the HDMI beam is inside our 720x720 display window
+                        if (unsigned(VgaPixCountersxD.HxD) < 720) and (unsigned(VgaPixCountersxD.VxD) < 720) then
+                            -- Concatenating vertical + horizontal adress
+                            -- Vertical * 720 + horizonta
+                            ram_rd_addr <= std_logic_vector(to_unsigned(
+                            (to_integer(unsigned(VgaPixCountersxD.VxD))*720) + 
+                            to_integer(unsigned(VgaPixCountersxD.HxD)), 19));
                             
+                            -- Cycle N+1: ram_data_out is now valid for the PREVIOUS address
+                            idx := to_integer(unsigned(ram_data_out));
                             -- Assign RAM data to the Pixel output
-                            PixelxD.RxD <= ram_data_out(23 downto 16);
-                            PixelxD.GxD <= ram_data_out(15 downto 8);
-                            PixelxD.BxD <= ram_data_out(7 downto 0);
-                        else
-                            -- Outside the 32x32 box, show a default color (e.g. background from Reg0)
-                            PixelxD.RxD <= PatternPortsxD(0).RegxD(23 downto 16);
-                            PixelxD.GxD <= PatternPortsxD(0).RegxD(15 downto 8);
-                            PixelxD.BxD <= PatternPortsxD(0).RegxD(7 downto 0);
+                            PixelxD.RxD <= COLOR_PALETTE(idx)(23 downto 16);
+                            PixelxD.GxD <= COLOR_PALETTE(idx)(15 downto 8);
+                            PixelxD.BxD <= COLOR_PALETTE(idx)(7 downto 0);
+                                               
                         end if;
                     else
                         PixelxD <= C_HDMI_VGA_PIX_IDLE;
                     end if;
                 end if;
             end process DisplayRamxP;
+            
 --            SwissFlagxP : process (HdmiVgaClocksxC.PllLockedxS,
 --                                   HdmiVgaClocksxC.VgaResetxRNA,
 --                                   HdmiVgaClocksxC.VgaxC) is
