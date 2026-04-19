@@ -132,8 +132,9 @@ port (
     power_down             : in  std_logic;
     loopback               : in  std_logic_vector(2 downto 0);
     tx_lock                : out std_logic;
-    init_clk_p             : in  std_logic;
-    init_clk_n             : in  std_logic;
+    init_clk_in            : in  std_logic; -- NEW
+    -- init_clk_p             : in  std_logic;
+    -- init_clk_n             : in  std_logic;
     init_clk_out           : out std_logic;
     tx_resetdone_out       : out std_logic;
     rx_resetdone_out       : out std_logic;
@@ -304,8 +305,7 @@ end component;
 
     component aurora_8b10b_CLOCK_MODULE
         port (
-                INIT_CLK_P              : in std_logic;
-                INIT_CLK_N              : in std_logic;
+                INIT_CLK_IN             : in std_logic;
                 INIT_CLK_O              : out std_logic; 
                 GT_CLK                  : in std_logic;
                 GT_CLK_LOCKED           : in std_logic;
@@ -314,6 +314,19 @@ end component;
                 PLL_NOT_LOCKED          : out std_logic
              );
     end component;
+
+    -- component aurora_8b10b_CLOCK_MODULE
+    --     port (
+    --             INIT_CLK_P              : in std_logic;
+    --             INIT_CLK_N              : in std_logic;
+    --             INIT_CLK_O              : out std_logic; 
+    --             GT_CLK                  : in std_logic;
+    --             GT_CLK_LOCKED           : in std_logic;
+    --             USER_CLK                : out std_logic;
+    --             SYNC_CLK                : out std_logic;
+    --             PLL_NOT_LOCKED          : out std_logic
+    --          );
+    -- end component;
 
     component aurora_8b10b_SUPPORT_RESET_LOGIC
         port (
@@ -414,8 +427,7 @@ begin
 
     clock_module_i : aurora_8b10b_CLOCK_MODULE
         port map (
-                    INIT_CLK_P          => init_clk_p,
-                    INIT_CLK_N          => init_clk_n,
+                    INIT_CLK_IN         => init_clk_in,
                     INIT_CLK_O          => init_clk_i,
                     GT_CLK              => tx_out_clk_i,
                     GT_CLK_LOCKED       => tx_lock_i,
@@ -423,6 +435,18 @@ begin
                     SYNC_CLK            => sync_clk_i,
                     PLL_NOT_LOCKED      => pll_not_locked_i
                  );
+
+    -- clock_module_i : aurora_8b10b_CLOCK_MODULE
+    --     port map (
+    --                 INIT_CLK_P          => init_clk_p,
+    --                 INIT_CLK_N          => init_clk_n,
+    --                 INIT_CLK_O          => init_clk_i,
+    --                 GT_CLK              => tx_out_clk_i,
+    --                 GT_CLK_LOCKED       => tx_lock_i,
+    --                 USER_CLK            => user_clk_i,
+    --                 SYNC_CLK            => sync_clk_i,
+    --                 PLL_NOT_LOCKED      => pll_not_locked_i
+    --              );
 
   --  outputs
   init_clk_out          <=  init_clk_i;
