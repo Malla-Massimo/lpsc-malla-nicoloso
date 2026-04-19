@@ -17,7 +17,7 @@ upgrade\_ip \[get\_ips]
 1. Désactiver l'orientation contenant un '1' en sélectionnant une 'X'
 2. Sélectionner la nouvelle orientation avec un '1'
 
-![aurora](./media/aurora.png)
+![aurora](./media/aurora_annotated.png)
 
 | Cellule     | Constante   | Interface |
 |-------------|-------------|-----------|
@@ -28,7 +28,22 @@ upgrade\_ip \[get\_ips]
 
 Les liaisons doivent se faire par paires opposées :
 
-* Nord <-> Sud
-* Est <-> Ouest
+- Nord <-> Sud
+- Est <-> Ouest
 
+### Interface AXI-Stream user
 
+- **Envoi :** s_axi_tx_tdata/tvalid/tready
+- **Réception :** m_axi_rx_tdata/tvalid
+
+### Dataflow (à vérifier en cours)
+
+**SLAVE -> MASTER :** 
+- idx palette de 5 bits pour chaque pixel, selon BRAM
+
+**MASTER -> SLAVE :** 
+- cx
+- cy
+- zoom (profondeur calcul ?)
+- ligne_debut
+- ligne_fin

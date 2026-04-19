@@ -8,7 +8,6 @@ axi_vip_if.sv,systemverilog,xilinx_vip,../xilinx_vip/hdl/axi_vip_if.sv,incdir=".
 clk_vip_if.sv,systemverilog,xilinx_vip,../xilinx_vip/hdl/clk_vip_if.sv,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"
 rst_vip_if.sv,systemverilog,xilinx_vip,../xilinx_vip/hdl/rst_vip_if.sv,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"
 xpm_cdc.sv,systemverilog,xpm,../ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"
-xpm_fifo.sv,systemverilog,xpm,../ip/xpm/xpm_fifo/hdl/xpm_fifo.sv,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"
 xpm_memory.sv,systemverilog,xpm,../ip/xpm/xpm_memory/hdl/xpm_memory.sv,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"
 xpm_VCOMP.vhd,vhdl,xpm,../ip/xpm/xpm_VCOMP.vhd,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"
 aurora_8b10b_aurora_pkg.vhd,vhdl,xil_defaultlib,../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_aurora_pkg.vhd,incdir="../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"

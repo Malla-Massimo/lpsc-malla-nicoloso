@@ -90,15 +90,15 @@ entity scalp_user_design is
         Pll2V5ClkIn1LOSxSI : in    std_logic;  -- External oscillator Loss of Sync
         -- GTP interfaces
         -- Clocks
-        -- GTPRefClk0PxCI     : in    std_logic;
-        -- GTPRefClk0NxCI     : in    std_logic;
+        GTPRefClk0PxCI     : in    std_logic;
+        GTPRefClk0NxCI     : in    std_logic;
         -- GTPRefClk1PxCI     : in    std_logic;
         -- GTPRefClk1NxCI     : in    std_logic;
         -- North
-        -- GTPFromNorthPxSI   : in    std_logic;
-        -- GTPFromNorthNxSI   : in    std_logic;
-        -- GTPToNorthPxSO     : out   std_logic;
-        -- GTPToNorthNxSO     : out   std_logic;
+        GTPFromNorthPxSI   : in    std_logic;   -- CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
+        GTPFromNorthNxSI   : in    std_logic;   -- CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
+        GTPToNorthPxSO     : out   std_logic;   -- CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
+        GTPToNorthNxSO     : out   std_logic;   -- CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
         -- East
         -- GTPFromEastPxSI    : in    std_logic;
         -- GTPFromEastNxSI    : in    std_logic;
@@ -479,6 +479,13 @@ architecture arch of scalp_user_design is
     ---------------------------------------------------------------------------
     signal GPIOSwitchesxD   : std_logic_vector((C_GPIO_SWITCHES_SIZE - 1) downto 0) := (others => '0');
     signal GPIOJoystickxD   : std_logic_vector((C_GPIO_JOYSTICK_SIZE - 1) downto 0) := (others => '0');
+
+    
+    ---------------------------------------------------------------------------
+    -- AURORA 8B10B GTP
+    ---------------------------------------------------------------------------
+    signal gtp_refclk      : std_logic;
+    signal gtp_refclk_odiv : std_logic;
 
     -- Attributes
     attribute mark_debug       : string;
@@ -903,6 +910,55 @@ begin
                     HdmiTxxDIO        => HdmiTxxD);
 
         end block HdmixB;
+
+
+
+        -- aurora 8b10b IP instance
+        IBUFDS_GTE2_inst : IBUFDS_GTE2
+        port map (
+            O     => gtp_refclk,
+            ODIV2 => gtp_refclk_odiv,
+            CEB   => '0',
+            I     => GTPRefClk0PxCI,
+            IB    => GTPRefClk0NxCI
+            );
+            
+        -- aurora 8b10b IP instance
+        AuroraNorthxI : entity work.aurora_8b10b
+            port map (
+                -- GTP pins
+                rxp                 => GTPFromNorthPxSI,
+                rxn                 => GTPFromNorthNxSI,
+                txp                 => GTPToNorthPxSO,
+                txn                 => GTPToNorthNxSO,
+                gt_refclk1          => gtp_refclk,
+                init_clk_in         => Clk125xC,
+                -- User TX stream (32 bits car lane_width=4)
+                s_axi_tx_tdata      => tx_data,
+                s_axi_tx_tvalid     => tx_valid,
+                s_axi_tx_tready     => tx_ready,
+                s_axi_tx_tlast      => tx_last,
+                s_axi_tx_tkeep      => "1111",
+                -- User RX stream
+                m_axi_rx_tdata      => rx_data,
+                m_axi_rx_tvalid     => rx_valid,
+                m_axi_rx_tlast      => rx_last,
+                m_axi_rx_tkeep      => open,
+                -- Status
+                channel_up          => aurora_ch_up,
+                lane_up             => aurora_lane_up,
+                hard_err            => open,
+                soft_err            => open,
+                -- Clocks produites par l'IP (exemple design)
+                user_clk_out        => aurora_user_clk,
+                sync_clk_out        => open,
+                reset_pb            => '0',
+                pma_init            => '0',
+                power_down          => '0',
+                loopback            => "000"
+                );
+
+
 
         ImGenxB : block is
 
