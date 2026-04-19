@@ -45,6 +45,28 @@ set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *sys_clock*}]
 # set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *clk_out1*}] -group [get_clocks -filter {NAME =~ *vga*}]
 set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *clk_100*}] -group [get_clocks -filter {NAME =~ *vga*}]
 
+
+
+
+
+##### Aurora constraints #####
+# GT reference clock 125 MHz (contrainte existante sur la pin U9/V9, mais ajoute la période)
+create_clock -name aurora_gt_refclk -period 8.000 [get_ports GTPRefClk0PxCI]
+
+# CDC false path pour les resets d'Aurora
+set_false_path -to [get_pins -filter {REF_PIN_NAME=~*D} -of_objects [get_cells -hierarchical -filter {NAME =~ *aurora_8b10b_cdc_to*}]]
+
+# GT channel location (GTPQ0 position 2 = North, comme défini dans l'IP)
+set_property LOC GTPE2_CHANNEL_X0Y1 [get_cells -hierarchical -filter {NAME =~ *gt0_aurora_8b10b_i*/gtpe2_i}]
+
+# Clock groups (les horloges Aurora sont asynchrones par rapport aux autres)
+set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *sys_clock*}] -group [get_clocks -filter {NAME =~ *aurora*}]
+set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *vga*}] -group [get_clocks -filter {NAME =~ *aurora*}]
+
+
+
+
+
 ##### GTP interfaces (bank 112) #####
 set_property PACKAGE_PIN U9 [get_ports GTPRefClk0PxCI]
 set_property PACKAGE_PIN V9 [get_ports GTPRefClk0NxCI]

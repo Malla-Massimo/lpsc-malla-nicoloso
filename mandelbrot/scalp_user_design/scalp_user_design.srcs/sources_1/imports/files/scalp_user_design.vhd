@@ -482,10 +482,14 @@ architecture arch of scalp_user_design is
 
     
     ---------------------------------------------------------------------------
-    -- AURORA 8B10B GTP
+    -- Aurora 8B10B 
     ---------------------------------------------------------------------------
-    signal gtp_refclk      : std_logic;
-    signal gtp_refclk_odiv : std_logic;
+    signal AuroraChannelUpxS : std_logic;
+    signal AuroraLaneUpxS    : std_logic;
+    signal AuroraHardErrxS   : std_logic;
+    signal AuroraSoftErrxS   : std_logic;
+    signal AuroraErrDetxS    : std_logic;
+    signal AuroraResetxR     : std_logic;
 
     -- Attributes
     attribute mark_debug       : string;
@@ -743,7 +747,8 @@ begin
                         SLEW       => "SLOW")
                     port map (
                         O => Led22V5RxSO,
-                        I => PwmRed2xS);
+                        -- I => PwmRed2xS);
+                        I => AuroraErrDetxS); -- rouge = erreur détectée
 
             end block OBufRedxB;
 
@@ -779,14 +784,16 @@ begin
                         O => Led12V5GxSO,
                         I => PwmGreen1xS);
 
-                OutBufLed2RxI : OBUF
+                -- OutBufLed2RxI : OBUF
+                OutBufLed2GxI : OBUF
                     generic map (
                         DRIVE      => 12,
                         IOSTANDARD => "DEFAULT",
                         SLEW       => "SLOW")
                     port map (
                         O => Led22V5GxSO,
-                        I => PwmGreen2xS);
+                        -- I => PwmGreen2xS);
+                        I => AuroraChannelUpxS); -- vert = channel up, tout est ok
 
             end block OBufGreenxB;
 
@@ -829,7 +836,8 @@ begin
                         SLEW       => "SLOW")
                     port map (
                         O => Led22V5BxSO,
-                        I => PwmBlue2xS);
+                        -- I => PwmBlue2xS);
+                        I => AuroraLaneUpxS); -- bleu = lane up
 
             end block OBufBluexB;
 
@@ -912,51 +920,35 @@ begin
         end block HdmixB;
 
 
+        AuroraxB : block is
+        begin
+            -- Active-high reset synchronized with Clk125
+            AuroraResetxR <= not Clk125RstxRNA;
 
-        -- aurora 8b10b IP instance
-        IBUFDS_GTE2_inst : IBUFDS_GTE2
-        port map (
-            O     => gtp_refclk,
-            ODIV2 => gtp_refclk_odiv,
-            CEB   => '0',
-            I     => GTPRefClk0PxCI,
-            IB    => GTPRefClk0NxCI
-            );
-            
-        -- aurora 8b10b IP instance
-        AuroraNorthxI : entity work.aurora_8b10b
-            port map (
-                -- GTP pins
-                rxp                 => GTPFromNorthPxSI,
-                rxn                 => GTPFromNorthNxSI,
-                txp                 => GTPToNorthPxSO,
-                txn                 => GTPToNorthNxSO,
-                gt_refclk1          => gtp_refclk,
-                init_clk_in         => Clk125xC,
-                -- User TX stream (32 bits car lane_width=4)
-                s_axi_tx_tdata      => tx_data,
-                s_axi_tx_tvalid     => tx_valid,
-                s_axi_tx_tready     => tx_ready,
-                s_axi_tx_tlast      => tx_last,
-                s_axi_tx_tkeep      => "1111",
-                -- User RX stream
-                m_axi_rx_tdata      => rx_data,
-                m_axi_rx_tvalid     => rx_valid,
-                m_axi_rx_tlast      => rx_last,
-                m_axi_rx_tkeep      => open,
-                -- Status
-                channel_up          => aurora_ch_up,
-                lane_up             => aurora_lane_up,
-                hard_err            => open,
-                soft_err            => open,
-                -- Clocks produites par l'IP (exemple design)
-                user_clk_out        => aurora_user_clk,
-                sync_clk_out        => open,
-                reset_pb            => '0',
-                pma_init            => '0',
-                power_down          => '0',
-                loopback            => "000"
+            ScalpAuroraxI : entity work.scalp_aurora
+                generic map (
+                    G_LOOPBACK => "010"  -- Near-End PMA loopback for 1-card test
+                                        -- Change to "000" for 2-card communication
+                )
+                port map (
+                    InitClkxCI       => Clk125xC,
+                    GtRefClkPxCI     => GTPRefClk0PxCI,
+                    GtRefClkNxCI     => GTPRefClk0NxCI,
+                    ResetxRANI       => AuroraResetxR,
+                    GtResetxRANI     => '0',
+                    RxPxSI           => GTPFromNorthPxSI,
+                    RxNxSI           => GTPFromNorthNxSI,
+                    TxPxSO           => GTPToNorthPxSO,
+                    TxNxSO           => GTPToNorthNxSO,
+                    ChannelUpxSO     => AuroraChannelUpxS,
+                    LaneUpxSO        => AuroraLaneUpxS,
+                    HardErrxSO       => AuroraHardErrxS,
+                    SoftErrxSO       => AuroraSoftErrxS,
+                    FrameErrxSO      => open,
+                    ErrorDetectedxSO => AuroraErrDetxS,
+                    ErrCountxDO      => open
                 );
+        end block AuroraxB;
 
 
 

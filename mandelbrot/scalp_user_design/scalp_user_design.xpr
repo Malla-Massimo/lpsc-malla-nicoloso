@@ -158,6 +158,84 @@
           <Proxy FileSetName="scalp_zynqps_system_ila_0_0"/>
         </CompFileExtendedInfo>
       </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_aurora_pkg.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_aurora_pkg.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_axi_to_ll_exdes.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_axi_to_ll_exdes.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_clock_module.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_clock_module.vhd"/>
+          <Attr Name="ImportTime" Val="1776621734"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_frame_check.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_frame_check.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_frame_gen.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_frame_gen.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_gt_common_wrapper.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_gt_common_wrapper.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_ll_to_axi_exdes.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_ll_to_axi_exdes.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_support.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_support.vhd"/>
+          <Attr Name="ImportTime" Val="1776622080"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_support_reset_logic.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_support_reset_logic.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/scalp_aurora.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/imports/files/scalp_axi_pkg.vhd">
         <FileInfo SFType="VHDL2008">
           <Attr Name="Library" Val="scalp_lib"/>
