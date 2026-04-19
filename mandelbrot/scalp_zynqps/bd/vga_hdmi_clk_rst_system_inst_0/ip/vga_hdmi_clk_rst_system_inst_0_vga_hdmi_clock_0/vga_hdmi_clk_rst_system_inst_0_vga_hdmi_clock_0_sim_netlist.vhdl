@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
--- Date        : Sat Apr 18 18:01:53 2026
--- Host        : ma2s running 64-bit major release  (build 9200)
+-- Date        : Sun Apr 19 20:42:00 2026
+-- Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               c:/lpsc/mandelbrot/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0/vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_sim_netlist.vhdl
+--               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/bd/vga_hdmi_clk_rst_system_inst_0/ip/vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0/vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0_sim_netlist.vhdl
 -- Design      : vga_hdmi_clk_rst_system_inst_0_vga_hdmi_clock_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.

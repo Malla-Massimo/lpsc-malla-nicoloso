@@ -121,14 +121,16 @@ begin
 
 pdu_rem : if USE_UFC_REM = 0 generate
    rem_int             <= TO_INTEGER(unsigned (LL_IP_REM + '1'));
-ll_ip_rem_inc_shift <= to_stdlogicvector("1111" srl rem_int);
+-- ll_ip_rem_inc_shift <= to_stdlogicvector("1111" srl rem_int);
+ll_ip_rem_inc_shift <= to_stdlogicvector(bit_vector'("1111") srl rem_int);
 AXI4_S_OP_TKEEP_i     <= "1111" when (LL_IP_REM = "11") else
                           (not ll_ip_rem_inc_shift);
 end generate pdu_rem;
 
 ufc_rem : if USE_UFC_REM = 1 generate
    ufc_rem_int         <= TO_INTEGER(unsigned (LL_IP_REM + '1'));
-ll_ip_rem_inc_shift <= to_stdlogicvector("1111" srl ufc_rem_int);
+-- ll_ip_rem_inc_shift <= to_stdlogicvector("1111" srl ufc_rem_int);
+ll_ip_rem_inc_shift <= to_stdlogicvector(bit_vector'("1111") srl ufc_rem_int);
 AXI4_S_OP_TKEEP_i     <= "1111" when (LL_IP_REM = "11") else
                           (not ll_ip_rem_inc_shift);
 end generate ufc_rem;  
