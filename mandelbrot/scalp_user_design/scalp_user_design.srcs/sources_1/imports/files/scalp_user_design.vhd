@@ -699,8 +699,11 @@ begin
             attribute mark_debug : string;
             attribute keep       : string;
 
-            -- attribute mark_debug of PwmRedxS   : signal is "true";
-            -- attribute keep of PwmRedxS         : signal is "true";
+            -- attribute mark_debug of PwmRedxS   : signal is "true"; -- ! old 
+            -- attribute keep of PwmRedxS         : signal is "true"; -- ! old 
+            -- attribute mark_debug of PwmRed1xS  : signal is "true";
+            -- attribute keep of PwmRed1xS        : signal is "true";
+
             -- attribute mark_debug of PwmGreenxS : signal is "true";
             -- attribute keep of PwmGreenxS       : signal is "true";
             -- attribute mark_debug of PwmBluexS  : signal is "true";
@@ -747,8 +750,8 @@ begin
                         SLEW       => "SLOW")
                     port map (
                         O => Led22V5RxSO,
-                        -- I => PwmRed2xS);
-                        I => AuroraErrDetxS); -- rouge = erreur détectée
+                        I => PwmRed2xS);
+                        -- I => AuroraErrDetxS); -- rouge = erreur détectée
 
             end block OBufRedxB;
 
@@ -792,8 +795,8 @@ begin
                         SLEW       => "SLOW")
                     port map (
                         O => Led22V5GxSO,
-                        -- I => PwmGreen2xS);
-                        I => AuroraChannelUpxS); -- vert = channel up, tout est ok
+                        I => PwmGreen2xS);
+                        -- I => AuroraChannelUpxS); -- vert = channel up, tout est ok
 
             end block OBufGreenxB;
 
@@ -836,8 +839,8 @@ begin
                         SLEW       => "SLOW")
                     port map (
                         O => Led22V5BxSO,
-                        -- I => PwmBlue2xS);
-                        I => AuroraLaneUpxS); -- bleu = lane up
+                        I => PwmBlue2xS);
+                        -- I => AuroraLaneUpxS); -- bleu = lane up
 
             end block OBufBluexB;
 

@@ -51,10 +51,10 @@ set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *clk_100*}] -
 
 ##### Aurora constraints #####
 # GT reference clock 125 MHz (contrainte existante sur la pin U9/V9, mais ajoute la période)
-create_clock -name aurora_gt_refclk -period 8.000 [get_ports GTPRefClk0PxCI]
+create_clock -period 8.000 -name aurora_gt_refclk [get_ports GTPRefClk0PxCI]
 
 # CDC false path pour les resets d'Aurora
-set_false_path -to [get_pins -filter {REF_PIN_NAME=~*D} -of_objects [get_cells -hierarchical -filter {NAME =~ *aurora_8b10b_cdc_to*}]]
+set_false_path -to [get_pins -filter REF_PIN_NAME=~*D -of_objects [get_cells -hierarchical -filter {NAME =~ *aurora_8b10b_cdc_to*}]]
 
 # GT channel location (GTPQ0 position 2 = North, comme défini dans l'IP)
 set_property LOC GTPE2_CHANNEL_X0Y1 [get_cells -hierarchical -filter {NAME =~ *gt0_aurora_8b10b_i*/gtpe2_i}]
@@ -72,10 +72,10 @@ set_property PACKAGE_PIN U9 [get_ports GTPRefClk0PxCI]
 set_property PACKAGE_PIN V9 [get_ports GTPRefClk0NxCI]
 #set_property PACKAGE_PIN "U5" [get_ports "GTPRefClk1PxCI"]
 #set_property PACKAGE_PIN "V5" [get_ports "GTPRefClk1NxCI"]
-set_property PACKAGE_PIN Y8 [get_ports GTPFromNorthNxSI]    # ! CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
-set_property PACKAGE_PIN W8 [get_ports GTPFromNorthPxSI]    # ! CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
-set_property PACKAGE_PIN Y4 [get_ports GTPToNorthNxSO]      # ! CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
-set_property PACKAGE_PIN W4 [get_ports GTPToNorthPxSO]      # ! CONNECT TO SOUTH AND UNCOMMENT FOR SOURTH ON 2ND SCALP
+set_property PACKAGE_PIN Y8 [get_ports GTPFromNorthNxSI]
+set_property PACKAGE_PIN W8 [get_ports GTPFromNorthPxSI]
+set_property PACKAGE_PIN Y4 [get_ports GTPToNorthNxSO]
+set_property PACKAGE_PIN W4 [get_ports GTPToNorthPxSO]
 #set_property PACKAGE_PIN AB7 [get_ports GTPFromSouthNxSI]
 #set_property PACKAGE_PIN AA7 [get_ports GTPFromSouthPxSI]
 #set_property PACKAGE_PIN AB3 [get_ports GTPToSouthNxSO]
@@ -337,5 +337,6 @@ set_property IOSTANDARD LVCMOS25 [get_ports SelfRstxRNO]
 set_operating_conditions -grade extended -process maximum
 # 4'' by 4'' PCB, no heatsink, no air flow
 set_operating_conditions -airflow 0 -heatsink none -board small
+
 
 
