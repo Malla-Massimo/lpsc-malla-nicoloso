@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="71" Path="C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.xpr">
+<Project Product="Vivado" Version="7" Minor="71" Path="C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="d415e326586b40799ad8db0f84c4160a"/>
@@ -69,13 +69,13 @@
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="9"/>
-    <Option Name="WTModelSimExportSim" Val="9"/>
-    <Option Name="WTQuestaExportSim" Val="9"/>
+    <Option Name="WTXSimExportSim" Val="10"/>
+    <Option Name="WTModelSimExportSim" Val="10"/>
+    <Option Name="WTQuestaExportSim" Val="10"/>
     <Option Name="WTIesExportSim" Val="0"/>
     <Option Name="WTVcsExportSim" Val="1"/>
-    <Option Name="WTRivieraExportSim" Val="9"/>
-    <Option Name="WTActivehdlExportSim" Val="9"/>
+    <Option Name="WTRivieraExportSim" Val="10"/>
+    <Option Name="WTActivehdlExportSim" Val="10"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -108,6 +108,103 @@
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_cdc_sync.vhd"/>
           <Attr Name="ImportTime" Val="1711380661"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_aurora_pkg.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_aurora_pkg.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_axi_to_ll_exdes.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_axi_to_ll_exdes.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_cdc_sync_exdes.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_cdc_sync_exdes.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_clock_module.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_clock_module.vhd"/>
+          <Attr Name="ImportTime" Val="1776621734"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_frame_check.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_frame_check.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_frame_gen.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_frame_gen.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_gt_common_wrapper.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_gt_common_wrapper.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_ll_to_axi_exdes.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_ll_to_axi_exdes.vhd"/>
+          <Attr Name="ImportTime" Val="1776619515"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_support.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_support.vhd"/>
+          <Attr Name="ImportTime" Val="1776622080"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_support_reset_logic.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_support_reset_logic.vhd"/>
+          <Attr Name="ImportTime" Val="1776619516"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/scalp_aurora.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -157,92 +254,6 @@
         <CompFileExtendedInfo CompFileName="scalp_zynqps.bd" FileRelPathName="ip\scalp_zynqps_system_ila_0_0\scalp_zynqps_system_ila_0_0.xci">
           <Proxy FileSetName="scalp_zynqps_system_ila_0_0"/>
         </CompFileExtendedInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_aurora_pkg.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_aurora_pkg.vhd"/>
-          <Attr Name="ImportTime" Val="1776619515"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_axi_to_ll_exdes.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_axi_to_ll_exdes.vhd"/>
-          <Attr Name="ImportTime" Val="1776619515"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_cdc_sync_exdes.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_cdc_sync_exdes.vhd"/>
-          <Attr Name="ImportTime" Val="1776619515"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_clock_module.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_clock_module.vhd"/>
-          <Attr Name="ImportTime" Val="1776621734"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_frame_check.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_frame_check.vhd"/>
-          <Attr Name="ImportTime" Val="1776619516"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_frame_gen.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_frame_gen.vhd"/>
-          <Attr Name="ImportTime" Val="1776619516"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_gt_common_wrapper.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_gt_common_wrapper.vhd"/>
-          <Attr Name="ImportTime" Val="1776619516"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_ll_to_axi_exdes.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_ll_to_axi_exdes.vhd"/>
-          <Attr Name="ImportTime" Val="1776619515"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_support.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_support.vhd"/>
-          <Attr Name="ImportTime" Val="1776622080"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/imports/aurora_8b10b_support_reset_logic.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../aurora_8b10b_ex/imports/aurora_8b10b_support_reset_logic.vhd"/>
-          <Attr Name="ImportTime" Val="1776619516"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/scalp_aurora.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/imports/files/scalp_axi_pkg.vhd">
         <FileInfo SFType="VHDL2008">
@@ -811,7 +822,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z015clg485-2" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_1" LaunchOptions="-jobs 11 " AutoRQSDir="$PSRCDIR/utils_1/imports/impl_1" ParallelReportGen="true">
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z015clg485-2" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_1" LaunchOptions="-jobs 4 " AutoRQSDir="$PSRCDIR/utils_1/imports/impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2023"/>
         <Step Id="init_design"/>
