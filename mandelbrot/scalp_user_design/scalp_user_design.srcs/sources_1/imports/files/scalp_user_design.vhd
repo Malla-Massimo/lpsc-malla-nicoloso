@@ -930,8 +930,8 @@ begin
 
             ScalpAuroraxI : entity work.scalp_aurora
                 generic map (
-                    G_LOOPBACK => "010"  -- Near-End PMA loopback for 1-card test
-                                        -- Change to "000" for 2-card communication
+                    G_LOOPBACK => "000"  -- Near-End PMA loopback for 1-card test: "010"
+                                         -- Change to "000" for 2-card communication
                 )
                 port map (
                     InitClkxCI       => Clk125xC,
