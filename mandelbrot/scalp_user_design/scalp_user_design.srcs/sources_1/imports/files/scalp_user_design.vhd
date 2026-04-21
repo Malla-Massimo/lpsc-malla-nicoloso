@@ -650,7 +650,8 @@ begin
         signal tx_ready_aurora : std_logic := '0';
         signal rx_data_aurora: std_logic_vector(31 downto 0) := (others => '0');
         signal rx_dvalid_aurora: std_logic := '0';
-
+        signal hard_err_aurora: std_logic := '0';
+        signal soft_err_aurora: std_logic := '0';
     
     component BRAM_5_500k is
       PORT (
@@ -750,15 +751,15 @@ begin
     PORT MAP (
         -- TRANSMITTER
         s_axi_tx_tdata => tx_data_aurora,
-        s_axi_tx_tkeep => '1111',
-        s_axi_tx_tlast => '0',
+        s_axi_tx_tkeep => "1111"
+        s_axi_tx_tlast => '1',
         s_axi_tx_tvalid => tx_dvalid_aurora,
         s_axi_tx_tready => tx_ready_aurora,
         
         -- RECEIVER
         m_axi_rx_tdata => rx_data_aurora,
-        m_axi_rx_tkeep => '1111',
-        m_axi_rx_tlast => '0',
+        m_axi_rx_tkeep => "1111"
+        m_axi_rx_tlast => '1',
         m_axi_rx_tvalid => rx_dvalid_aurora,
 
         s_axi_nfc_tx_tvalid => s_axi_nfc_tx_tvalid,
@@ -773,18 +774,21 @@ begin
         m_axi_ufc_rx_tlast => open,
         m_axi_ufc_rx_tvalid => open,
 
-        hard_err => hard_err,
-        soft_err => soft_err,
+        hard_err => hard_err_aurora,
+        soft_err => soft_err_aurora,
         frame_err => frame_err,
         channel_up => channel_up,
         lane_up => lane_up,
-        txp => txp,
-        txn => txn,
+    
         reset => reset,
         gt_reset => gt_reset,
-        loopback => loopback,
-        rxp => rxp,
-        rxn => rxn,
+        loopback => "111",
+           
+        txp => GTPToSouthPxSO,,
+        txn => GTPToSouthNxSO,
+        rxp => GTPFromSouthPxSI,
+        rxn => GTPFromSouthNxSI,
+        
         drpclk_in => drpclk_in,
         drpaddr_in => drpaddr_in,
         drpen_in => drpen_in,
@@ -792,20 +796,25 @@ begin
         drprdy_out => drprdy_out,
         drpdo_out => drpdo_out,
         drpwe_in => drpwe_in,
+        
         m_axi_nfc_rx_tvalid => m_axi_nfc_rx_tvalid,
         m_axi_nfc_rx_tdata => m_axi_nfc_rx_tdata,
+        
         power_down => power_down,
         tx_lock => tx_lock,
         tx_resetdone_out => tx_resetdone_out,
         rx_resetdone_out => rx_resetdone_out,
         link_reset_out => link_reset_out,
+        
         gt_common_reset_out => gt_common_reset_out,
         gt0_pll0outclk_in => gt0_pll0outclk_in,
         gt0_pll1outclk_in => gt0_pll1outclk_in,
         gt0_pll0outrefclk_in => gt0_pll0outrefclk_in,
         gt0_pll1outrefclk_in => gt0_pll1outrefclk_in,
         gt0_pll0refclklost_in => gt0_pll0refclklost_in,
+        
         quad1_common_lock_in => quad1_common_lock_in,
+        
         init_clk_in => init_clk_in,
         pll_not_locked => pll_not_locked,
         tx_out_clk => tx_out_clk,
