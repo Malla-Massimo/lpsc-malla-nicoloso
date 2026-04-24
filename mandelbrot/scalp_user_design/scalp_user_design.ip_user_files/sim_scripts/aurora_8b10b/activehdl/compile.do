@@ -54,7 +54,6 @@ vcom -work xil_defaultlib -93  \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_rx_ll_deframer.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_rx_ll_nfc.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_rx_ll_pdu_datapath.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_rx_ll_ufc_datapath.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_rx_ll.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_scrambler_top.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_scrambler.vhd" \
@@ -76,15 +75,6 @@ vcom -work xil_defaultlib -93  \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_tx_ll_control.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_tx_ll_datapath.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_tx_ll.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_barrel_shifter_control.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_barrel_shifter.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_filter.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_output_mux.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_output_switch_control.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_sideband_output.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_storage_count_control.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_storage_mux.vhd" \
-"../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_ufc_storage_switch_control.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b/src/aurora_8b10b_valid_data_counter.vhd" \
 "../../../../scalp_user_design.gen/sources_1/ip/aurora_8b10b/aurora_8b10b.vhd" \
 

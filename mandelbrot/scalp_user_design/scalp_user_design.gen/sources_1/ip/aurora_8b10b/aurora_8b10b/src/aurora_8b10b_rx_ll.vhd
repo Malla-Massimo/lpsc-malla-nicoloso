@@ -58,7 +58,6 @@
 --               This module supports 2 4-byte lane designs.
 --
 --               This module supports Immediate Mode Native Flow Control.
---               This module supports User Flow Control.
 --
 
 library IEEE;
@@ -76,14 +75,6 @@ RX_REM           : out std_logic_vector(0 to 1);
             RX_SOF_N         : out std_logic;
             RX_EOF_N         : out std_logic;
 
-    -- UFC Interface
-
-UFC_RX_DATA      : out std_logic_vector(0 to 31);
-UFC_RX_REM       : out std_logic_vector(0 to 1);
-            UFC_RX_SRC_RDY_N : out std_logic;
-            UFC_RX_SOF_N     : out std_logic;
-            UFC_RX_EOF_N     : out std_logic;
-
     -- Global Logic Interface
 
             START_RX         : in std_logic;
@@ -96,7 +87,6 @@ RX_PE_DATA_V     : in std_logic_vector(0 to 1);
 RX_SCP           : in std_logic_vector(0 to 1);
 RX_ECP           : in std_logic_vector(0 to 1);
 RX_SNF           : in std_logic_vector(0 to 1);
-RX_SUF           : in std_logic_vector(0 to 1);
 RX_FC_NB         : in std_logic_vector(0 to 7);
 
     -- TX_LL Interface
@@ -125,25 +115,10 @@ signal RX_REM_Buffer           : std_logic_vector(0 to 1);
     signal RX_SRC_RDY_N_Buffer     : std_logic;
     signal RX_SOF_N_Buffer         : std_logic;
     signal RX_EOF_N_Buffer         : std_logic;
-signal UFC_RX_DATA_Buffer      : std_logic_vector(0 to 31);
-signal UFC_RX_REM_Buffer       : std_logic_vector(0 to 1);
-    signal UFC_RX_SRC_RDY_N_Buffer : std_logic;
-    signal UFC_RX_SOF_N_Buffer     : std_logic;
-    signal UFC_RX_EOF_N_Buffer     : std_logic;
     signal TX_WAIT_Buffer          : std_logic;
     signal FRAME_ERR_Buffer      : std_logic;
 
 -- Wire Declarations --
-
-signal pdu_pad_i           : std_logic_vector(0 to 1);
-signal pdu_data_i          : std_logic_vector(0 to 31);
-signal pdu_data_v_i        : std_logic_vector(0 to 1);
-signal pdu_scp_i           : std_logic_vector(0 to 1);
-signal pdu_ecp_i           : std_logic_vector(0 to 1);
-signal ufc_message_start_i : std_logic_vector(0 to 1);
-signal ufc_data_i          : std_logic_vector(0 to 31);
-signal ufc_data_v_i        : std_logic_vector(0 to 1);
-    signal ufc_start_i         : std_logic;
 
     signal start_rx_i          : std_logic;
 
@@ -170,45 +145,6 @@ RX_FC_NB      : in  std_logic_vector(0 to 7);
         -- USER Interface
 
                 USER_CLK      : in  std_logic
-
-             );
-
-    end component;
-
-
-    component aurora_8b10b_UFC_FILTER
-
-        port (
-
-        -- Aurora Channel Interface
-
-RX_PAD            : in std_logic_vector(0 to 1);
-RX_PE_DATA        : in std_logic_vector(0 to 31);
-RX_PE_DATA_V      : in std_logic_vector(0 to 1);
-RX_SCP            : in std_logic_vector(0 to 1);
-RX_ECP            : in std_logic_vector(0 to 1);
-RX_SUF            : in std_logic_vector(0 to 1);
-RX_FC_NB          : in std_logic_vector(0 to 7);
-
-        -- PDU Datapath Interface
-
-PDU_DATA          : out std_logic_vector(0 to 31);
-PDU_DATA_V        : out std_logic_vector(0 to 1);
-PDU_PAD           : out std_logic_vector(0 to 1);
-PDU_SCP           : out std_logic_vector(0 to 1);
-PDU_ECP           : out std_logic_vector(0 to 1);
-
-        -- UFC Datapath Interface
-
-UFC_DATA          : out std_logic_vector(0 to 31);
-UFC_DATA_V        : out std_logic_vector(0 to 1);
-UFC_MESSAGE_START : out std_logic_vector(0 to 1);
-                UFC_START         : out std_logic;
-
-        -- System Interface
-
-                USER_CLK          : in std_logic;
-                RESET             : in std_logic
 
              );
 
@@ -249,35 +185,6 @@ RX_REM       : out std_logic_vector(0 to 1);
     end component;
 
 
-    component aurora_8b10b_RX_LL_UFC_DATAPATH
-
-        port (
-
-        --Traffic Separator Interface
-
-UFC_DATA          : in std_logic_vector(0 to 31);
-UFC_DATA_V        : in std_logic_vector(0 to 1);
-UFC_MESSAGE_START : in std_logic_vector(0 to 1);
-                UFC_START         : in std_logic;
-
-        --LocalLink UFC Interface
-
-UFC_RX_DATA       : out std_logic_vector(0 to 31);
-UFC_RX_REM        : out std_logic_vector(0 to 1);
-                UFC_RX_SRC_RDY_N  : out std_logic;
-                UFC_RX_SOF_N      : out std_logic;
-                UFC_RX_EOF_N      : out std_logic;
-
-        --System Interface
-
-                USER_CLK          : in std_logic;
-                RESET             : in std_logic
-
-             );
-
-    end component;
-
-
 begin
 
     RX_D             <= RX_D_Buffer;
@@ -285,11 +192,6 @@ begin
     RX_SRC_RDY_N     <= RX_SRC_RDY_N_Buffer;
     RX_SOF_N         <= RX_SOF_N_Buffer;
     RX_EOF_N         <= RX_EOF_N_Buffer;
-    UFC_RX_DATA      <= UFC_RX_DATA_Buffer;
-    UFC_RX_REM       <= UFC_RX_REM_Buffer;
-    UFC_RX_SRC_RDY_N <= UFC_RX_SRC_RDY_N_Buffer;
-    UFC_RX_SOF_N     <= UFC_RX_SOF_N_Buffer;
-    UFC_RX_EOF_N     <= UFC_RX_EOF_N_Buffer;
     TX_WAIT          <= TX_WAIT_Buffer;
     FRAME_ERR      <= FRAME_ERR_Buffer;
 
@@ -324,45 +226,6 @@ begin
                  );
 
 
-    -- Separate UFC traffic from regular data --
-
-    ufc_filter_i : aurora_8b10b_UFC_FILTER
-
-        port map (
-
-        -- Aurora Channel Interface
-
-                    RX_PAD            => RX_PAD,
-                    RX_PE_DATA        => RX_PE_DATA,
-                    RX_PE_DATA_V      => RX_PE_DATA_V,
-                    RX_SCP            => RX_SCP,
-                    RX_ECP            => RX_ECP,
-                    RX_SUF            => RX_SUF,
-                    RX_FC_NB          => RX_FC_NB,
-
-        -- PDU Datapath Interface
-
-                    PDU_DATA          => pdu_data_i,
-                    PDU_DATA_V        => pdu_data_v_i,
-                    PDU_PAD           => pdu_pad_i,
-                    PDU_SCP           => pdu_scp_i,
-                    PDU_ECP           => pdu_ecp_i,
-
-        -- UFC Datapath Interface
-
-                    UFC_DATA          => ufc_data_i,
-                    UFC_DATA_V        => ufc_data_v_i,
-                    UFC_MESSAGE_START => ufc_message_start_i,
-                    UFC_START         => ufc_start_i,
-
-        -- System Interface
-
-                    USER_CLK          => USER_CLK,
-                    RESET             => start_rx_i
-
-                 );
-
-
     -- Datapath for user PDUs --
 
     rx_ll_pdu_datapath_i : aurora_8b10b_RX_LL_PDU_DATAPATH
@@ -371,11 +234,11 @@ begin
 
         -- Traffic Separator Interface
 
-                    PDU_DATA     => pdu_data_i,
-                    PDU_DATA_V   => pdu_data_v_i,
-                    PDU_PAD      => pdu_pad_i,
-                    PDU_SCP      => pdu_scp_i,
-                    PDU_ECP      => pdu_ecp_i,
+                    PDU_DATA     => RX_PE_DATA,
+                    PDU_DATA_V   => RX_PE_DATA_V,
+                    PDU_PAD      => RX_PAD,
+                    PDU_SCP      => RX_SCP,
+                    PDU_ECP      => RX_ECP,
 
         -- LocalLink PDU Interface
 
@@ -393,35 +256,6 @@ begin
 
                     USER_CLK     => USER_CLK,
                     RESET        => start_rx_i
-
-                 );
-
-
-    -- Datapath for UFC PDUs --
-
-    rx_ll_ufc_datapath_i : aurora_8b10b_RX_LL_UFC_DATAPATH
-
-        port map (
-
-        -- Traffic Separator Interface
-
-                    UFC_DATA          => ufc_data_i,
-                    UFC_DATA_V        => ufc_data_v_i,
-                    UFC_MESSAGE_START => ufc_message_start_i,
-                    UFC_START         => ufc_start_i,
-
-        -- LocalLink PDU Interface
-
-                    UFC_RX_DATA       => UFC_RX_DATA_Buffer,
-                    UFC_RX_REM        => UFC_RX_REM_Buffer,
-                    UFC_RX_SRC_RDY_N  => UFC_RX_SRC_RDY_N_Buffer,
-                    UFC_RX_SOF_N      => UFC_RX_SOF_N_Buffer,
-                    UFC_RX_EOF_N      => UFC_RX_EOF_N_Buffer,
-
-        -- System Interface
-
-                    USER_CLK          => USER_CLK,
-                    RESET             => start_rx_i
 
                  );
 

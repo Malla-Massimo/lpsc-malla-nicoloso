@@ -421,7 +421,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>HAS_TREADY</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TREADY">1</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TREADY">0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -504,7 +504,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.UFC_S_AXI_TX" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.UFC_S_AXI_TX" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -553,7 +553,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>TDATA_NUM_BYTES</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TDATA_NUM_BYTES">4</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TDATA_NUM_BYTES">0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -607,7 +607,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>HAS_TKEEP</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TKEEP">1</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TKEEP">0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -616,7 +616,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>HAS_TLAST</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TLAST">1</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TLAST">0</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -672,7 +672,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.UFC_M_AXI_RX" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.UFC_M_AXI_RX" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -17839,11 +17839,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:32:05 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:31:25 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:945105eb</spirit:value>
+            <spirit:value>9:e6195e36</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17858,11 +17858,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:32:05 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:31:26 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17873,7 +17873,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17884,7 +17884,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:9891af18</spirit:value>
+            <spirit:value>9:b88cef9f</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17898,11 +17898,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:33:55 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:32:08 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17913,7 +17913,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17927,11 +17927,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:32:07 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:31:27 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17946,11 +17946,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:32:02 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:31:24 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17966,11 +17966,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:32:05 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:31:26 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:945105eb</spirit:value>
+            <spirit:value>9:e6195e36</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -17986,11 +17986,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 21 15:32:05 UTC 2026</spirit:value>
+            <spirit:value>Fri Apr 24 17:31:26 UTC 2026</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:48cbf671</spirit:value>
+            <spirit:value>9:055d7ea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -18204,7 +18204,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_ufc_tx_tvalid" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_ufc_tx_tvalid" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -18231,7 +18231,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_ufc_tx_tdata" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_ufc_tx_tdata" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -18251,7 +18251,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_ufc_tx_tready" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_ufc_tx_tready" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;RX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -18363,7 +18363,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tdata" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tdata" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -18387,7 +18387,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tkeep" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tkeep" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -18407,7 +18407,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tlast" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tlast" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -18427,7 +18427,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tvalid" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.m_axi_ufc_rx_tvalid" xilinx:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.USER_INTERFACE&apos;))=&quot;AXI_4_Streaming&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.DATAFLOW_CONFIG&apos;))!=&quot;TX-only_Simplex&quot;) and ((spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Immediate_NFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC&quot;) or (spirit:decode(id(&apos;MODELPARAM_VALUE.FLOW_MODE&apos;))=&quot;UFC+_Completion_NFC&quot;)))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -55428,7 +55428,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="string">
         <spirit:name>flow_mode</spirit:name>
-        <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.flow_mode">UFC+_Immediate_NFC</spirit:value>
+        <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.flow_mode">Immediate_NFC</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="boolean">
         <spirit:name>c_nfc</spirit:name>
@@ -55440,7 +55440,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="boolean">
         <spirit:name>c_ufc</spirit:name>
-        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.c_ufc">true</spirit:value>
+        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.c_ufc">false</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="boolean">
         <spirit:name>c_example_simulation</spirit:name>
@@ -56058,10 +56058,6 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_rx_ll_ufc_datapath.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
         <spirit:name>aurora_8b10b/src/aurora_8b10b_rx_ll.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
@@ -56143,42 +56139,6 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>aurora_8b10b/src/aurora_8b10b_tx_ll.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_barrel_shifter_control.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_barrel_shifter.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_filter.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_output_mux.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_output_switch_control.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_sideband_output.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_storage_count_control.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_storage_mux.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_storage_switch_control.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -56277,10 +56237,6 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_rx_ll_ufc_datapath.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
         <spirit:name>aurora_8b10b/src/aurora_8b10b_rx_ll.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
@@ -56362,42 +56318,6 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>aurora_8b10b/src/aurora_8b10b_tx_ll.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_barrel_shifter_control.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_barrel_shifter.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_filter.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_output_mux.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_output_switch_control.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_sideband_output.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_storage_count_control.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_storage_mux.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>aurora_8b10b/src/aurora_8b10b_ufc_storage_switch_control.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -56644,7 +56564,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Flow_Mode</spirit:name>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Flow_Mode" spirit:choiceRef="choice_pairs_3c580107" spirit:order="15">UFC+_Immediate_NFC</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Flow_Mode" spirit:choiceRef="choice_pairs_3c580107" spirit:order="15">Immediate_NFC</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -57537,8 +57457,6 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.TDEST_WIDTH" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.TID_WIDTH" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.TUSER_WIDTH" xilinx:valueSource="constant"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TKEEP" xilinx:valueSource="auto"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TLAST" xilinx:valueSource="auto"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TREADY" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TSTRB" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TDATA_NUM_BYTES" xilinx:valueSource="auto"/>
@@ -57547,6 +57465,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TUSER_WIDTH" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TKEEP" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TLAST" xilinx:valueSource="constant"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TREADY" xilinx:valueSource="auto"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TSTRB" xilinx:valueSource="constant"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.TDATA_NUM_BYTES" xilinx:valueSource="auto"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.TDEST_WIDTH" xilinx:valueSource="constant"/>

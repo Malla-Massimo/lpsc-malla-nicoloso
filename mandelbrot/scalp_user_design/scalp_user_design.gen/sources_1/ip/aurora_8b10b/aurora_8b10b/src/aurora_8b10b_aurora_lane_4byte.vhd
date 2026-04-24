@@ -100,7 +100,6 @@ entity aurora_8b10b_AURORA_LANE_4BYTE is
             GEN_SCP             : in  std_logic_vector(0 to 1);         -- SCP generation request from TX_LL.
             GEN_ECP             : in  std_logic_vector(0 to 1);         -- ECP generation request from TX_LL.
             GEN_SNF             : in  std_logic_vector(0 to 1);         -- SNF generation request from TX_LL
-            GEN_SUF             : in  std_logic_vector(0 to 1);         -- SUF generation request from TX_LL
             GEN_PAD             : in  std_logic_vector(0 to 1);         -- PAD generation request from TX_LL
             FC_NB               : in  std_logic_vector(0 to 7);         -- Size code for SUF and SNF messages
             TX_PE_DATA          : in  std_logic_vector(0 to 31);        -- Data from TX_LL to send over lane.
@@ -115,7 +114,6 @@ entity aurora_8b10b_AURORA_LANE_4BYTE is
             RX_SCP              : out std_logic_vector(0 to 1);         -- Indicates lane received SCP.
             RX_ECP              : out std_logic_vector(0 to 1);         -- Indicates lane received ECP
             RX_SNF              : out std_logic_vector(0 to 1);         -- Indicates lane received SNF
-            RX_SUF              : out std_logic_vector(0 to 1);         -- Indicates lane received SUF
             RX_FC_NB            : out std_logic_vector(0 to 7);         -- Size code for SNF or SUF
 
     -- Global Logic Interface
@@ -186,7 +184,6 @@ architecture RTL of aurora_8b10b_AURORA_LANE_4BYTE is
     signal rx_scp_descram_in        : std_logic_vector(0 to 1);
     signal rx_ecp_descram_in        : std_logic_vector(0 to 1);
     signal rx_snf_descram_in        : std_logic_vector(0 to 1);
-    signal rx_suf_descram_in        : std_logic_vector(0 to 1);
     signal rx_fc_nb_descram_in        : std_logic_vector(0 to 7);
     signal rx_sp_descram_in        : std_logic;
     signal rx_spa_descram_in        : std_logic;
@@ -268,7 +265,6 @@ architecture RTL of aurora_8b10b_AURORA_LANE_4BYTE is
                 GEN_SCP      : in std_logic_vector(0 to 1);       -- Generate SCP.
                 GEN_ECP      : in std_logic_vector(0 to 1);       -- Generate ECP.
                 GEN_SNF      : in std_logic_vector(0 to 1);       -- Generate SNF using code given by FC_NB.
-                GEN_SUF      : in std_logic_vector(0 to 1);       -- Generate SUF using code given by FC_NB.
                 GEN_PAD      : in std_logic_vector(0 to 1);       -- Replace LSB with Pad character.
                 FC_NB        : in std_logic_vector(0 to 7);       -- Size code for Flow Control messages.
                 TX_PE_DATA   : in std_logic_vector(0 to 31);      -- Data.  Transmitted when TX_PE_DATA_V is asserted.
@@ -314,7 +310,6 @@ architecture RTL of aurora_8b10b_AURORA_LANE_4BYTE is
                 RX_SCP           : out std_logic_vector(0 to 1);     -- SCP symbol received.
                 RX_ECP           : out std_logic_vector(0 to 1);     -- ECP symbol received.
                 RX_SNF           : out std_logic_vector(0 to 1);     -- SNF symbol received.
-                RX_SUF           : out std_logic_vector(0 to 1);     -- SUF symbol reveived.
                 RX_FC_NB         : out std_logic_vector(0 to 7);     -- Flow Control size code.  Valid with RX_SNF or RX_SUF.
 
         -- Lane Init SM Interface
@@ -433,7 +428,6 @@ end component;
             RX_SCP           : out std_logic_vector(0 to 1);     -- SCP symbol received.
             RX_ECP           : out std_logic_vector(0 to 1);     -- ECP symbol received.
             RX_SNF           : out std_logic_vector(0 to 1);     -- SNF symbol received.
-            RX_SUF           : out std_logic_vector(0 to 1);     -- SUF symbol reveived.
             RX_FC_NB         : out std_logic_vector(0 to 7);     -- Flow Control size code.  Valid with RX_SNF or RX_SUF.
 
             RX_PAD_IN           : in std_logic_vector(0 to 1);     -- LSByte is PAD.
@@ -442,7 +436,6 @@ end component;
             RX_SCP_IN           : in std_logic_vector(0 to 1);     -- SCP symbol received.
             RX_ECP_IN           : in std_logic_vector(0 to 1);     -- ECP symbol received.
             RX_SNF_IN           : in std_logic_vector(0 to 1);     -- SNF symbol received.
-            RX_SUF_IN           : in std_logic_vector(0 to 1);     -- SUF symbol reveived.
             RX_FC_NB_IN         : in std_logic_vector(0 to 7);     -- Flow Control size code.  Valid with RX_SNF or RX_SUF.
 
     -- Lane Init SM Interface
@@ -568,7 +561,6 @@ begin
                     GEN_SCP      => GEN_SCP,
                     GEN_ECP      => GEN_ECP,
                     GEN_SNF      => GEN_SNF,
-                    GEN_SUF      => GEN_SUF,
                     GEN_PAD      => GEN_PAD,
                     FC_NB        => FC_NB,
                     TX_PE_DATA   => TX_PE_DATA,
@@ -614,7 +606,6 @@ begin
             RX_SCP           =>   rx_scp_descram_in,
             RX_ECP           =>   rx_ecp_descram_in,
             RX_SNF           =>   rx_snf_descram_in,
-            RX_SUF           =>   rx_suf_descram_in,
             RX_FC_NB         =>   rx_fc_nb_descram_in,	
 
         -- Lane Init SM Interface
@@ -756,7 +747,6 @@ begin
                     RX_SCP           => RX_SCP,
                     RX_ECP           => RX_ECP,
                     RX_SNF           => RX_SNF,
-                    RX_SUF           => RX_SUF,
                     RX_FC_NB         => RX_FC_NB,
 
             RX_PAD_IN           =>   rx_pad_descram_in,
@@ -765,7 +755,6 @@ begin
             RX_SCP_IN           =>   rx_scp_descram_in,
             RX_ECP_IN           =>   rx_ecp_descram_in,
             RX_SNF_IN           =>   rx_snf_descram_in,
-            RX_SUF_IN           =>   rx_suf_descram_in,
             RX_FC_NB_IN         =>   rx_fc_nb_descram_in,	
 
     -- Lane Init SM Interface

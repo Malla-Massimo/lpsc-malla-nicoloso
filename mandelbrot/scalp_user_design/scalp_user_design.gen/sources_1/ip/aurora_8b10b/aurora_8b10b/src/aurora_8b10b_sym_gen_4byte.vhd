@@ -72,7 +72,6 @@
 --
 --               This module supports Immediate Mode Native Flow Control.
 --
---               This module supports User Flow Control.
 --
 
 library IEEE;
@@ -87,7 +86,6 @@ entity aurora_8b10b_SYM_GEN_4BYTE is
             GEN_SCP      : in std_logic_vector(0 to 1);       -- Generate SCP.
             GEN_ECP      : in std_logic_vector(0 to 1);       -- Generate ECP.
             GEN_SNF      : in std_logic_vector(0 to 1);       -- Generate SNF using code given by FC_NB.
-            GEN_SUF      : in std_logic_vector(0 to 1);       -- Generate SUF using code given by FC_NB.
             GEN_PAD      : in std_logic_vector(0 to 1);       -- Replace LSB with Pad character.
             FC_NB        : in std_logic_vector(0 to 7);       -- Size code for Flow Control messages.
             TX_PE_DATA   : in std_logic_vector(0 to 31);      -- Data.  Transmitted when TX_PE_DATA_V is asserted.
@@ -137,7 +135,6 @@ architecture RTL of aurora_8b10b_SYM_GEN_4BYTE is
     signal gen_scp_r      : std_logic_vector(0 to 1);
     signal gen_ecp_r      : std_logic_vector(0 to 1);
     signal gen_snf_r      : std_logic_vector(0 to 1);
-    signal gen_suf_r      : std_logic_vector(0 to 1);
     signal gen_pad_r      : std_logic_vector(0 to 1);
     signal fc_nb_r        : std_logic_vector(0 to 7);
     signal tx_pe_data_r   : std_logic_vector(0 to 31);
@@ -172,7 +169,6 @@ begin
             gen_scp_r      <= GEN_SCP      after DLY;
             gen_ecp_r      <= GEN_ECP      after DLY;
             gen_snf_r      <= GEN_SNF      after DLY;
-            gen_suf_r      <= GEN_SUF      after DLY;
             gen_pad_r      <= GEN_PAD      after DLY;
             fc_nb_r        <= FC_NB        after DLY;
             tx_pe_data_r   <= TX_PE_DATA   after DLY;
@@ -197,7 +193,6 @@ begin
     idle_c(0) <= not (gen_scp_r(0)      or
                       gen_ecp_r(0)      or
                       gen_snf_r(0)      or
-                      gen_suf_r(0)      or
                       tx_pe_data_v_r(0) or
                       gen_cc_r          or
                       gen_sp_r          or
@@ -227,10 +222,6 @@ begin
             elsif (gen_snf_r(0) = '1') then
 
                 TX_DATA_Buffer(31 downto 24) <= X"DC" after DLY;                -- K28.6(SNF)
-
-            elsif (gen_suf_r(0) = '1') then
-
-                TX_DATA_Buffer(31 downto 24) <= X"9C" after DLY;                -- K28.4(SUF)
 
             elsif (tx_pe_data_v_r(0) = '1') then
 
@@ -295,7 +286,6 @@ begin
     idle_c(1) <= not (gen_scp_r(0)      or
                       gen_ecp_r(0)      or
                       gen_snf_r(0)      or
-                      gen_suf_r(0)      or
                       tx_pe_data_v_r(0) or
                       gen_cc_r          or
                       gen_sp_r          or
@@ -326,10 +316,6 @@ begin
             elsif (gen_snf_r(0) = '1') then
 
                 TX_DATA_Buffer(23 downto 16) <= fc_nb_r(0 to 3) & "0000" after DLY;     -- SNF Data
-
-            elsif (gen_suf_r(0) = '1') then
-
-                TX_DATA_Buffer(23 downto 16) <= fc_nb_r(0 to 3) & "0000" after DLY;     -- SUF Data
 
             elsif ((tx_pe_data_v_r(0) and gen_pad_r(0)) = '1') then
 
@@ -379,7 +365,6 @@ begin
         if (USER_CLK 'event and USER_CLK = '1') then
             TX_CHAR_IS_K_Buffer(2) <= not ((tx_pe_data_v_r(0) and not gen_pad_r(0)) or
                                             gen_snf_r(0)      or
-                                            gen_suf_r(0)      or
                                             gen_sp_r          or
                                             gen_spa_r         or
                                             gen_v_r(1))  or (gen_cc_r) after DLY;
@@ -396,7 +381,6 @@ begin
     idle_c(2) <= not (gen_scp_r(1)      or
                       gen_ecp_r(1)      or
                       gen_snf_r(1)      or
-                      gen_suf_r(1)      or
                       tx_pe_data_v_r(1) or
                       gen_cc_r          or
                       gen_sp_r          or
@@ -426,10 +410,6 @@ begin
             elsif (gen_snf_r(1) = '1') then
 
                 TX_DATA_Buffer(15 downto 8) <= X"DC" after DLY;                  -- K28.6(SNF)
-
-            elsif (gen_suf_r(1) = '1') then
-
-                TX_DATA_Buffer(15 downto 8) <= X"9C" after DLY;                  -- K28.4(SUF)
 
             elsif (tx_pe_data_v_r(1) = '1') then
 
@@ -492,7 +472,6 @@ begin
     idle_c(3) <= not (gen_scp_r(1)      or
                       gen_ecp_r(1)      or
                       gen_snf_r(1)      or
-                      gen_suf_r(1)      or
                       tx_pe_data_v_r(1) or
                       gen_cc_r          or
                       gen_sp_r          or
@@ -524,10 +503,6 @@ begin
             elsif (gen_snf_r(1) = '1') then
 
                 TX_DATA_Buffer(7 downto 0) <= fc_nb_r(4 to 7) & "0000" after DLY; -- SNF Data
-
-            elsif (gen_suf_r(1) = '1') then
-
-                TX_DATA_Buffer(7 downto 0) <= fc_nb_r(4 to 7) & "0000" after DLY; -- SUF Data
 
             elsif ((tx_pe_data_v_r(1) and gen_pad_r(1)) = '1') then
 
@@ -577,7 +552,6 @@ begin
         if (USER_CLK 'event and USER_CLK = '1') then
             TX_CHAR_IS_K_Buffer(0) <= not ((tx_pe_data_v_r(1) and not gen_pad_r(1)) or
                                             gen_snf_r(1)      or
-                                            gen_suf_r(1)      or
                                             gen_sp_r          or
                                             gen_spa_r         or
                                             gen_v_r(3)) or (gen_cc_r) after DLY;

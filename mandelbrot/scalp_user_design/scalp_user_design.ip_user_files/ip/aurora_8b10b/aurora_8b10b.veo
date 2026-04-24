@@ -63,17 +63,10 @@ aurora_8b10b your_instance_name (
   .s_axi_nfc_tx_tvalid(s_axi_nfc_tx_tvalid),      // input wire s_axi_nfc_tx_tvalid
   .s_axi_nfc_tx_tdata(s_axi_nfc_tx_tdata),        // input wire [0 : 3] s_axi_nfc_tx_tdata
   .s_axi_nfc_tx_tready(s_axi_nfc_tx_tready),      // output wire s_axi_nfc_tx_tready
-  .s_axi_ufc_tx_tvalid(s_axi_ufc_tx_tvalid),      // input wire s_axi_ufc_tx_tvalid
-  .s_axi_ufc_tx_tdata(s_axi_ufc_tx_tdata),        // input wire [0 : 2] s_axi_ufc_tx_tdata
-  .s_axi_ufc_tx_tready(s_axi_ufc_tx_tready),      // output wire s_axi_ufc_tx_tready
   .m_axi_rx_tdata(m_axi_rx_tdata),                // output wire [0 : 31] m_axi_rx_tdata
   .m_axi_rx_tkeep(m_axi_rx_tkeep),                // output wire [0 : 3] m_axi_rx_tkeep
   .m_axi_rx_tlast(m_axi_rx_tlast),                // output wire m_axi_rx_tlast
   .m_axi_rx_tvalid(m_axi_rx_tvalid),              // output wire m_axi_rx_tvalid
-  .m_axi_ufc_rx_tdata(m_axi_ufc_rx_tdata),        // output wire [0 : 31] m_axi_ufc_rx_tdata
-  .m_axi_ufc_rx_tkeep(m_axi_ufc_rx_tkeep),        // output wire [0 : 3] m_axi_ufc_rx_tkeep
-  .m_axi_ufc_rx_tlast(m_axi_ufc_rx_tlast),        // output wire m_axi_ufc_rx_tlast
-  .m_axi_ufc_rx_tvalid(m_axi_ufc_rx_tvalid),      // output wire m_axi_ufc_rx_tvalid
   .hard_err(hard_err),                            // output wire hard_err
   .soft_err(soft_err),                            // output wire soft_err
   .frame_err(frame_err),                          // output wire frame_err

@@ -59,8 +59,6 @@
 --
 --               This module supports Immediate Mode Native Flow Control.
 --
---               This module supports User Flow Control
---
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
@@ -78,7 +76,6 @@ entity aurora_8b10b_SYM_DEC_4BYTE is
             RX_SCP           : out std_logic_vector(0 to 1);     -- SCP symbol received.
             RX_ECP           : out std_logic_vector(0 to 1);     -- ECP symbol received.
             RX_SNF           : out std_logic_vector(0 to 1);     -- SNF symbol received.
-            RX_SUF           : out std_logic_vector(0 to 1);     -- SUF symbol reveived.
             RX_FC_NB         : out std_logic_vector(0 to 7);     -- Flow Control size code.  Valid with RX_SNF or RX_SUF.
 
     -- Lane Init SM Interface
@@ -139,8 +136,6 @@ architecture RTL of aurora_8b10b_SYM_DEC_4BYTE is
     constant ECP_3          : std_logic_vector(0 to 3) := X"E";
     constant SNF_0          : std_logic_vector(0 to 3) := X"D";
     constant SNF_1          : std_logic_vector(0 to 3) := X"C";
-    constant SUF_0          : std_logic_vector(0 to 3) := X"9";
-    constant SUF_1          : std_logic_vector(0 to 3) := X"C";
     constant A_CHAR_0       : std_logic_vector(0 to 3) := X"7";
     constant A_CHAR_1       : std_logic_vector(0 to 3) := X"C";
     constant VER_DATA_0     : std_logic_vector(0 to 3) := X"E";
@@ -156,7 +151,6 @@ architecture RTL of aurora_8b10b_SYM_DEC_4BYTE is
     signal RX_SCP_Buffer       : std_logic_vector(0 to 1);
     signal RX_ECP_Buffer       : std_logic_vector(0 to 1);
     signal RX_SNF_Buffer       : std_logic_vector(0 to 1);
-    signal RX_SUF_Buffer       : std_logic_vector(0 to 1);
     signal RX_FC_NB_Buffer     : std_logic_vector(0 to 7);
     signal RX_SP_Buffer        : std_logic;
     signal RX_SPA_Buffer       : std_logic;
@@ -178,7 +172,6 @@ architecture RTL of aurora_8b10b_SYM_DEC_4BYTE is
     signal rx_scp_d_r                  : std_logic_vector(0 to 7);
     signal rx_ecp_d_r                  : std_logic_vector(0 to 7);
     signal rx_snf_d_r                  : std_logic_vector(0 to 3);
-    signal rx_suf_d_r                  : std_logic_vector(0 to 3);
     signal rx_sp_r                     : std_logic_vector(0 to 7);
     signal rx_spa_r                    : std_logic_vector(0 to 7);
     signal rx_sp_neg_d_r               : std_logic_vector(0 to 1);
@@ -200,7 +193,6 @@ begin
     RX_SCP       <= RX_SCP_Buffer;
     RX_ECP       <= RX_ECP_Buffer;
     RX_SNF       <= RX_SNF_Buffer AND ('1' & first_v_received_r);
-    RX_SUF       <= RX_SUF_Buffer;
     RX_FC_NB     <= RX_FC_NB_Buffer;
     RX_SP        <= RX_SP_Buffer;
     RX_SPA       <= RX_SPA_Buffer;
@@ -686,43 +678,6 @@ begin
             RX_SNF_Buffer(1) <= rx_pe_control_r(2) and
                                 rx_snf_d_r(2) and
                                 rx_snf_d_r(3) after DLY;
-
-        end if;
-
-    end process;
-
-
-    -- Decode RX_SUF.
-
-    process (USER_CLK)
-
-    begin
-
-        if (USER_CLK 'event and USER_CLK = '1') then
-
-            rx_suf_d_r(0) <= std_bool(word_aligned_data_r(0 to 3)   = SUF_0) after DLY;
-            rx_suf_d_r(1) <= std_bool(word_aligned_data_r(4 to 7)   = SUF_1) after DLY;
-            rx_suf_d_r(2) <= std_bool(word_aligned_data_r(16 to 19) = SUF_0) after DLY;
-            rx_suf_d_r(3) <= std_bool(word_aligned_data_r(20 to 23) = SUF_1) after DLY;
-
-        end if;
-
-    end process;
-
-
-    process (USER_CLK)
-
-    begin
-
-        if (USER_CLK 'event and USER_CLK = '1') then
-
-            RX_SUF_Buffer(0) <= rx_pe_control_r(0) and
-                                rx_suf_d_r(0)      and
-                                rx_suf_d_r(1) after DLY;
-
-            RX_SUF_Buffer(1) <= rx_pe_control_r(2) and
-                                rx_suf_d_r(2)      and
-                                rx_suf_d_r(3) after DLY;
 
         end if;
 

@@ -58,8 +58,6 @@
 --
 --               This module supports Immediate Mode Native Flow Control
 --
---               This module supports User Flow Control
---
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
@@ -83,12 +81,6 @@ TX_REM         : in std_logic_vector(0 to 1);
             NFC_NB         : in std_logic_vector(0 to 3);
             NFC_ACK_N      : out std_logic;
 
-    -- UFC Interface
-
-            UFC_TX_REQ_N   : in std_logic;
-            UFC_TX_MS      : in std_logic_vector(0 to 3);
-            UFC_TX_ACK_N   : out std_logic;
-
     -- Clock Compensation Interface
 
             WARN_CC        : in std_logic;
@@ -103,7 +95,6 @@ TX_REM         : in std_logic_vector(0 to 1);
             GEN_SCP        : out std_logic;
             GEN_ECP        : out std_logic;
             GEN_SNF        : out std_logic;
-            GEN_SUF        : out std_logic;
             FC_NB          : out std_logic_vector(0 to 3);
 TX_PE_DATA_V   : out std_logic_vector(0 to 1);
 GEN_PAD        : out std_logic_vector(0 to 1);
@@ -129,11 +120,9 @@ architecture MAPPED of aurora_8b10b_TX_LL is
 
     signal TX_DST_RDY_N_Buffer  : std_logic;
     signal NFC_ACK_N_Buffer     : std_logic;
-    signal UFC_TX_ACK_N_Buffer  : std_logic;
     signal GEN_SCP_Buffer       : std_logic;
     signal GEN_ECP_Buffer       : std_logic;
     signal GEN_SNF_Buffer       : std_logic;
-    signal GEN_SUF_Buffer       : std_logic;
     signal FC_NB_Buffer         : std_logic_vector(0 to 3);
 signal TX_PE_DATA_V_Buffer  : std_logic_vector(0 to 1);
 signal GEN_PAD_Buffer       : std_logic_vector(0 to 1);
@@ -145,7 +134,6 @@ signal GEN_CC_Buffer        : std_logic;
 
     signal halt_c_i       : std_logic;
     signal tx_dst_rdy_n_i : std_logic;
-signal ufc_message_i  : std_logic_vector(0 to 1);
 
 -- Component Declarations --
 
@@ -171,7 +159,6 @@ TX_PE_DATA   : out std_logic_vector(0 to 31);
 
                 HALT_C       : in std_logic;
                 TX_DST_RDY_N : in std_logic;
-UFC_MESSAGE  : in std_logic_vector(0 to 1);
 
         -- System Interface
 
@@ -201,12 +188,6 @@ TX_REM        : in std_logic_vector(0 to 1);
                 NFC_NB        : in std_logic_vector(0 to 3);
                 NFC_ACK_N     : out std_logic;
 
-        -- UFC Interface
-
-                UFC_TX_REQ_N  : in std_logic;
-                UFC_TX_MS     : in std_logic_vector(0 to 3);
-                UFC_TX_ACK_N  : out std_logic;
-
         -- Clock Compensation Interface
 
                 WARN_CC       : in std_logic;
@@ -219,14 +200,12 @@ TX_REM        : in std_logic_vector(0 to 1);
         -- TX_LL Control Module Interface
 
                 HALT_C        : out std_logic;
-UFC_MESSAGE   : out std_logic_vector(0 to 1);
 
         -- Aurora Lane Interface
 
                 GEN_SCP       : out std_logic;
                 GEN_ECP       : out std_logic;
                 GEN_SNF       : out std_logic;
-                GEN_SUF       : out std_logic;
                 FC_NB         : out std_logic_vector(0 to 3);
 GEN_CC        : out std_logic;
 
@@ -247,11 +226,9 @@ begin
 
     TX_DST_RDY_N  <= TX_DST_RDY_N_Buffer;
     NFC_ACK_N     <= NFC_ACK_N_Buffer;
-    UFC_TX_ACK_N  <= UFC_TX_ACK_N_Buffer;
     GEN_SCP       <= GEN_SCP_Buffer;
     GEN_ECP       <= GEN_ECP_Buffer;
     GEN_SNF       <= GEN_SNF_Buffer;
-    GEN_SUF       <= GEN_SUF_Buffer;
     FC_NB         <= FC_NB_Buffer;
     TX_PE_DATA_V  <= TX_PE_DATA_V_Buffer;
     GEN_PAD       <= GEN_PAD_Buffer;
@@ -291,7 +268,6 @@ begin
 
                     HALT_C => halt_c_i,
                     TX_DST_RDY_N => tx_dst_rdy_n_i,
-                    UFC_MESSAGE => ufc_message_i,
 
         -- System Interface
 
@@ -321,12 +297,6 @@ begin
                     NFC_NB => NFC_NB,
                     NFC_ACK_N => NFC_ACK_N_Buffer,
 
-        -- UFC Interface
-
-                    UFC_TX_REQ_N => UFC_TX_REQ_N,
-                    UFC_TX_MS => UFC_TX_MS,
-                    UFC_TX_ACK_N => UFC_TX_ACK_N_Buffer,
-
         -- Clock Compensation Interface
 
                     WARN_CC => WARN_CC,
@@ -339,14 +309,12 @@ begin
         -- TX_LL Control Module Interface
 
                     HALT_C => halt_c_i,
-                    UFC_MESSAGE => ufc_message_i,
 
         -- Aurora Lane Interface
 
                     GEN_SCP => GEN_SCP_Buffer,
                     GEN_ECP => GEN_ECP_Buffer,
                     GEN_SNF => GEN_SNF_Buffer,
-                    GEN_SUF => GEN_SUF_Buffer,
                     FC_NB => FC_NB_Buffer,
                     GEN_CC => GEN_CC_Buffer,
 

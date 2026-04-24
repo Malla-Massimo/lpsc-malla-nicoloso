@@ -55,7 +55,6 @@
 --               reference design module. This module supports the following features:
 --
 --               * Immediate Mode Native Flow Control
---               * User Flow Control
 --
 
 library IEEE;
@@ -104,18 +103,6 @@ M_AXI_RX_TKEEP         : out std_logic_vector(0 to 3);
 
             M_AXI_RX_SNF           : out std_logic;
             M_AXI_RX_FC_NB         : out std_logic_vector(0 to 3);
-    -- User Flow Control TX Interface
-
-            S_AXI_UFC_TX_REQ       : in std_logic;
-            S_AXI_UFC_TX_MS        : in std_logic_vector(0 to 2);
-            S_AXI_UFC_TX_ACK       : out std_logic;
-
-    -- User Flow Control RX Inteface
-
-M_AXI_UFC_RX_TDATA     : out std_logic_vector(0 to 31);
-M_AXI_UFC_RX_TKEEP     : out std_logic_vector(0 to 3);
-            M_AXI_UFC_RX_TVALID    : out std_logic;
-            M_AXI_UFC_RX_TLAST     : out std_logic;
     -- GTX Serial I/O
 
 RXP             : in  std_logic;
@@ -182,7 +169,7 @@ end aurora_8b10b_core;
 
 architecture MAPPED of aurora_8b10b_core is
   attribute core_generation_info           : string;
-attribute core_generation_info of MAPPED : architecture is "aurora_8b10b,aurora_8b10b_v11_1_25,{user_interface=AXI_4_Streaming,backchannel_mode=Sidebands,c_aurora_lanes=1,c_column_used=None,c_gt_clock_1=GTPQ0,c_gt_clock_2=None,c_gt_loc_1=1,c_gt_loc_10=X,c_gt_loc_11=X,c_gt_loc_12=X,c_gt_loc_13=X,c_gt_loc_14=X,c_gt_loc_15=X,c_gt_loc_16=X,c_gt_loc_17=X,c_gt_loc_18=X,c_gt_loc_19=X,c_gt_loc_2=X,c_gt_loc_20=X,c_gt_loc_21=X,c_gt_loc_22=X,c_gt_loc_23=X,c_gt_loc_24=X,c_gt_loc_25=X,c_gt_loc_26=X,c_gt_loc_27=X,c_gt_loc_28=X,c_gt_loc_29=X,c_gt_loc_3=X,c_gt_loc_30=X,c_gt_loc_31=X,c_gt_loc_32=X,c_gt_loc_33=X,c_gt_loc_34=X,c_gt_loc_35=X,c_gt_loc_36=X,c_gt_loc_37=X,c_gt_loc_38=X,c_gt_loc_39=X,c_gt_loc_4=X,c_gt_loc_40=X,c_gt_loc_41=X,c_gt_loc_42=X,c_gt_loc_43=X,c_gt_loc_44=X,c_gt_loc_45=X,c_gt_loc_46=X,c_gt_loc_47=X,c_gt_loc_48=X,c_gt_loc_5=X,c_gt_loc_6=X,c_gt_loc_7=X,c_gt_loc_8=X,c_gt_loc_9=X,c_lane_width=4,c_line_rate=50000,c_nfc=true,c_nfc_mode=IMM,c_refclk_frequency=125000,c_simplex=false,c_simplex_mode=TX,c_stream=false,c_ufc=true,flow_mode=UFC+_Immediate_NFC,interface_mode=Framing,dataflow_config=Duplex}";
+attribute core_generation_info of MAPPED : architecture is "aurora_8b10b,aurora_8b10b_v11_1_25,{user_interface=AXI_4_Streaming,backchannel_mode=Sidebands,c_aurora_lanes=1,c_column_used=None,c_gt_clock_1=GTPQ0,c_gt_clock_2=None,c_gt_loc_1=1,c_gt_loc_10=X,c_gt_loc_11=X,c_gt_loc_12=X,c_gt_loc_13=X,c_gt_loc_14=X,c_gt_loc_15=X,c_gt_loc_16=X,c_gt_loc_17=X,c_gt_loc_18=X,c_gt_loc_19=X,c_gt_loc_2=X,c_gt_loc_20=X,c_gt_loc_21=X,c_gt_loc_22=X,c_gt_loc_23=X,c_gt_loc_24=X,c_gt_loc_25=X,c_gt_loc_26=X,c_gt_loc_27=X,c_gt_loc_28=X,c_gt_loc_29=X,c_gt_loc_3=X,c_gt_loc_30=X,c_gt_loc_31=X,c_gt_loc_32=X,c_gt_loc_33=X,c_gt_loc_34=X,c_gt_loc_35=X,c_gt_loc_36=X,c_gt_loc_37=X,c_gt_loc_38=X,c_gt_loc_39=X,c_gt_loc_4=X,c_gt_loc_40=X,c_gt_loc_41=X,c_gt_loc_42=X,c_gt_loc_43=X,c_gt_loc_44=X,c_gt_loc_45=X,c_gt_loc_46=X,c_gt_loc_47=X,c_gt_loc_48=X,c_gt_loc_5=X,c_gt_loc_6=X,c_gt_loc_7=X,c_gt_loc_8=X,c_gt_loc_9=X,c_lane_width=4,c_line_rate=50000,c_nfc=true,c_nfc_mode=IMM,c_refclk_frequency=125000,c_simplex=false,c_simplex_mode=TX,c_stream=false,c_ufc=false,flow_mode=Immediate_NFC,interface_mode=Framing,dataflow_config=Duplex}";
 
     -- Parameter Declarations --
     constant DLY : time := 1 ns;
@@ -359,7 +346,6 @@ attribute core_generation_info of MAPPED : architecture is "aurora_8b10b,aurora_
                 GEN_SCP             : in  std_logic_vector(0 to 1);         -- SCP generation request from TX_LL.
                 GEN_ECP             : in  std_logic_vector(0 to 1);         -- ECP generation request from TX_LL.
                 GEN_SNF             : in  std_logic_vector(0 to 1);         -- SNF generation request from TX_LL
-                GEN_SUF             : in  std_logic_vector(0 to 1);         -- SUF generation request from TX_LL
                 GEN_PAD             : in  std_logic_vector(0 to 1);         -- PAD generation request from TX_LL
                 FC_NB               : in  std_logic_vector(0 to 7);         -- Size code for SUF and SNF messages
                 TX_PE_DATA          : in  std_logic_vector(0 to 31);        -- Data from TX_LL to send over lane.
@@ -374,7 +360,6 @@ attribute core_generation_info of MAPPED : architecture is "aurora_8b10b,aurora_
                 RX_SCP              : out std_logic_vector(0 to 1);         -- Indicates lane received SCP.
                 RX_ECP              : out std_logic_vector(0 to 1);         -- Indicates lane received ECP
                 RX_SNF              : out std_logic_vector(0 to 1);         -- Indicates lane received SNF
-                RX_SUF              : out std_logic_vector(0 to 1);         -- Indicates lane received SUF
                 RX_FC_NB            : out std_logic_vector(0 to 7);         -- Size code for SNF or SUF
 
         -- Global Logic Interface
@@ -548,12 +533,6 @@ TX_REM         : in std_logic_vector(0 to 1);
                 NFC_NB         : in std_logic_vector(0 to 3);
                 NFC_ACK_N      : out std_logic;
 
-        -- UFC Interface
-
-                UFC_TX_REQ_N   : in std_logic;
-                UFC_TX_MS      : in std_logic_vector(0 to 3);
-                UFC_TX_ACK_N   : out std_logic;
-
         -- Clock Compensation Interface
                 WARN_CC        : in std_logic;
                 DO_CC          : in std_logic;
@@ -566,7 +545,6 @@ TX_REM         : in std_logic_vector(0 to 1);
                 GEN_SCP        : out std_logic;
                 GEN_ECP        : out std_logic;
                 GEN_SNF        : out std_logic;
-                GEN_SUF        : out std_logic;
                 FC_NB          : out std_logic_vector(0 to 3);
 TX_PE_DATA_V   : out std_logic_vector(0 to 1);
 GEN_PAD        : out std_logic_vector(0 to 1);
@@ -597,14 +575,6 @@ RX_REM           : out std_logic_vector(0 to 1);
                 RX_SOF_N         : out std_logic;
                 RX_EOF_N         : out std_logic;
 
-        -- UFC Interface
-
-UFC_RX_DATA      : out std_logic_vector(0 to 31);
-UFC_RX_REM       : out std_logic_vector(0 to 1);
-                UFC_RX_SRC_RDY_N : out std_logic;
-                UFC_RX_SOF_N     : out std_logic;
-                UFC_RX_EOF_N     : out std_logic;
-
         -- Global Logic Interface
 
                 START_RX         : in std_logic;
@@ -617,7 +587,6 @@ RX_PE_DATA_V     : in std_logic_vector(0 to 1);
 RX_SCP           : in std_logic_vector(0 to 1);
 RX_ECP           : in std_logic_vector(0 to 1);
 RX_SNF           : in std_logic_vector(0 to 1);
-RX_SUF           : in std_logic_vector(0 to 1);
 RX_FC_NB         : in std_logic_vector(0 to 7);
 
         -- TX_LL Interface
@@ -693,8 +662,6 @@ signal   gen_scp_i               :   std_logic;
 signal   gen_scp_striped_i       :   std_logic_vector(0 to 1);         
 signal   gen_snf_i               :   std_logic;         
 signal   gen_snf_striped_i       :   std_logic_vector(0 to 1);         
-signal   gen_suf_i               :   std_logic;         
-signal   gen_suf_striped_i       :   std_logic_vector(0 to 1);         
 signal   gen_v_i                 :   std_logic_vector(0 to 3);          
 signal   got_a_i                 :   std_logic_vector(0 to 3);          
 signal   got_v_i                 :   std_logic;            
@@ -746,8 +713,6 @@ signal   rx_scp_striped_i        :   std_logic_vector(0 to 1);
 signal   rx_snf_i                :   std_logic_vector(0 to 1);            
 signal   rx_snf_striped_i        :   std_logic_vector(0 to 1);          
 signal   rx_status_float_i       :   std_logic_vector(4 downto 0);            
-signal   rx_suf_i                :   std_logic_vector(0 to 1);            
-signal   rx_suf_striped_i        :   std_logic_vector(0 to 1);          
 signal   soft_err_i            :   std_logic_vector(0 to 1);            
 signal   all_soft_err_i        :   std_logic;
 signal   start_rx_i              :   std_logic;         
@@ -783,18 +748,6 @@ signal rx_rem                   : std_logic_vector(0 to 1);
 signal rx_src_rdy               : std_logic;
 signal rx_sof                   : std_logic;
 signal rx_eof                   : std_logic;
-
-    -- TX AXI UFC I/F signals
-signal tx_ufc_data               : std_logic_vector(0 to 3);
-signal tx_ufc_src_rdy            : std_logic;
-signal tx_ufc_dst_rdy            : std_logic;
-
-    -- RX AXI UFC I/F signals
-signal rx_ufc_data               : std_logic_vector(0 to 31);
-signal rx_ufc_rem                : std_logic_vector(0 to 1);
-signal rx_ufc_src_rdy            : std_logic;
-signal rx_ufc_sof                : std_logic;
-signal rx_ufc_eof                : std_logic;
 
     -- TX AXI NFC I/F signals
 signal tx_nfc_data               : std_logic_vector(0 to 3);
@@ -958,7 +911,6 @@ LANE_UP <= lane_up_i;
 
     gen_scp_striped_i <= gen_scp_i & '0';
     gen_snf_striped_i <= gen_snf_i & '0';
-    gen_suf_striped_i <= gen_suf_i & '0';
     fc_nb_striped_i <= fc_nb_i & "0000";
     gen_ecp_striped_i <= '0' & gen_ecp_i;
     gen_pad_striped_i(0 to 1) <= gen_pad_i(0) & gen_pad_i(1);
@@ -976,8 +928,6 @@ LANE_UP <= lane_up_i;
     rx_ecp_i(1) <= rx_ecp_striped_i(1);
     rx_snf_i(0) <= rx_snf_striped_i(0);
     rx_snf_i(1) <= rx_snf_striped_i(1);
-    rx_suf_i(0) <= rx_suf_striped_i(0);
-    rx_suf_i(1) <= rx_suf_striped_i(1);
     rx_fc_nb_i(0 to 3) <= rx_fc_nb_striped_i(0 to 3);
     rx_fc_nb_i(4 to 7) <= rx_fc_nb_striped_i(4 to 7);
 
@@ -1015,7 +965,6 @@ ENA_COMMA_ALIGN     => ena_comma_align_i,
         -- TX_LL Interface
                     GEN_SCP             => gen_scp_striped_i,
                     GEN_SNF             => gen_snf_striped_i,
-                    GEN_SUF             => gen_suf_striped_i,
                     FC_NB               => fc_nb_striped_i,
                     GEN_ECP             => gen_ecp_striped_i,
                     GEN_PAD             => gen_pad_striped_i(0 to 1),
@@ -1031,7 +980,6 @@ GEN_CC              => gen_cc_i,
                     RX_SCP              => rx_scp_striped_i(0 to 1),
                     RX_ECP              => rx_ecp_striped_i(0 to 1),
                     RX_SNF              => rx_snf_striped_i(0 to 1),
-                    RX_SUF              => rx_suf_striped_i(0 to 1),
                     RX_FC_NB            => rx_fc_nb_striped_i(0 to 7),
 
         -- Global Logic Interface
@@ -1225,37 +1173,6 @@ PLLLKDET_OUT            => tx_lock_i,
       CHANNEL_UP            => channel_up_i
     );
 
-
-    axi_to_ll_ufc_i : aurora_8b10b_AXI_TO_LL
-    generic map
-    (
-       DATA_WIDTH           => 4,
-       STRB_WIDTH           => 4,
-       REM_WIDTH            => 2,
-       USE_4_NFC            => 2,
-       USE_UFC_REM          => 1
-    )
-
-    port map
-    (
-     AXI4_S_IP_TX_TVALID    => S_AXI_UFC_TX_REQ,
-     AXI4_S_OP_TX_TREADY    => S_AXI_UFC_TX_ACK,
-     AXI4_S_IP_TX_TDATA     => ufc_tx_ms_i,
-AXI4_S_IP_TX_TKEEP     => "0000",
-     AXI4_S_IP_TX_TLAST     => tied_to_ground_i,
-
-     LL_OP_DATA             => tx_ufc_data,
-     LL_OP_SOF_N            => OPEN,
-     LL_OP_EOF_N            => OPEN,
-     LL_OP_REM              => OPEN,
-     LL_OP_SRC_RDY_N        => tx_ufc_src_rdy,
-     LL_IP_DST_RDY_N        => tx_ufc_dst_rdy,
-
-     -- System Interface
-     USER_CLK               => user_clk,
-     RESET                  => system_reset_i, 
-     CHANNEL_UP             => channel_up_i
-    );
     axi_to_ll_nfc_i : aurora_8b10b_AXI_TO_LL
     generic map
     (
@@ -1290,12 +1207,6 @@ AXI4_S_IP_TX_TKEEP     => "0000",
 
     -- Instantiate TX_LL --
 
-    -- The TX_LL module takes 4 bits.  We append a 1 to the end so all
-    -- ufc message sizes are odd.  This sizing is a holdover from the
-    -- original Aurora protocol.
-
-    ufc_tx_ms_i <= S_AXI_UFC_TX_MS & '1';
-
     rst_cc_module_i  <= system_reset_i;
     standard_cc_module_i : aurora_8b10b_STANDARD_CC_MODULE
         generic map
@@ -1327,12 +1238,6 @@ AXI4_S_IP_TX_TKEEP     => "0000",
                     NFC_NB                  => tx_nfc_data,
                     NFC_ACK_N               => tx_nfc_dst_rdy,
 
-
-        -- UFC Interface
-                    UFC_TX_REQ_N            => tx_ufc_src_rdy,
-                    UFC_TX_MS               => tx_ufc_data,
-                    UFC_TX_ACK_N            => tx_ufc_dst_rdy,
-
         -- Clock Compenstaion Interface
                     WARN_CC                 => WARN_CC,
                     DO_CC                   => DO_CC_I,
@@ -1346,7 +1251,6 @@ AXI4_S_IP_TX_TKEEP     => "0000",
                     GEN_SCP                 => gen_scp_i,
                     GEN_ECP                 => gen_ecp_i,
                     GEN_SNF                 => gen_snf_i,
-                    GEN_SUF                 => gen_suf_i,
                     FC_NB                   => fc_nb_i,
                     TX_PE_DATA_V            => tx_pe_data_v_i,
                     GEN_PAD                 => gen_pad_i,
@@ -1390,32 +1294,6 @@ AXI4_S_IP_TX_TKEEP     => "0000",
 
     );
 
-    ll_to_axi_ufc_i : aurora_8b10b_LL_TO_AXI
-    generic map
-    (
-       DATA_WIDTH           => 32,
-       USE_UFC_REM          => 1,            
-       STRB_WIDTH           => 4,
-       REM_WIDTH            => 2
-    )
-
-    port map
-    (
-      LL_IP_DATA            => rx_ufc_data,
-      LL_IP_SOF_N           => rx_ufc_sof,
-      LL_IP_EOF_N           => rx_ufc_eof,
-      LL_IP_REM             => rx_ufc_rem,
-      LL_IP_SRC_RDY_N       => rx_ufc_src_rdy,
-      LL_OP_DST_RDY_N       => OPEN,
-
-      AXI4_S_OP_TVALID      => M_AXI_UFC_RX_TVALID,
-      AXI4_S_OP_TDATA       => M_AXI_UFC_RX_TDATA,
-      AXI4_S_OP_TKEEP       => M_AXI_UFC_RX_TKEEP,
-      AXI4_S_OP_TLAST       => M_AXI_UFC_RX_TLAST,
-      AXI4_S_IP_TREADY      => tied_to_ground_i
-
-    );
-
 
     -- Instantiate RX_LL --
 
@@ -1427,14 +1305,6 @@ AXI4_S_IP_TX_TKEEP     => "0000",
                     RX_SRC_RDY_N            => rx_src_rdy,
                     RX_SOF_N                => rx_sof,
                     RX_EOF_N                => rx_eof,
-
-        -- UFC Interface
-
-                    UFC_RX_DATA             => rx_ufc_data,
-                    UFC_RX_REM              => rx_ufc_rem,
-                    UFC_RX_SRC_RDY_N        => rx_ufc_src_rdy,
-                    UFC_RX_SOF_N            => rx_ufc_sof,
-                    UFC_RX_EOF_N            => rx_ufc_eof,
 
         -- Global Logic Interface
 
@@ -1448,7 +1318,6 @@ AXI4_S_IP_TX_TKEEP     => "0000",
                     RX_SCP                  => rx_scp_i,
                     RX_ECP                  => rx_ecp_i,
                     RX_SNF                  => rx_snf_i,
-                    RX_SUF                  => rx_suf_i,
                     RX_FC_NB                => rx_fc_nb_i,
         -- TX_LL Interface
                     DECREMENT_NFC           => decrement_nfc_i,

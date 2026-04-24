@@ -61,14 +61,6 @@ module aurora_8b10b_sv (
   (* X_INTERFACE_MODE = "master USER_DATA_M_AXI_RX" *)
   (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME USER_DATA_M_AXI_RX, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.0, LAYERED_METADATA undef, INSERT_VIP 0" *)
   vivado_axis_v1_0.master USER_DATA_M_AXI_RX,
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 UFC_S_AXI_TX" *)
-  (* X_INTERFACE_MODE = "slave UFC_S_AXI_TX" *)
-  (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME UFC_S_AXI_TX, TDATA_NUM_BYTES 0, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 100000000, PHASE 0.0, LAYERED_METADATA undef, INSERT_VIP 0" *)
-  vivado_axis_v1_0.slave UFC_S_AXI_TX,
-  (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 UFC_M_AXI_RX" *)
-  (* X_INTERFACE_MODE = "master UFC_M_AXI_RX" *)
-  (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME UFC_M_AXI_RX, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.0, LAYERED_METADATA undef, INSERT_VIP 0" *)
-  vivado_axis_v1_0.master UFC_M_AXI_RX,
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 NFC_S_AXI_TX" *)
   (* X_INTERFACE_MODE = "slave NFC_S_AXI_TX" *)
   (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME NFC_S_AXI_TX, TDATA_NUM_BYTES 0, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 100000000, PHASE 0.0, LAYERED_METADATA undef, INSERT_VIP 0" *)
@@ -160,10 +152,6 @@ module aurora_8b10b_sv (
   assign USER_DATA_M_AXI_RX.TID = 0;
   assign USER_DATA_M_AXI_RX.TSTRB = 0;
   assign USER_DATA_M_AXI_RX.TUSER = 0;
-  assign UFC_M_AXI_RX.TDEST = 0;
-  assign UFC_M_AXI_RX.TID = 0;
-  assign UFC_M_AXI_RX.TSTRB = 0;
-  assign UFC_M_AXI_RX.TUSER = 0;
   assign NFC_M_AXI_RX.TDEST = 0;
   assign NFC_M_AXI_RX.TID = 0;
   assign NFC_M_AXI_RX.TKEEP = 0;
@@ -180,17 +168,10 @@ module aurora_8b10b_sv (
     .s_axi_nfc_tx_tvalid(NFC_S_AXI_TX.TVALID),
     .s_axi_nfc_tx_tdata(NFC_S_AXI_TX.TDATA),
     .s_axi_nfc_tx_tready(NFC_S_AXI_TX.TREADY),
-    .s_axi_ufc_tx_tvalid(UFC_S_AXI_TX.TVALID),
-    .s_axi_ufc_tx_tdata(UFC_S_AXI_TX.TDATA),
-    .s_axi_ufc_tx_tready(UFC_S_AXI_TX.TREADY),
     .m_axi_rx_tdata(USER_DATA_M_AXI_RX.TDATA),
     .m_axi_rx_tkeep(USER_DATA_M_AXI_RX.TKEEP),
     .m_axi_rx_tlast(USER_DATA_M_AXI_RX.TLAST),
     .m_axi_rx_tvalid(USER_DATA_M_AXI_RX.TVALID),
-    .m_axi_ufc_rx_tdata(UFC_M_AXI_RX.TDATA),
-    .m_axi_ufc_rx_tkeep(UFC_M_AXI_RX.TKEEP),
-    .m_axi_ufc_rx_tlast(UFC_M_AXI_RX.TLAST),
-    .m_axi_ufc_rx_tvalid(UFC_M_AXI_RX.TVALID),
     .hard_err(hard_err),
     .soft_err(soft_err),
     .frame_err(frame_err),

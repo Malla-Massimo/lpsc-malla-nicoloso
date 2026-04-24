@@ -61,17 +61,10 @@ COMPONENT aurora_8b10b
     s_axi_nfc_tx_tvalid : IN STD_LOGIC;
     s_axi_nfc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 3);
     s_axi_nfc_tx_tready : OUT STD_LOGIC;
-    s_axi_ufc_tx_tvalid : IN STD_LOGIC;
-    s_axi_ufc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 2);
-    s_axi_ufc_tx_tready : OUT STD_LOGIC;
     m_axi_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
     m_axi_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
     m_axi_rx_tlast : OUT STD_LOGIC;
     m_axi_rx_tvalid : OUT STD_LOGIC;
-    m_axi_ufc_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
-    m_axi_ufc_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
-    m_axi_ufc_rx_tlast : OUT STD_LOGIC;
-    m_axi_ufc_rx_tvalid : OUT STD_LOGIC;
     hard_err : OUT STD_LOGIC;
     soft_err : OUT STD_LOGIC;
     frame_err : OUT STD_LOGIC;
@@ -130,17 +123,10 @@ your_instance_name : aurora_8b10b
     s_axi_nfc_tx_tvalid => s_axi_nfc_tx_tvalid,
     s_axi_nfc_tx_tdata => s_axi_nfc_tx_tdata,
     s_axi_nfc_tx_tready => s_axi_nfc_tx_tready,
-    s_axi_ufc_tx_tvalid => s_axi_ufc_tx_tvalid,
-    s_axi_ufc_tx_tdata => s_axi_ufc_tx_tdata,
-    s_axi_ufc_tx_tready => s_axi_ufc_tx_tready,
     m_axi_rx_tdata => m_axi_rx_tdata,
     m_axi_rx_tkeep => m_axi_rx_tkeep,
     m_axi_rx_tlast => m_axi_rx_tlast,
     m_axi_rx_tvalid => m_axi_rx_tvalid,
-    m_axi_ufc_rx_tdata => m_axi_ufc_rx_tdata,
-    m_axi_ufc_rx_tkeep => m_axi_ufc_rx_tkeep,
-    m_axi_ufc_rx_tlast => m_axi_ufc_rx_tlast,
-    m_axi_ufc_rx_tvalid => m_axi_ufc_rx_tvalid,
     hard_err => hard_err,
     soft_err => soft_err,
     frame_err => frame_err,

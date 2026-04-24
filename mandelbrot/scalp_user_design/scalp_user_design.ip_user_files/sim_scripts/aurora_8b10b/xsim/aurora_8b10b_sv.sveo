@@ -63,8 +63,6 @@
 // INTF_TAG     ------ Begin cut for INTERFACE INSTANTIATION Template ------
 vivado_axis_v1_0 #(.TDATA_NUM_BYTES(4), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_WIDTH(0)) USER_DATA_S_AXI_TX();
 vivado_axis_v1_0 #(.TDATA_NUM_BYTES(4), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_WIDTH(0)) USER_DATA_M_AXI_RX();
-vivado_axis_v1_0 #(.TDATA_NUM_BYTES(0), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_WIDTH(0)) UFC_S_AXI_TX();
-vivado_axis_v1_0 #(.TDATA_NUM_BYTES(4), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_WIDTH(0)) UFC_M_AXI_RX();
 vivado_axis_v1_0 #(.TDATA_NUM_BYTES(0), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_WIDTH(0)) NFC_S_AXI_TX();
 vivado_axis_v1_0 #(.TDATA_NUM_BYTES(0), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_WIDTH(0)) NFC_M_AXI_RX();
 // INTF_TAG_END ------  End cut for INTERFACE INSTANTIATION Template  ------
@@ -73,8 +71,6 @@ vivado_axis_v1_0 #(.TDATA_NUM_BYTES(0), .TDEST_WIDTH(0), .TID_WIDTH(0), .TUSER_W
 aurora_8b10b_sv your_instance_name (
   .USER_DATA_S_AXI_TX(USER_DATA_S_AXI_TX.slave), // vivado_axis_v1_0.slave USER_DATA_S_AXI_TX
   .USER_DATA_M_AXI_RX(USER_DATA_M_AXI_RX.master), // vivado_axis_v1_0.master USER_DATA_M_AXI_RX
-  .UFC_S_AXI_TX(UFC_S_AXI_TX.slave), // vivado_axis_v1_0.slave UFC_S_AXI_TX
-  .UFC_M_AXI_RX(UFC_M_AXI_RX.master), // vivado_axis_v1_0.master UFC_M_AXI_RX
   .NFC_S_AXI_TX(NFC_S_AXI_TX.slave), // vivado_axis_v1_0.slave NFC_S_AXI_TX
   .NFC_M_AXI_RX(NFC_M_AXI_RX.master), // vivado_axis_v1_0.master NFC_M_AXI_RX
   .hard_err(hard_err), // output wire hard_err

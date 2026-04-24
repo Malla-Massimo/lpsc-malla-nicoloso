@@ -66,7 +66,6 @@ entity aurora_8b10b_DESCRAMBLER_TOP is
             RX_SCP           : out std_logic_vector(0 to 1);      -- SCP symbol received.
             RX_ECP           : out std_logic_vector(0 to 1);      -- ECP symbol received.
             RX_SNF           : out std_logic_vector(0 to 1);      -- SNF symbol received.
-            RX_SUF           : out std_logic_vector(0 to 1);      -- SUF symbol reveived.
             RX_FC_NB         : out std_logic_vector(0 to 7);     -- Flow Control size code.  Valid with RX_SNF or RX_SUF.
 
             RX_PAD_IN           : in std_logic_vector(0 to 1);      -- LSByte is PAD.
@@ -75,7 +74,6 @@ entity aurora_8b10b_DESCRAMBLER_TOP is
             RX_SCP_IN           : in std_logic_vector(0 to 1);      -- SCP symbol received.
             RX_ECP_IN           : in std_logic_vector(0 to 1);      -- ECP symbol received.
             RX_SNF_IN           : in std_logic_vector(0 to 1);      -- SNF symbol received.
-            RX_SUF_IN           : in std_logic_vector(0 to 1);      -- SUF symbol reveived.
             RX_FC_NB_IN         : in std_logic_vector(0 to 7);     -- Flow Control size code.  Valid with RX_SNF or RX_SUF.
 
     -- Lane Init SM Interface
@@ -126,7 +124,6 @@ architecture BEHAVIORAL of aurora_8b10b_DESCRAMBLER_TOP is
     signal  data_nxt2            : std_logic_vector(0 to 31);    
     signal  RX_PE_DATA_Buffer    : std_logic_vector(0 to 31);    
     signal  RX_SNF_Buffer    : std_logic_vector(0 to 1);    
-    signal  RX_SUF_Buffer    : std_logic_vector(0 to 1);   
 
    component aurora_8b10b_SCRAMBLER is
 
@@ -166,7 +163,6 @@ begin
        RX_SCP     <=  RX_SCP_IN after DLY; 
        RX_ECP     <=  RX_ECP_IN after DLY; 
        RX_SNF_Buffer   <=  RX_SNF_IN after DLY; 
-       RX_SUF_Buffer   <=  RX_SUF_IN after DLY; 
        RX_FC_NB   <=  RX_FC_NB_IN after DLY; 
        RX_SP     <=  RX_SP_IN after DLY; 
        RX_SPA     <=  RX_SPA_IN after DLY; 
@@ -246,6 +242,5 @@ begin
    RX_PE_DATA(16 to 31) <=  RX_PE_DATA_Buffer(16 to 31);
 
    RX_SNF               <=  RX_SNF_Buffer;
-   RX_SUF               <=  RX_SUF_Buffer;
 
 end BEHAVIORAL;

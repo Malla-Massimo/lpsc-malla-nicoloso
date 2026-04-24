@@ -81,7 +81,6 @@ TX_PE_DATA   : out std_logic_vector(0 to 31);
 
             HALT_C       : in std_logic;
             TX_DST_RDY_N : in std_logic;
-UFC_MESSAGE  : in std_logic_vector(0 to 1);
 
     -- System Interface
 
@@ -109,12 +108,10 @@ signal TX_PE_DATA_Buffer   : std_logic_vector(0 to 31);
 signal in_frame_r              : std_logic;
 signal storage_r               : std_logic_vector(0 to 15);
 signal storage_v_r             : std_logic;
-signal storage_ufc_v_r         : std_logic;
 signal storage_pad_r           : std_logic;
 signal tx_pe_data_r            : std_logic_vector(0 to 31);
 signal valid_c                 : std_logic_vector(0 to 1);
 signal tx_pe_data_v_r          : std_logic_vector(0 to 1);
-signal tx_pe_ufc_v_r           : std_logic_vector(0 to 1);
 signal gen_pad_c               : std_logic_vector(0 to 1);
 signal gen_pad_r               : std_logic_vector(0 to 1);
 
@@ -252,22 +249,6 @@ when others => valid_c <= "11";
     end process;
 
 
-    -- The storage_ufc_v_r register is asserted when valid UFC data is placed in the storage register.
-    -- Note that UFC data cannot be halted.
-
-    process (USER_CLK)
-
-    begin
-
-        if (USER_CLK 'event and USER_CLK = '1') then
-
-            storage_ufc_v_r <= UFC_MESSAGE(1) after DLY;
-
-        end if;
-
-    end process;
-
-
     -- The tx_pe_data_v_r registers track valid data in the TX_PE_DATA register.  The data is valid
     -- if it was valid in the previous stage.  Since the first 2 bytes come from storage, validity is
     -- determined from the storage_v_r signal. The remaining bytes are valid if their valid signal
@@ -286,25 +267,6 @@ when others => valid_c <= "11";
                 tx_pe_data_v_r(1) <= valid_c(0) and in_frame_c after DLY;
 
             end if;
-
-        end if;
-
-    end process;
-
-
-    -- The tx_pe_ufc_v_r register tracks valid ufc data in the tx_pe_data_register.  The first 2 bytes
-    -- come from storage: they are valid if storage_ufc_v_r was asserted.  The remaining bytes come from
-    -- the TX_D input.  They are valid if UFC_MESSAGE was high when they were exampled.  Note that UFC data
-    -- cannot be halted.
-
-    process (USER_CLK)
-
-    begin
-
-        if (USER_CLK 'event and USER_CLK = '1') then
-
-            tx_pe_ufc_v_r(0) <= storage_ufc_v_r after DLY;
-            tx_pe_ufc_v_r(1) <= UFC_MESSAGE(0) after DLY;
 
         end if;
 
@@ -386,10 +348,10 @@ when others => gen_pad_c <= "00";
         if (USER_CLK 'event and USER_CLK = '1') then
 
             TX_PE_DATA_Buffer      <= tx_pe_data_r after DLY;
-            TX_PE_DATA_V_Buffer(0) <= (tx_pe_data_v_r(0) and not HALT_C) or tx_pe_ufc_v_r(0) after DLY;
-            TX_PE_DATA_V_Buffer(1) <= (tx_pe_data_v_r(1) and not HALT_C) or tx_pe_ufc_v_r(1) after DLY;
-            GEN_PAD_Buffer(0)      <= (gen_pad_r(0) and not HALT_C) and not tx_pe_ufc_v_r(0) after DLY;
-            GEN_PAD_Buffer(1)      <= (gen_pad_r(1) and not HALT_C) and not tx_pe_ufc_v_r(1) after DLY;
+            TX_PE_DATA_V_Buffer(0) <= tx_pe_data_v_r(0) and not HALT_C after DLY;
+            TX_PE_DATA_V_Buffer(1) <= tx_pe_data_v_r(1) and not HALT_C after DLY;
+            GEN_PAD_Buffer(0)      <= gen_pad_r(0) and not HALT_C after DLY;
+            GEN_PAD_Buffer(1)      <= gen_pad_r(1) and not HALT_C after DLY;
 
         end if;
 

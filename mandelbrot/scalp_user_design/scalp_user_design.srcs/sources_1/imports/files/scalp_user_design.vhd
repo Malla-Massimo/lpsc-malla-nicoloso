@@ -644,14 +644,8 @@ begin
         signal write_done : std_logic := '0';
         signal write_done_sync1 : std_logic := '0';
         signal write_done_sync2 : std_logic := '0';
+        
 
-        signal tx_data_aurora: std_logic_vector(31 downto 0) := (others => '0');
-        signal tx_dvalid_aurora : std_logic := '0';
-        signal tx_ready_aurora : std_logic := '0';
-        signal rx_data_aurora: std_logic_vector(31 downto 0) := (others => '0');
-        signal rx_dvalid_aurora: std_logic := '0';
-        signal hard_err_aurora: std_logic := '0';
-        signal soft_err_aurora: std_logic := '0';
     
     component BRAM_5_500k is
       PORT (
@@ -668,68 +662,61 @@ begin
       end component BRAM_5_500k;
       
       COMPONENT aurora_8b10b
-      PORT (
-        s_axi_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 31);
-        s_axi_tx_tkeep : IN STD_LOGIC_VECTOR(0 TO 3);
-        s_axi_tx_tlast : IN STD_LOGIC;
-        s_axi_tx_tvalid : IN STD_LOGIC;
-        s_axi_tx_tready : OUT STD_LOGIC;
-        s_axi_nfc_tx_tvalid : IN STD_LOGIC;
-        s_axi_nfc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 3);
-        s_axi_nfc_tx_tready : OUT STD_LOGIC;
-        s_axi_ufc_tx_tvalid : IN STD_LOGIC;
-        s_axi_ufc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 2);
-        s_axi_ufc_tx_tready : OUT STD_LOGIC;
-        m_axi_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
-        m_axi_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
-        m_axi_rx_tlast : OUT STD_LOGIC;
-        m_axi_rx_tvalid : OUT STD_LOGIC;
-        m_axi_ufc_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
-        m_axi_ufc_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
-        m_axi_ufc_rx_tlast : OUT STD_LOGIC;
-        m_axi_ufc_rx_tvalid : OUT STD_LOGIC;
-        hard_err : OUT STD_LOGIC;
-        soft_err : OUT STD_LOGIC;
-        frame_err : OUT STD_LOGIC;
-        channel_up : OUT STD_LOGIC;
-        lane_up : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
-        txp : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
-        txn : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
-        reset : IN STD_LOGIC;
-        gt_reset : IN STD_LOGIC;
-        loopback : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-        rxp : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-        rxn : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-        drpclk_in : IN STD_LOGIC;
-        drpaddr_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
-        drpen_in : IN STD_LOGIC;
-        drpdi_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-        drprdy_out : OUT STD_LOGIC;
-        drpdo_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        drpwe_in : IN STD_LOGIC;
-        m_axi_nfc_rx_tvalid : OUT STD_LOGIC;
-        m_axi_nfc_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 3);
-        power_down : IN STD_LOGIC;
-        tx_lock : OUT STD_LOGIC;
-        tx_resetdone_out : OUT STD_LOGIC;
-        rx_resetdone_out : OUT STD_LOGIC;
-        link_reset_out : OUT STD_LOGIC;
-        gt_common_reset_out : OUT STD_LOGIC;
-        gt0_pll0outclk_in : IN STD_LOGIC;
-        gt0_pll1outclk_in : IN STD_LOGIC;
-        gt0_pll0outrefclk_in : IN STD_LOGIC;
-        gt0_pll1outrefclk_in : IN STD_LOGIC;
-        gt0_pll0refclklost_in : IN STD_LOGIC;
-        quad1_common_lock_in : IN STD_LOGIC;
-        init_clk_in : IN STD_LOGIC;
-        pll_not_locked : IN STD_LOGIC;
-        tx_out_clk : OUT STD_LOGIC;
-        sys_reset_out : OUT STD_LOGIC;
-        user_clk : IN STD_LOGIC;
-        sync_clk : IN STD_LOGIC;
-        gt_refclk1 : IN STD_LOGIC 
-      );
-    END COMPONENT;
+  PORT (
+    s_axi_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 31);
+    s_axi_tx_tkeep : IN STD_LOGIC_VECTOR(0 TO 3);
+    s_axi_tx_tlast : IN STD_LOGIC;
+    s_axi_tx_tvalid : IN STD_LOGIC;
+    s_axi_tx_tready : OUT STD_LOGIC;
+    s_axi_nfc_tx_tvalid : IN STD_LOGIC;
+    s_axi_nfc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 3);
+    s_axi_nfc_tx_tready : OUT STD_LOGIC;
+    m_axi_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
+    m_axi_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
+    m_axi_rx_tlast : OUT STD_LOGIC;
+    m_axi_rx_tvalid : OUT STD_LOGIC;
+    hard_err : OUT STD_LOGIC;
+    soft_err : OUT STD_LOGIC;
+    frame_err : OUT STD_LOGIC;
+    channel_up : OUT STD_LOGIC;
+    lane_up : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+    txp : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+    txn : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+    reset : IN STD_LOGIC;
+    gt_reset : IN STD_LOGIC;
+    loopback : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+    rxp : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    rxn : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    drpclk_in : IN STD_LOGIC;
+    drpaddr_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+    drpen_in : IN STD_LOGIC;
+    drpdi_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+    drprdy_out : OUT STD_LOGIC;
+    drpdo_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    drpwe_in : IN STD_LOGIC;
+    m_axi_nfc_rx_tvalid : OUT STD_LOGIC;
+    m_axi_nfc_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 3);
+    power_down : IN STD_LOGIC;
+    tx_lock : OUT STD_LOGIC;
+    tx_resetdone_out : OUT STD_LOGIC;
+    rx_resetdone_out : OUT STD_LOGIC;
+    link_reset_out : OUT STD_LOGIC;
+    gt_common_reset_out : OUT STD_LOGIC;
+    gt0_pll0outclk_in : IN STD_LOGIC;
+    gt0_pll1outclk_in : IN STD_LOGIC;
+    gt0_pll0outrefclk_in : IN STD_LOGIC;
+    gt0_pll1outrefclk_in : IN STD_LOGIC;
+    gt0_pll0refclklost_in : IN STD_LOGIC;
+    quad1_common_lock_in : IN STD_LOGIC;
+    init_clk_in : IN STD_LOGIC;
+    pll_not_locked : IN STD_LOGIC;
+    tx_out_clk : OUT STD_LOGIC;
+    sys_reset_out : OUT STD_LOGIC;
+    user_clk : IN STD_LOGIC;
+    sync_clk : IN STD_LOGIC;
+    gt_refclk1 : IN STD_LOGIC 
+  );
+END COMPONENT;
          
     begin  -- block PLxB
         
@@ -748,80 +735,73 @@ begin
     );
     
     Aurora : aurora_8b10b
-    PORT MAP (
-        -- TRANSMITTER
-        s_axi_tx_tdata => tx_data_aurora,
-        s_axi_tx_tkeep => "1111"
-        s_axi_tx_tlast => '1',
-        s_axi_tx_tvalid => tx_dvalid_aurora,
-        s_axi_tx_tready => tx_ready_aurora,
-        
-        -- RECEIVER
-        m_axi_rx_tdata => rx_data_aurora,
-        m_axi_rx_tkeep => "1111"
-        m_axi_rx_tlast => '1',
-        m_axi_rx_tvalid => rx_dvalid_aurora,
+  PORT MAP (
+    -- TRANSMITTER
+    s_axi_tx_tdata => s_axi_tx_tdata, -- Transmit data
+    s_axi_tx_tkeep => s_axi_tx_tkeep, -- Which last octects are valid
+    s_axi_tx_tlast => s_axi_tx_tlast, -- Indicate End of frame
+    s_axi_tx_tvalid => s_axi_tx_tvalid, -- Enable sending data
+    s_axi_tx_tready => s_axi_tx_tready, -- Select data source. Must be set to low when K char are transmitted
 
-        s_axi_nfc_tx_tvalid => s_axi_nfc_tx_tvalid,
-        s_axi_nfc_tx_tdata => s_axi_nfc_tx_tdata,
-        s_axi_nfc_tx_tready => s_axi_nfc_tx_tready,
-        s_axi_ufc_tx_tvalid => open,
-        s_axi_ufc_tx_tdata => open,
-        s_axi_ufc_tx_tready => open,
-       
-        m_axi_ufc_rx_tdata => open,
-        m_axi_ufc_rx_tkeep => open,
-        m_axi_ufc_rx_tlast => open,
-        m_axi_ufc_rx_tvalid => open,
-
-        hard_err => hard_err_aurora,
-        soft_err => soft_err_aurora,
-        frame_err => frame_err,
-        channel_up => channel_up,
-        lane_up => lane_up,
+    s_axi_nfc_tx_tvalid => s_axi_nfc_tx_tvalid,
+    s_axi_nfc_tx_tdata => s_axi_nfc_tx_tdata,
+    s_axi_nfc_tx_tready => s_axi_nfc_tx_tready,
     
-        reset => reset,
-        gt_reset => gt_reset,
-        loopback => "111",
-           
-        txp => GTPToSouthPxSO,,
-        txn => GTPToSouthNxSO,
-        rxp => GTPFromSouthPxSI,
-        rxn => GTPFromSouthNxSI,
-        
-        drpclk_in => drpclk_in,
-        drpaddr_in => drpaddr_in,
-        drpen_in => drpen_in,
-        drpdi_in => drpdi_in,
-        drprdy_out => drprdy_out,
-        drpdo_out => drpdo_out,
-        drpwe_in => drpwe_in,
-        
-        m_axi_nfc_rx_tvalid => m_axi_nfc_rx_tvalid,
-        m_axi_nfc_rx_tdata => m_axi_nfc_rx_tdata,
-        
-        power_down => power_down,
-        tx_lock => tx_lock,
-        tx_resetdone_out => tx_resetdone_out,
-        rx_resetdone_out => rx_resetdone_out,
-        link_reset_out => link_reset_out,
-        
-        gt_common_reset_out => gt_common_reset_out,
-        gt0_pll0outclk_in => gt0_pll0outclk_in,
-        gt0_pll1outclk_in => gt0_pll1outclk_in,
-        gt0_pll0outrefclk_in => gt0_pll0outrefclk_in,
-        gt0_pll1outrefclk_in => gt0_pll1outrefclk_in,
-        gt0_pll0refclklost_in => gt0_pll0refclklost_in,
-        
-        quad1_common_lock_in => quad1_common_lock_in,
-        
-        init_clk_in => init_clk_in,
-        pll_not_locked => pll_not_locked,
-        tx_out_clk => tx_out_clk,
-        sys_reset_out => sys_reset_out,
-        user_clk => user_clk,
-        sync_clk => sync_clk,
-        gt_refclk1 => gt_refclk1
+    -- RECEIVER
+    m_axi_rx_tdata => m_axi_rx_tdata,
+    m_axi_rx_tkeep => m_axi_rx_tkeep,
+    m_axi_rx_tlast => m_axi_rx_tlast,
+    m_axi_rx_tvalid => m_axi_rx_tvalid,
+    
+    -- CLOCKS
+    init_clk_in => init_clk_in,
+    user_clk => user_clk, -- main clock
+    drpclk_in => drpclk_in, -- State machine RX side
+
+    -- RESETS ASYNCHRONES
+    reset => reset, -- with clock init_clk_in
+    gt_reset => gt_reset, -- with clock user_clk
+
+    hard_err => hard_err,
+    soft_err => soft_err,
+    frame_err => frame_err,
+    channel_up => channel_up,
+    lane_up => lane_up,
+    txp => txp,
+    txn => txn,
+   
+   
+    loopback => loopback,
+    rxp => rxp,
+    rxn => rxn,
+    
+    drpaddr_in => drpaddr_in,
+    drpen_in => drpen_in,
+    drpdi_in => drpdi_in,
+    drprdy_out => drprdy_out,
+    drpdo_out => drpdo_out,
+    drpwe_in => drpwe_in,
+    m_axi_nfc_rx_tvalid => m_axi_nfc_rx_tvalid,
+    m_axi_nfc_rx_tdata => m_axi_nfc_rx_tdata,
+    power_down => power_down,
+    tx_lock => tx_lock,
+    tx_resetdone_out => tx_resetdone_out,
+    rx_resetdone_out => rx_resetdone_out,
+    link_reset_out => link_reset_out,
+    gt_common_reset_out => gt_common_reset_out,
+    gt0_pll0outclk_in => gt0_pll0outclk_in,
+    gt0_pll1outclk_in => gt0_pll1outclk_in,
+    gt0_pll0outrefclk_in => gt0_pll0outrefclk_in,
+    gt0_pll1outrefclk_in => gt0_pll1outrefclk_in,
+    gt0_pll0refclklost_in => gt0_pll0refclklost_in,
+    quad1_common_lock_in => quad1_common_lock_in,
+    
+    pll_not_locked => pll_not_locked,
+    tx_out_clk => tx_out_clk,
+    sys_reset_out => sys_reset_out,
+    
+    sync_clk => sync_clk,
+    gt_refclk1 => gt_refclk1
   );
     
         ScalpFirmwareIDxI : entity work.scalp_firmwareid
