@@ -28,6 +28,7 @@ use ieee.math_real."log2";
 -- use ieee.std_logic_unsigned.all;
 -- use ieee.std_logic_arith.all;
 -- use ieee.std_logic_misc.all;
+use ieee.fixed_pkg.all;
 
 library unisim;
 use unisim.vcomponents.all;
@@ -645,7 +646,18 @@ begin
         signal write_done_sync1 : std_logic := '0';
         signal write_done_sync2 : std_logic := '0';
         
+        signal julia_start : std_logic := '0';
+        signal julia_x : sfixed(3 downto -15); 
+        signal julia_y : sfixed(3 downto -15);
+        signal julia_n_iter : std_logic_vector(7 downto 0);
+        signal julia_done: std_logic;
+        signal julia_x_step : sfixed(3 downto -15) := to_sfixed(0.0041666, 3, -15);
+        signal julia_y_step : sfixed(3 downto -15) := to_sfixed(0.0041666, 3, -15);
+        signal cur_x_int: unsigned(9 downto 0);
+        signal cur_y_int: unsigned (9 downto 0);
 
+        type state_t is (INIT, CALCULATE, DONE);
+        signal state: state_t := INIT;
     
     component BRAM_5_500k is
       PORT (
@@ -660,6 +672,20 @@ begin
         doutb : OUT STD_LOGIC_VECTOR(4 DOWNTO 0)
       );
       end component BRAM_5_500k;
+      
+      component Julia_n_calculator is
+        Port ( 
+            clk         : in std_logic;
+            rst         : in std_logic;
+            start       : in std_logic;
+            x           : in sfixed(3 downto -15);
+            y           : in sfixed(3 downto -15);
+            c_re        : in sfixed(3 downto -15);
+            c_im        : in sfixed(3 downto -15);
+            n_iteration : out std_logic_vector(7 downto 0);
+            done        : out std_logic
+        );
+    end component;
       
       COMPONENT aurora_8b10b
   PORT (
@@ -734,75 +760,88 @@ END COMPONENT;
         doutb => ram_data_out               -- Data out
     );
     
-    Aurora : aurora_8b10b
-  PORT MAP (
-    -- TRANSMITTER
-    s_axi_tx_tdata => s_axi_tx_tdata, -- Transmit data
-    s_axi_tx_tkeep => s_axi_tx_tkeep, -- Which last octects are valid
-    s_axi_tx_tlast => s_axi_tx_tlast, -- Indicate End of frame
-    s_axi_tx_tvalid => s_axi_tx_tvalid, -- Enable sending data
-    s_axi_tx_tready => s_axi_tx_tready, -- Select data source. Must be set to low when K char are transmitted
-
-    s_axi_nfc_tx_tvalid => s_axi_nfc_tx_tvalid,
-    s_axi_nfc_tx_tdata => s_axi_nfc_tx_tdata,
-    s_axi_nfc_tx_tready => s_axi_nfc_tx_tready,
+    U_JULIA_GEN: Julia_n_calculator
+    port map (
+        clk         => clk_100MHz,
+        rst         => Clk125RstxR,
+        start       => julia_start,
+        x           => julia_x,
+        y           => julia_y,
+        c_re        => to_sfixed(-0.835, 3, -15), -- Julia Real constant
+        c_im        => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
+        n_iteration => julia_n_iter,
+        done        => julia_done
+    );
     
-    -- RECEIVER
-    m_axi_rx_tdata => m_axi_rx_tdata,
-    m_axi_rx_tkeep => m_axi_rx_tkeep,
-    m_axi_rx_tlast => m_axi_rx_tlast,
-    m_axi_rx_tvalid => m_axi_rx_tvalid,
+--    Aurora : aurora_8b10b
+--  PORT MAP (
+--    -- TRANSMITTER
+--    s_axi_tx_tdata => s_axi_tx_tdata, -- Transmit data
+--    s_axi_tx_tkeep => s_axi_tx_tkeep, -- Which last octects are valid
+--    s_axi_tx_tlast => s_axi_tx_tlast, -- Indicate End of frame
+--    s_axi_tx_tvalid => s_axi_tx_tvalid, -- Enable sending data
+--    s_axi_tx_tready => s_axi_tx_tready, -- Select data source. Must be set to low when K char are transmitted
+
+--    s_axi_nfc_tx_tvalid => s_axi_nfc_tx_tvalid,
+--    s_axi_nfc_tx_tdata => s_axi_nfc_tx_tdata,
+--    s_axi_nfc_tx_tready => s_axi_nfc_tx_tready,
     
-    -- CLOCKS
-    init_clk_in => init_clk_in,
-    user_clk => user_clk, -- main clock
-    drpclk_in => drpclk_in, -- State machine RX side
+--    -- RECEIVER
+--    m_axi_rx_tdata => m_axi_rx_tdata,
+--    m_axi_rx_tkeep => m_axi_rx_tkeep,
+--    m_axi_rx_tlast => m_axi_rx_tlast,
+--    m_axi_rx_tvalid => m_axi_rx_tvalid,
+    
+--    -- CLOCKS
+--    init_clk_in => init_clk_in,
+--    user_clk => user_clk, -- main clock
+--    drpclk_in => drpclk_in, -- State machine RX side
 
-    -- RESETS ASYNCHRONES
-    reset => reset, -- with clock init_clk_in
-    gt_reset => gt_reset, -- with clock user_clk
+--    -- RESETS ASYNCHRONES
+--    reset => reset, -- with clock init_clk_in
+--    gt_reset => gt_reset, -- with clock user_clk
 
-    hard_err => hard_err,
-    soft_err => soft_err,
-    frame_err => frame_err,
-    channel_up => channel_up,
-    lane_up => lane_up,
-    txp => txp,
-    txn => txn,
+--    hard_err => hard_err,
+--    soft_err => soft_err,
+--    frame_err => frame_err,
+--    channel_up => channel_up,
+--    lane_up => lane_up,
+--    txp => txp,
+--    txn => txn,
    
    
-    loopback => loopback,
-    rxp => rxp,
-    rxn => rxn,
+--    loopback => loopback,
+--    rxp => rxp,
+--    rxn => rxn,
     
-    drpaddr_in => drpaddr_in,
-    drpen_in => drpen_in,
-    drpdi_in => drpdi_in,
-    drprdy_out => drprdy_out,
-    drpdo_out => drpdo_out,
-    drpwe_in => drpwe_in,
-    m_axi_nfc_rx_tvalid => m_axi_nfc_rx_tvalid,
-    m_axi_nfc_rx_tdata => m_axi_nfc_rx_tdata,
-    power_down => power_down,
-    tx_lock => tx_lock,
-    tx_resetdone_out => tx_resetdone_out,
-    rx_resetdone_out => rx_resetdone_out,
-    link_reset_out => link_reset_out,
-    gt_common_reset_out => gt_common_reset_out,
-    gt0_pll0outclk_in => gt0_pll0outclk_in,
-    gt0_pll1outclk_in => gt0_pll1outclk_in,
-    gt0_pll0outrefclk_in => gt0_pll0outrefclk_in,
-    gt0_pll1outrefclk_in => gt0_pll1outrefclk_in,
-    gt0_pll0refclklost_in => gt0_pll0refclklost_in,
-    quad1_common_lock_in => quad1_common_lock_in,
+--    drpaddr_in => drpaddr_in,
+--    drpen_in => drpen_in,
+--    drpdi_in => drpdi_in,
+--    drprdy_out => drprdy_out,
+--    drpdo_out => drpdo_out,
+--    drpwe_in => drpwe_in,
+--    m_axi_nfc_rx_tvalid => m_axi_nfc_rx_tvalid,
+--    m_axi_nfc_rx_tdata => m_axi_nfc_rx_tdata,
+--    power_down => power_down,
+--    tx_lock => tx_lock,
+--    tx_resetdone_out => tx_resetdone_out,
+--    rx_resetdone_out => rx_resetdone_out,
+--    link_reset_out => link_reset_out,
+--    gt_common_reset_out => gt_common_reset_out,
+--    gt0_pll0outclk_in => gt0_pll0outclk_in,
+--    gt0_pll1outclk_in => gt0_pll1outclk_in,
+--    gt0_pll0outrefclk_in => gt0_pll0outrefclk_in,
+--    gt0_pll1outrefclk_in => gt0_pll1outrefclk_in,
+--    gt0_pll0refclklost_in => gt0_pll0refclklost_in,
+--    quad1_common_lock_in => quad1_common_lock_in,
     
-    pll_not_locked => pll_not_locked,
-    tx_out_clk => tx_out_clk,
-    sys_reset_out => sys_reset_out,
+--    pll_not_locked => pll_not_locked,
+--    tx_out_clk => tx_out_clk,
+--    sys_reset_out => sys_reset_out,
     
-    sync_clk => sync_clk,
-    gt_refclk1 => gt_refclk1
-  );
+--    sync_clk => sync_clk,
+--    gt_refclk1 => gt_refclk1
+--  );
     
         ScalpFirmwareIDxI : entity work.scalp_firmwareid
             generic map (
@@ -1136,34 +1175,90 @@ END COMPONENT;
             ---------------------------------------------------------------------------
             -- 1. WRITER PROCESS: Fill the RAM with the Swiss Flag
             ---------------------------------------------------------------------------
-            SwissFlagToRamxP : process(clk_100MHz)
-                variable x, y : integer;
+            
+            JuliaPlotter: process(clk_100MHz)
+             variable v_mult_res : sfixed(13 downto -15);
             begin
                 if rising_edge(clk_100MHz) then
                     if Clk125PllLockedxS = '1' and write_done = '0' then
-                        -- Convert linear address 5x(720x720) to 2D coordinates (0-31)
-                        x := to_integer(unsigned(ram_wr_addr) mod 720);
-                        y := to_integer(unsigned(ram_wr_addr) / 720);
-        
-                        -- Background (Red)
-                        ram_data_in <= "00101"; 
-        
-                        -- Vertical bar of the cross
-                        if (x >= 330 and x < 390) then
-                            ram_data_in <= "00100";
-                        -- Horizontal bar of the cross
-                        elsif (y >= 330 and y < 390) then
-                            ram_data_in <= "00100";
-                        end if;
-                        
-                       if unsigned(ram_wr_addr) = 720*720 - 1 then
-                            write_done <= '1';
-                        else
-                            ram_wr_addr <= std_logic_vector(unsigned(ram_wr_addr) + 1);
-                        end if;
+
+                        case state is 
+                            when INIT => 
+                                -- Convert linear address 5x(720x720) to 2D coordinates (0-31)
+                                cur_x_int <= (others => '0');
+                                cur_y_int <= (others => '0');
+                                state     <= CALCULATE;
+
+                            when CALCULATE =>
+                               if julia_start = '0' and julia_done = '0' then
+                                -- Calculate coordinates for the NEXT calculation
+                                v_mult_res := to_sfixed(to_integer(cur_x_int), 9, 0) * julia_x_step;
+                                julia_x    <= resize(v_mult_res - 2.0, julia_x); 
+                                
+                                v_mult_res := to_sfixed(to_integer(cur_y_int), 9, 0) * julia_y_step;
+                                julia_y    <= resize(v_mult_res - 1.0, julia_y);
+                                
+                                julia_start <= '1'; 
+
+                                elsif julia_done = '1' then
+                                    ram_wr_addr <= std_logic_vector(cur_x_int + (cur_y_int * 720));
+                                    
+                                    if unsigned(julia_n_iter) >= 100 then
+                                        ram_data_in <= "00000"; 
+                                    else
+                                        ram_data_in <= std_logic_vector(resize(unsigned(julia_n_iter) / 3, 5));
+                                    end if;
+                                    
+                                    if cur_x_int < 719 then
+                                        cur_x_int <= cur_x_int + 1;
+                                    else
+                                        cur_x_int <= (others => '0');
+                                        if cur_y_int < 719 then
+                                            cur_y_int <= cur_y_int + 1;
+                                        else
+                                            state <= DONE;
+                                        end if;
+                                    end if;
+                                end if;
+                            when DONE =>
+                                julia_start <= '0';
+                            when others => state <= INIT;
+                        end case;
                     end if;
                 end if;
-            end process SwissFlagToRamxP;
+            end process JuliaPlotter;
+            
+
+
+
+            -- SwissFlagToRamxP : process(clk_100MHz)
+            --     variable x, y : integer;
+            -- begin
+            --     if rising_edge(clk_100MHz) then
+            --         if Clk125PllLockedxS = '1' and write_done = '0' then
+            --             -- Convert linear address 5x(720x720) to 2D coordinates (0-31)
+            --             x := to_integer(unsigned(ram_wr_addr) mod 720);
+            --             y := to_integer(unsigned(ram_wr_addr) / 720);
+        
+            --             -- Background (Red)
+            --             ram_data_in <= "00101"; 
+        
+            --             -- Vertical bar of the cross
+            --             if (x >= 330 and x < 390) then
+            --                 ram_data_in <= "00100";
+            --             -- Horizontal bar of the cross
+            --             elsif (y >= 330 and y < 390) then
+            --                 ram_data_in <= "00100";
+            --             end if;
+                        
+            --            if unsigned(ram_wr_addr) = 720*720 - 1 then
+            --                 write_done <= '1';
+            --             else
+            --                 ram_wr_addr <= std_logic_vector(unsigned(ram_wr_addr) + 1);
+            --             end if;
+            --         end if;
+            --     end if;
+            -- end process SwissFlagToRamxP;
             
             ---------------------------------------------------------------------------
             -- 2. READER PROCESS: Read RAM and send to HDMI

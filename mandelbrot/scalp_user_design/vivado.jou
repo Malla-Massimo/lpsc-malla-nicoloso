@@ -3,10 +3,10 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Thu Apr  9 18:45:50 2026
-# Process ID         : 26396
+# Start of session at: Wed Apr 29 21:49:19 2026
+# Process ID         : 14332
 # Current directory  : C:/lpsc/mandelbrot/scalp_user_design
-# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent656 C:\lpsc\mandelbrot\scalp_user_design\scalp_user_design.xpr
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent11404 C:\lpsc\mandelbrot\scalp_user_design\scalp_user_design.xpr
 # Log file           : C:/lpsc/mandelbrot/scalp_user_design/vivado.log
 # Journal file       : C:/lpsc/mandelbrot/scalp_user_design\vivado.jou
 # Running On         : ma2s
@@ -17,15 +17,12 @@
 # CPU Physical cores : 20
 # CPU Logical cores  : 28
 # Host memory        : 68447 MB
-# Swap memory        : 30505 MB
-# Total Virtual      : 98953 MB
-# Available Virtual  : 64957 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 72742 MB
+# Available Virtual  : 48531 MB
 #-----------------------------------------------------------
 start_gui
 open_project C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.xpr
 update_compile_order -fileset sources_1
-launch_runs impl_1 -jobs 14
-wait_on_run impl_1
-open_run impl_1
-report_methodology -name methodology_1
-open_bd_design {C:/lpsc/mandelbrot/scalp_zynqps/scalp_zynqps.bd}
+launch_runs synth_1 -jobs 14
+wait_on_run synth_1
