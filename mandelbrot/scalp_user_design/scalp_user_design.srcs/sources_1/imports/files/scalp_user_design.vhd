@@ -106,10 +106,10 @@ entity scalp_user_design is
         -- GTPToEastPxSO      : out   std_logic;
         -- GTPToEastNxSO      : out   std_logic;
         -- South
-        GTPFromSouthPxSI   : in    std_logic;
-        GTPFromSouthNxSI   : in    std_logic;
-        GTPToSouthPxSO     : out   std_logic;
-        GTPToSouthNxSO     : out   std_logic;
+--        GTPFromSouthPxSI   : in    std_logic;
+--        GTPFromSouthNxSI   : in    std_logic;
+--        GTPToSouthPxSO     : out   std_logic;
+--        GTPToSouthNxSO     : out   std_logic;
         -- West
         -- GTPFromWestPxSI    : in    std_logic;
         -- GTPFromWestNxSI    : in    std_logic;
@@ -587,52 +587,35 @@ begin
         );
         end component;
         
-    type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
-    constant COLOR_PALETTE : color_pattern := (
-    -- Greyscale / Basics
-    0  => x"000000", -- Black
-    1  => x"404040", -- Dark Grey
-    2  => x"808080", -- Grey
-    3  => x"C0C0C0", -- Light Grey
-    4  => x"FFFFFF", -- White
+type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
+constant COLOR_PALETTE : color_pattern := (
+    -- 0: Background (Diverging immediately)
+    -- Pure Black
+    0  => x"000000", 
+    1  => x"000000", 
+    2  => x"000000",
+    3  => x"000000",
+    4  => x"000000",
+    5  => x"000000", 
     
-    -- Reds / Oranges
-    5  => x"FF0000", -- Red
-    6  => x"800000", -- Maroon
-    7  => x"FF4500", -- Orange Red
-    8  => x"FFA500", -- Orange
-    
-    -- Greens
-    9  => x"00FF00", -- Lime
-    10 => x"008000", -- Green
-    11 => x"006400", -- Dark Green
-    12 => x"ADFF2F", -- Green Yellow
-    
-    -- Blues
-    13 => x"0000FF", -- Blue
-    14 => x"000080", -- Navy
-    15 => x"00BFFF", -- Deep Sky Blue
-    16 => x"1E90FF", -- Dodger Blue
-    
-    -- Yellows / Purples / Cyans
-    17 => x"FFFF00", -- Yellow
-    18 => x"FFD700", -- Gold
-    19 => x"FF00FF", -- Magenta
-    20 => x"800080", -- Purple
-    21 => x"4B0082", -- Indigo
-    22 => x"00FFFF", -- Cyan
-    23 => x"008080", -- Teal
-    
-    -- Custom Artistic / Pastels
-    24 => x"FFC0CB", -- Pink
-    25 => x"F0E68C", -- Khaki
-    26 => x"E6E6FA", -- Lavender
-    27 => x"FFFACD", -- Lemon Chiffon
-    28 => x"20B2AA", -- Light Sea Green
-    29 => x"FF6347", -- Tomato
-    30 => x"7FFFD4", -- Aquamarine
-    31 => x"DEB887", -- Burly Wood
-    others => x"000000"
+    -- 6 to 10: Deep Space Blues (Slow escapes)
+    6  => x"00194B",
+    7  => x"001E5A",
+    8  => x"002369", 
+    9  => x"002878", 
+    10 => x"002D87",
+
+    -- 11 to 20: Electric Purples and Magentas
+    11 => x"1E1487", 12 => x"3C0A87", 13 => x"5A0087",
+    14 => x"780087", 15 => x"960087", 16 => x"B40087",
+    17 => x"D20078", 18 => x"F00069", 19 => x"FF005A",
+    20 => x"FF003C",
+
+    -- 21 to 31: Fire and Gold (Fast escapes/Edges)
+    21 => x"FF1E1E", 22 => x"FF3C00", 23 => x"FF5A00",
+    24 => x"FF7800", 25 => x"FF9600", 26 => x"FFB400",
+    27 => x"FFD200", 28 => x"FFF000", 29 => x"FFFF3C",
+    30 => x"FFFF78", 31 => x"FFFFB4"
 );
         
         -- DECLARE SIGNALS FOR THE RAM 
@@ -640,7 +623,7 @@ begin
         signal ram_data_out  : std_logic_vector(4 downto 0) := (others => '0');
         signal ram_wr_addr   : std_logic_vector(18 downto 0)  := (others => '0');
         signal ram_rd_addr   : std_logic_vector(18 downto 0)  := (others => '0');
-        signal ram_we        : std_logic_vector(1 downto 0)  := (others => '1');
+        signal ram_we        : std_logic_vector(0 downto 0)  := (others => '0');
         signal color_buffer : std_logic_vector(23 downto 0) := (others => '0');
         signal write_done : std_logic := '0';
         signal write_done_sync1 : std_logic := '0';
@@ -656,7 +639,7 @@ begin
         signal cur_x_int: unsigned(9 downto 0);
         signal cur_y_int: unsigned (9 downto 0);
 
-        type state_t is (INIT, CALCULATE, DONE);
+        type state_t is (INIT, CALCULATE, WAIT_FOR_ACK, DONE);
         signal state: state_t := INIT;
     
     component BRAM_5_500k is
@@ -751,7 +734,7 @@ begin
     port map (
         clka  => clk_100MHz,                --100 Mhz clk
         ena   => '1',                       -- Permanently enabled
-        wea   => "1",                       -- Write enable (vector size 1)
+        wea   => ram_we,                       -- Write enable (vector size 1)
         addra => ram_wr_addr,               -- Adresse input 
         dina  => ram_data_in,               -- Input data
         clkb  => HdmiVgaClocksxC.VgaxC,     -- Clk Out
@@ -1187,39 +1170,52 @@ begin
                                 -- Convert linear address 5x(720x720) to 2D coordinates (0-31)
                                 cur_x_int <= (others => '0');
                                 cur_y_int <= (others => '0');
+                                ram_we      <= "0";
                                 state     <= CALCULATE;
 
                             when CALCULATE =>
-                               if julia_start = '0' and julia_done = '0' then
-                                -- Calculate coordinates for the NEXT calculation
-                                v_mult_res := to_sfixed(to_integer(cur_x_int), 9, 0) * julia_x_step;
-                                julia_x    <= resize(v_mult_res - 2.0, julia_x); 
-                                
-                                v_mult_res := to_sfixed(to_integer(cur_y_int), 9, 0) * julia_y_step;
-                                julia_y    <= resize(v_mult_res - 1.0, julia_y);
-                                
-                                julia_start <= '1'; 
-
-                                elsif julia_done = '1' then
-                                    ram_wr_addr <= std_logic_vector(cur_x_int + (cur_y_int * 720));
+                                -- Wait for the calculator to finish
+                                if julia_done = '1' then 
+                                    julia_start <= '0';
+                                    ram_we      <= "1";
+                                    ram_wr_addr <= std_logic_vector(resize(cur_x_int + (cur_y_int * 720), 19));
                                     
-                                    if unsigned(julia_n_iter) >= 100 then
-                                        ram_data_in <= "00000"; 
-                                    else
-                                        ram_data_in <= std_logic_vector(resize(unsigned(julia_n_iter) / 3, 5));
-                                    end if;
-                                    
+                                    -- Map iteration to 5 bits color pattern
+                                    ram_data_in <= std_logic_vector(resize(unsigned(julia_n_iter) / 3, 5));
+                            
+                                    state <= WAIT_FOR_ACK;
+                                else
+                                    -- Ensure start is high while calculating
+                                    julia_start <= '1';
+                                    ram_we      <= "0";
+                                end if;
+                            
+                            when WAIT_FOR_ACK =>
+                                ram_we <= "0";
+                                julia_start <= '0'; -- Ensure start is low
+                                
+                                -- Crucial: Wait for the calculator to acknowledge the reset
+                                if julia_done = '0' then 
                                     if cur_x_int < 719 then
                                         cur_x_int <= cur_x_int + 1;
+                                        -- Update julia_x here so it is READY for the next CALCULATE state
+                                        julia_x <= resize((to_sfixed(to_integer(cur_x_int + 1), 10, 0) * julia_x_step) - 1.5, julia_x);
+                                        state   <= CALCULATE;
                                     else
                                         cur_x_int <= (others => '0');
+                                        -- Reset X coordinate to the far left
+                                        julia_x   <= to_sfixed(-1.5, julia_x); 
                                         if cur_y_int < 719 then
                                             cur_y_int <= cur_y_int + 1;
+                                            -- Update julia_y here so it is stable
+                                            julia_y <= resize((to_sfixed(to_integer(cur_y_int + 1), 10, 0) * julia_y_step) - 1.5, julia_y);
+                                            state   <= CALCULATE;
                                         else
                                             state <= DONE;
                                         end if;
                                     end if;
                                 end if;
+
                             when DONE =>
                                 julia_start <= '0';
                             when others => state <= INIT;
@@ -1228,9 +1224,6 @@ begin
                 end if;
             end process JuliaPlotter;
             
-
-
-
             -- SwissFlagToRamxP : process(clk_100MHz)
             --     variable x, y : integer;
             -- begin

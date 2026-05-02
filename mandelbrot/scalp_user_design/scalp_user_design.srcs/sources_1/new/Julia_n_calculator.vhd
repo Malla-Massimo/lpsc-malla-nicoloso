@@ -54,25 +54,25 @@ begin
                         end if;
 
                     when CALCULATE_0 =>
-                        if (resize(x_carre + y_carre, 3, -15) < to_sfixed(4, 3, -15)) and (n_count < 100) then
-                            x_buff  <= Z_re;
-                            y_buff  <= Z_im;
+                        if (x_carre + y_carre) <= to_sfixed(4, 3, -15) and (n_count < 100) then
                             x_carre <= resize(Z_re * Z_re, 3, -15);
                             y_carre <= resize(Z_im * Z_im, 3, -15);
                             state   <= CALCULATE_1;
+                            
                         else
                             state   <= DONE_STATE;
                         end if;
 
                     when CALCULATE_1 =>
                         Z_re <= resize(x_carre - y_carre + c_re, 3, -15);
-                        Z_im <= resize(shift_left(resize(x_buff * y_buff, 4, -30), 1) + c_im, 3, -15);
+                        Z_im <= resize(shift_left(resize(Z_re * Z_im, 4, -30), 1) + c_im, 3, -15);
                         
                         n_count <= n_count + 1;
                         state   <= CALCULATE_0; 
 
                     when DONE_STATE =>
                         done <= '1';
+                  
                         if start = '0' then
                             state <= IDLE;
                         end if;

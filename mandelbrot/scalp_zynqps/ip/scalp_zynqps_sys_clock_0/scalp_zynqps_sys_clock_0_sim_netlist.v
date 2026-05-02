@@ -2,10 +2,10 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-// Date        : Tue Apr 21 18:31:46 2026
-// Host        : LAPTOP-CHKLS7CN running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim -rename_top scalp_zynqps_sys_clock_0 -prefix
-//               scalp_zynqps_sys_clock_0_ scalp_zynqps_sys_clock_0_sim_netlist.v
+// Date        : Sat May  2 13:28:23 2026
+// Host        : ma2s running 64-bit major release  (build 9200)
+// Command     : write_verilog -force -mode funcsim
+//               c:/lpsc/mandelbrot/scalp_zynqps/ip/scalp_zynqps_sys_clock_0/scalp_zynqps_sys_clock_0_sim_netlist.v
 // Design      : scalp_zynqps_sys_clock_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -32,7 +32,7 @@ module scalp_zynqps_sys_clock_0
   wire locked;
   wire resetn;
 
-  scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_wiz inst
+  scalp_zynqps_sys_clock_0_clk_wiz inst
        (.clk_100(clk_100),
         .clk_125(clk_125),
         .clk_in1(clk_in1),
@@ -40,7 +40,7 @@ module scalp_zynqps_sys_clock_0
         .resetn(resetn));
 endmodule
 
-module scalp_zynqps_sys_clock_0_scalp_zynqps_sys_clock_0_clk_wiz
+module scalp_zynqps_sys_clock_0_clk_wiz
    (clk_125,
     clk_100,
     resetn,
