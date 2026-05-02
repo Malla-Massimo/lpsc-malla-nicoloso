@@ -4,8 +4,8 @@
 // Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
 // Date        : Tue Apr 21 18:35:42 2026
 // Host        : LAPTOP-CHKLS7CN running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               c:/lpsc/mandelbrot/scalp_zynqps/ip/scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0_1/scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0 -prefix
+//               scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0_ scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0_stub.v
 // Design      : scalp_zynqps_ps7_0_axi_periph_imp_auto_pc_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z015clg485-2

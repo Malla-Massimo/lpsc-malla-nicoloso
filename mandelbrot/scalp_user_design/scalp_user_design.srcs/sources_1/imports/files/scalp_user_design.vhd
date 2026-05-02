@@ -485,12 +485,12 @@ architecture arch of scalp_user_design is
     ---------------------------------------------------------------------------
     -- Aurora 8B10B 
     ---------------------------------------------------------------------------
-    signal AuroraChannelUpxS : std_logic;
-    signal AuroraLaneUpxS    : std_logic;
-    signal AuroraHardErrxS   : std_logic;
-    signal AuroraSoftErrxS   : std_logic;
-    signal AuroraErrDetxS    : std_logic;
-    signal AuroraResetxR     : std_logic;
+--    signal AuroraChannelUpxS : std_logic;
+--    signal AuroraLaneUpxS    : std_logic;
+--    signal AuroraHardErrxS   : std_logic;
+--    signal AuroraSoftErrxS   : std_logic;
+--    signal AuroraErrDetxS    : std_logic;
+--    signal AuroraResetxR     : std_logic;
 
     -- Attributes
     attribute mark_debug       : string;
@@ -687,62 +687,62 @@ begin
         );
     end component;
       
-      COMPONENT aurora_8b10b
-  PORT (
-    s_axi_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 31);
-    s_axi_tx_tkeep : IN STD_LOGIC_VECTOR(0 TO 3);
-    s_axi_tx_tlast : IN STD_LOGIC;
-    s_axi_tx_tvalid : IN STD_LOGIC;
-    s_axi_tx_tready : OUT STD_LOGIC;
-    s_axi_nfc_tx_tvalid : IN STD_LOGIC;
-    s_axi_nfc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 3);
-    s_axi_nfc_tx_tready : OUT STD_LOGIC;
-    m_axi_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
-    m_axi_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
-    m_axi_rx_tlast : OUT STD_LOGIC;
-    m_axi_rx_tvalid : OUT STD_LOGIC;
-    hard_err : OUT STD_LOGIC;
-    soft_err : OUT STD_LOGIC;
-    frame_err : OUT STD_LOGIC;
-    channel_up : OUT STD_LOGIC;
-    lane_up : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
-    txp : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
-    txn : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
-    reset : IN STD_LOGIC;
-    gt_reset : IN STD_LOGIC;
-    loopback : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-    rxp : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    rxn : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    drpclk_in : IN STD_LOGIC;
-    drpaddr_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
-    drpen_in : IN STD_LOGIC;
-    drpdi_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    drprdy_out : OUT STD_LOGIC;
-    drpdo_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-    drpwe_in : IN STD_LOGIC;
-    m_axi_nfc_rx_tvalid : OUT STD_LOGIC;
-    m_axi_nfc_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 3);
-    power_down : IN STD_LOGIC;
-    tx_lock : OUT STD_LOGIC;
-    tx_resetdone_out : OUT STD_LOGIC;
-    rx_resetdone_out : OUT STD_LOGIC;
-    link_reset_out : OUT STD_LOGIC;
-    gt_common_reset_out : OUT STD_LOGIC;
-    gt0_pll0outclk_in : IN STD_LOGIC;
-    gt0_pll1outclk_in : IN STD_LOGIC;
-    gt0_pll0outrefclk_in : IN STD_LOGIC;
-    gt0_pll1outrefclk_in : IN STD_LOGIC;
-    gt0_pll0refclklost_in : IN STD_LOGIC;
-    quad1_common_lock_in : IN STD_LOGIC;
-    init_clk_in : IN STD_LOGIC;
-    pll_not_locked : IN STD_LOGIC;
-    tx_out_clk : OUT STD_LOGIC;
-    sys_reset_out : OUT STD_LOGIC;
-    user_clk : IN STD_LOGIC;
-    sync_clk : IN STD_LOGIC;
-    gt_refclk1 : IN STD_LOGIC 
-  );
-END COMPONENT;
+--      COMPONENT aurora_8b10b
+--  PORT (
+--    s_axi_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 31);
+--    s_axi_tx_tkeep : IN STD_LOGIC_VECTOR(0 TO 3);
+--    s_axi_tx_tlast : IN STD_LOGIC;
+--    s_axi_tx_tvalid : IN STD_LOGIC;
+--    s_axi_tx_tready : OUT STD_LOGIC;
+--    s_axi_nfc_tx_tvalid : IN STD_LOGIC;
+--    s_axi_nfc_tx_tdata : IN STD_LOGIC_VECTOR(0 TO 3);
+--    s_axi_nfc_tx_tready : OUT STD_LOGIC;
+--    m_axi_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 31);
+--    m_axi_rx_tkeep : OUT STD_LOGIC_VECTOR(0 TO 3);
+--    m_axi_rx_tlast : OUT STD_LOGIC;
+--    m_axi_rx_tvalid : OUT STD_LOGIC;
+--    hard_err : OUT STD_LOGIC;
+--    soft_err : OUT STD_LOGIC;
+--    frame_err : OUT STD_LOGIC;
+--    channel_up : OUT STD_LOGIC;
+--    lane_up : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+--    txp : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+--    txn : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+--    reset : IN STD_LOGIC;
+--    gt_reset : IN STD_LOGIC;
+--    loopback : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+--    rxp : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+--    rxn : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+--    drpclk_in : IN STD_LOGIC;
+--    drpaddr_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+--    drpen_in : IN STD_LOGIC;
+--    drpdi_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+--    drprdy_out : OUT STD_LOGIC;
+--    drpdo_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+--    drpwe_in : IN STD_LOGIC;
+--    m_axi_nfc_rx_tvalid : OUT STD_LOGIC;
+--    m_axi_nfc_rx_tdata : OUT STD_LOGIC_VECTOR(0 TO 3);
+--    power_down : IN STD_LOGIC;
+--    tx_lock : OUT STD_LOGIC;
+--    tx_resetdone_out : OUT STD_LOGIC;
+--    rx_resetdone_out : OUT STD_LOGIC;
+--    link_reset_out : OUT STD_LOGIC;
+--    gt_common_reset_out : OUT STD_LOGIC;
+--    gt0_pll0outclk_in : IN STD_LOGIC;
+--    gt0_pll1outclk_in : IN STD_LOGIC;
+--    gt0_pll0outrefclk_in : IN STD_LOGIC;
+--    gt0_pll1outrefclk_in : IN STD_LOGIC;
+--    gt0_pll0refclklost_in : IN STD_LOGIC;
+--    quad1_common_lock_in : IN STD_LOGIC;
+--    init_clk_in : IN STD_LOGIC;
+--    pll_not_locked : IN STD_LOGIC;
+--    tx_out_clk : OUT STD_LOGIC;
+--    sys_reset_out : OUT STD_LOGIC;
+--    user_clk : IN STD_LOGIC;
+--    sync_clk : IN STD_LOGIC;
+--    gt_refclk1 : IN STD_LOGIC 
+--  );
+--END COMPONENT;
          
     begin  -- block PLxB
         
@@ -911,15 +911,15 @@ END COMPONENT;
                         O => Led12V5RxSO,
                         I => PwmRed1xS);
 
-                OutBufLed2RxI : OBUF
-                    generic map (
-                        DRIVE      => 12,
-                        IOSTANDARD => "DEFAULT",
-                        SLEW       => "SLOW")
-                    port map (
-                        O => Led22V5RxSO,
-                        -- I => PwmRed2xS);
-                        I => AuroraErrDetxS); -- rouge = erreur détectée
+--                OutBufLed2RxI : OBUF
+--                    generic map (
+--                        DRIVE      => 12,
+--                        IOSTANDARD => "DEFAULT",
+--                        SLEW       => "SLOW")
+--                    port map (
+--                        O => Led22V5RxSO,
+--                        -- I => PwmRed2xS);
+--                        I => AuroraErrDetxS); -- rouge = erreur détectée
 
             end block OBufRedxB;
 
@@ -956,15 +956,15 @@ END COMPONENT;
                         I => PwmGreen1xS);
 
                 -- OutBufLed2RxI : OBUF
-                OutBufLed2GxI : OBUF
-                    generic map (
-                        DRIVE      => 12,
-                        IOSTANDARD => "DEFAULT",
-                        SLEW       => "SLOW")
-                    port map (
-                        O => Led22V5GxSO,
-                        -- I => PwmGreen2xS);
-                        I => AuroraChannelUpxS); -- vert = channel up, tout est ok
+--                OutBufLed2GxI : OBUF
+--                    generic map (
+--                        DRIVE      => 12,
+--                        IOSTANDARD => "DEFAULT",
+--                        SLEW       => "SLOW")
+--                    port map (
+--                        O => Led22V5GxSO,
+--                        -- I => PwmGreen2xS);
+--                        I => AuroraChannelUpxS); -- vert = channel up, tout est ok
 
             end block OBufGreenxB;
 
@@ -1000,15 +1000,15 @@ END COMPONENT;
                         O => Led12V5BxSO,
                         I => PwmBlue1xS);
 
-                OutBufLed2BxI : OBUF
-                    generic map (
-                        DRIVE      => 12,
-                        IOSTANDARD => "DEFAULT",
-                        SLEW       => "SLOW")
-                    port map (
-                        O => Led22V5BxSO,
-                        -- I => PwmBlue2xS);
-                        I => AuroraLaneUpxS); -- bleu = lane up
+--                OutBufLed2BxI : OBUF
+--                    generic map (
+--                        DRIVE      => 12,
+--                        IOSTANDARD => "DEFAULT",
+--                        SLEW       => "SLOW")
+--                    port map (
+--                        O => Led22V5BxSO,
+--                        -- I => PwmBlue2xS);
+--                        I => AuroraLaneUpxS); -- bleu = lane up
 
             end block OBufBluexB;
 
