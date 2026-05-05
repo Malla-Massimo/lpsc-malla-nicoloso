@@ -638,6 +638,7 @@ constant COLOR_PALETTE : color_pattern := (
         signal julia_y_step : sfixed(3 downto -15) := to_sfixed(0.0041666, 3, -15);
         signal cur_x_int: unsigned(9 downto 0);
         signal cur_y_int: unsigned (9 downto 0);
+        signal julia_range : sfixed(3 downto -15) := to_sfixed(3.0, 3, -15);
 
         type state_t is (INIT, CALCULATE, WAIT_FOR_ACK, DONE);
         signal state: state_t := INIT;
@@ -1160,55 +1161,64 @@ constant COLOR_PALETTE : color_pattern := (
             ---------------------------------------------------------------------------
             
             JuliaPlotter: process(clk_100MHz)
-             variable v_mult_res : sfixed(13 downto -15);
             begin
                 if rising_edge(clk_100MHz) then
                     if Clk125PllLockedxS = '1' and write_done = '0' then
-
                         case state is 
                             when INIT => 
-                                -- Convert linear address 5x(720x720) to 2D coordinates (0-31)
                                 cur_x_int <= (others => '0');
                                 cur_y_int <= (others => '0');
-                                ram_we      <= "0";
-                                state     <= CALCULATE;
+                                ram_we    <= "0";
 
+                                -- 1. Handle Zoom Range Reset/Update
+                                if julia_range > to_sfixed(0.1, 3, -15) then
+                                    julia_range <= resize(julia_range - to_sfixed(0.005, 3, -15), julia_range);
+                                else
+                                    julia_range <= to_sfixed(3.0, 3, -15);
+                                end if;
+
+                                -- 2. Calculate Steps based on the RANGE (1/720 = 0.001388)
+                                julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
+                                julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
+
+                                -- 3. Initial Coordinates (Centered: -360 * step)
+                                julia_x <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
+                                julia_y <= resize(to_sfixed(-360, 10, 0) * julia_y_step, 3, -15);
+
+                                state <= CALCULATE;
+                                
                             when CALCULATE =>
-                                -- Wait for the calculator to finish
                                 if julia_done = '1' then 
                                     julia_start <= '0';
                                     ram_we      <= "1";
                                     ram_wr_addr <= std_logic_vector(resize(cur_x_int + (cur_y_int * 720), 19));
-                                    
-                                    -- Map iteration to 5 bits color pattern
+                                    -- Color Mapping
                                     ram_data_in <= std_logic_vector(resize(unsigned(julia_n_iter) / 3, 5));
-                            
                                     state <= WAIT_FOR_ACK;
                                 else
-                                    -- Ensure start is high while calculating
                                     julia_start <= '1';
                                     ram_we      <= "0";
                                 end if;
                             
                             when WAIT_FOR_ACK =>
-                                ram_we <= "0";
-                                julia_start <= '0'; -- Ensure start is low
+                                ram_we      <= "0";
+                                julia_start <= '0'; 
                                 
-                                -- Crucial: Wait for the calculator to acknowledge the reset
                                 if julia_done = '0' then 
                                     if cur_x_int < 719 then
                                         cur_x_int <= cur_x_int + 1;
-                                        -- Update julia_x here so it is READY for the next CALCULATE state
-                                        julia_x <= resize((to_sfixed(to_integer(cur_x_int + 1), 10, 0) * julia_x_step) - 1.5, julia_x);
+                                        -- Use the STEP, not julia_x, to find the next point
+                                        julia_x <= resize(to_sfixed(to_integer(cur_x_int + 1) - 360, 10, 0) * julia_x_step, 3, -15);
                                         state   <= CALCULATE;
                                     else
                                         cur_x_int <= (others => '0');
-                                        -- Reset X coordinate to the far left
-                                        julia_x   <= to_sfixed(-1.5, julia_x); 
+                                        -- Reset X to far left
+                                        julia_x <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
+                                        
                                         if cur_y_int < 719 then
                                             cur_y_int <= cur_y_int + 1;
-                                            -- Update julia_y here so it is stable
-                                            julia_y <= resize((to_sfixed(to_integer(cur_y_int + 1), 10, 0) * julia_y_step) - 1.5, julia_y);
+                                            -- Calculate next Y based on step and center offset
+                                            julia_y <= resize(to_sfixed(to_integer(cur_y_int + 1) - 360, 10, 0) * julia_y_step, 3, -15);
                                             state   <= CALCULATE;
                                         else
                                             state <= DONE;
@@ -1217,8 +1227,9 @@ constant COLOR_PALETTE : color_pattern := (
                                 end if;
 
                             when DONE =>
-                                julia_start <= '0';
-                            when others => state <= INIT;
+                                state <= INIT;
+                            when others => 
+                                state <= INIT;
                         end case;
                     end if;
                 end if;
