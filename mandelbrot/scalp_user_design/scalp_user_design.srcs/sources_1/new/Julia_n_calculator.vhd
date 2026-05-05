@@ -28,7 +28,7 @@ architecture Behavioral of Julia_n_calculator is
     signal x_buff  : sfixed(3 downto -15) := (others => '0');
     signal y_buff  : sfixed(3 downto -15) := (others => '0');
 
-    type state_t is (IDLE, CALCULATE_0, CALCULATE_1, DONE_STATE);
+    type state_t is (IDLE, CALCULATE_0, CALCULATE_1, CALCULATE_2, DONE_STATE);
     signal state : state_t := IDLE;
 
 begin
@@ -62,10 +62,14 @@ begin
                         else
                             state   <= DONE_STATE;
                         end if;
-
+                    
                     when CALCULATE_1 =>
+                        Z_im <= resize(Z_re * Z_im * 2, 3, -15);
+                        state <= CALCULATE_2;
+
+                    when CALCULATE_2 =>
                         Z_re <= resize(x_carre - y_carre + c_re, 3, -15);
-                        Z_im <= resize(shift_left(resize(Z_re * Z_im, 4, -30), 1) + c_im, 3, -15);
+                        Z_im <= resize(Z_im + c_im, 3, -15);
                         
                         n_count <= n_count + 1;
                         state   <= CALCULATE_0; 
