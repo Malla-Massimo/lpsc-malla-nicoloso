@@ -611,7 +611,11 @@ begin
         type state_t is (INIT_RANGE, INIT_STEP, INIT_COORD, CALCULATE, WAIT_FOR_ACK, DONE);
         signal palette_index_reg : std_logic_vector(4 downto 0);
         signal state: state_t := INIT_RANGE;
-    
+
+        -- Julia Pipelined
+        signal addr_done: unsigned(18 downto 0);
+        signal julia_busy: std_logic
+
     component BRAM_5_500k is
       PORT (
         clka : IN STD_LOGIC;
@@ -645,6 +649,27 @@ begin
             iteration : in std_logic_vector(7 downto 0);
             palette_index : out std_logic_vector(4 downto 0)
         );
+    end component;
+
+    component JuliaPipelined is
+    Port ( 
+        clk: in std_logic;
+        rst: in std_logic;
+        start: in std_logic;
+
+        x:   in sfixed(3 downto -15);
+        y:   in sfixed(3 downto -15);
+        ram_addr: in unsigned(18 downto 0);
+
+        c_re: in sfixed(3 downto -15);
+        c_im: in sfixed(3 downto -15);
+
+        n_iteration: out std_logic_vector(7 downto 0);
+        done: out std_logic;
+        addr_done: out unsigned(18 downto 0);
+        julia_busy: std_logic
+
+    );
     end component;
 
     type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
@@ -770,6 +795,25 @@ begin
         palette_index => palette_index
     );
     
+    julia_pipelined: JuliaPipelined
+    port map (
+         clk:  => clk_100MHz,
+        rst:   => Clk125RstxR,
+        start =>  julia_start,
+
+        x:    => julia_x_coord,
+        y     => julia_y_coord,
+        ram_addr: addr_counter,
+
+        c_re: to_sfixed(-0.835, 3, -15), -- Julia Real constant
+        c_im: to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
+
+        n_iteration: julia_n_iter,
+        done:julia_done,
+        addr_done: addr_done,
+        julia_busy: julia_busy
+    );
+
 --    Aurora : aurora_8b10b
 --  PORT MAP (
 --    -- TRANSMITTER
@@ -1168,12 +1212,11 @@ begin
                     WRADDR => BramAddrxD,
                     WRCLK  => ClpxNumRegsAxixD.ClockxC.ClkxC,
                     WREN   => '1');
-                      
-            ---------------------------------------------------------------------------
-            -- JULIA PROCESS 
-            ---------------------------------------------------------------------------
-            
-            JuliaPlotter: process(clk_100MHz)
+                
+             ---------------------------------------------------------------------------
+            -- JULIA PROCESS PIPELINED
+            ---------------------------------------------------------------------------        
+            JuliaPipe: process(clk_100MHz)
             begin
                 if rising_edge(clk_100MHz) then
                     if Clk125PllLockedxS = '1' and write_done = '0' then
@@ -1202,24 +1245,18 @@ begin
                                 julia_x_coord <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
                                 julia_y_coord <= resize(to_sfixed(-360, 10, 0) * julia_y_step, 3, -15);
                                 x_initial_left <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
-                                state <= CALCULATE;
-                                
-                            when CALCULATE =>
-                                if julia_done = '1' then 
-                                    julia_start <= '0';
-                                    ram_we      <= "1";
-                                    state <= WAIT_FOR_ACK;
-                                    
-                                    ram_wr_addr <= std_logic_vector(addr_counter);
-                                    -- Color Mapping
-                                    ram_data_in <= palette_index_reg;
 
-                                    addr_counter <= addr_counter + 1;
-                                    
+                                julia_start <= '1';
+                                state <= CALCULATE;
+                            
+                            when CALCULATE =>
+                                -- Calculator can accept new data to load
+                                if julia_busy = '0' then 
+                                    -- Setup next coordinates for the next time it's free
                                     if cur_x_int < 719 then
                                         cur_x_int <= cur_x_int + 1;
                                         julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -15);
-                                    
+                                        addr_counter <= addr_counter + 1;
                                     else
                                         if cur_y_int < 719 then
                                             cur_x_int <= (others => '0');
@@ -1228,25 +1265,21 @@ begin
                                             julia_x_coord <= x_initial_left;
                                          else
                                             state <= DONE;
-                                        end if;
+                                            julia_start <= '0';
                                     end if;
                                 else
                                     julia_start <= '1';
-                                    ram_we      <= "0";
-                                    palette_index_reg <= palette_index;
-                                end if;
-                            
-                            when WAIT_FOR_ACK =>
-                                ram_we <= "0"; -- CRITICAL: Stop writing immediately
-                                julia_start <= '0';
-                                
-                                -- Only go back when the calculator has reset its 'done' flag
-                                if julia_done = '0' then
-                                    state <= CALCULATE;
-                                else
-                                    state <= WAIT_FOR_ACK; -- Stay here until calculator is ready
                                 end if;
 
+                                -- SEPARATE LOGIC: Always listen for 'done' to write to RAM
+                                if julia_done = '1' then
+                                    ram_we <= "1";
+                                    ram_wr_addr <= std_logic_vector(addr_done);
+                                    ram_data_in <= palette(julia_n_iteration);
+                                else
+                                    ram_we <= "0";
+                                end if;
+                                                        
                             when DONE =>
                                 state <= INIT_RANGE;
                             when others => 
@@ -1254,7 +1287,96 @@ begin
                         end case;
                     end if;
                 end if;
-            end process JuliaPlotter;
+            end process JuliaPipe;
+            
+           
+
+            ---------------------------------------------------------------------------
+            -- JULIA PROCESS 
+            ---------------------------------------------------------------------------
+            
+            -- JuliaPlotter: process(clk_100MHz)
+            -- begin
+            --     if rising_edge(clk_100MHz) then
+            --         if Clk125PllLockedxS = '1' and write_done = '0' then
+            --             case state is 
+            --                when INIT_RANGE => 
+            --                     cur_x_int <= (others => '0');
+            --                     cur_y_int <= (others => '0');
+            --                     addr_counter <= (others => '0');
+            --                     ram_we <= "0";
+
+            --                     if julia_range > to_sfixed(0.1, 3, -15) then
+            --                         julia_range <= resize(julia_range - to_sfixed(0.005, 3, -15), julia_range);
+            --                     else
+            --                         julia_range <= to_sfixed(3.0, 3, -15);
+            --                     end if;
+            --                     state <= INIT_STEP; -- Wait for range to update
+
+            --                 when INIT_STEP =>
+            --                     -- Now julia_range is updated, we can calculate steps
+            --                     julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
+            --                     julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
+            --                     state <= INIT_COORD; -- Wait for steps to update
+
+            --                 when INIT_COORD =>
+            --                     -- Now steps are updated, we can calculate initial coordinates
+            --                     julia_x_coord <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
+            --                     julia_y_coord <= resize(to_sfixed(-360, 10, 0) * julia_y_step, 3, -15);
+            --                     x_initial_left <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
+            --                     state <= CALCULATE;
+                                
+            --                 when CALCULATE =>
+            --                     if julia_done = '1' then 
+            --                         julia_start <= '0';
+            --                         ram_we      <= "1";
+            --                         state <= WAIT_FOR_ACK;
+                                    
+            --                         ram_wr_addr <= std_logic_vector(addr_counter);
+            --                         -- Color Mapping
+            --                         ram_data_in <= palette_index_reg;
+
+            --                         addr_counter <= addr_counter + 1;
+                                    
+            --                         if cur_x_int < 719 then
+            --                             cur_x_int <= cur_x_int + 1;
+            --                             julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -15);
+                                    
+            --                         else
+            --                             if cur_y_int < 719 then
+            --                                 cur_x_int <= (others => '0');
+            --                                 julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -15);
+            --                                 cur_y_int <= cur_y_int + 1;
+            --                                 julia_x_coord <= x_initial_left;
+            --                              else
+            --                                 state <= DONE;
+            --                             end if;
+            --                         end if;
+            --                     else
+            --                         julia_start <= '1';
+            --                         ram_we      <= "0";
+            --                         palette_index_reg <= palette_index;
+            --                     end if;
+                            
+            --                 when WAIT_FOR_ACK =>
+            --                     ram_we <= "0"; -- CRITICAL: Stop writing immediately
+            --                     julia_start <= '0';
+                                
+            --                     -- Only go back when the calculator has reset its 'done' flag
+            --                     if julia_done = '0' then
+            --                         state <= CALCULATE;
+            --                     else
+            --                         state <= WAIT_FOR_ACK; -- Stay here until calculator is ready
+            --                     end if;
+
+            --                 when DONE =>
+            --                     state <= INIT_RANGE;
+            --                 when others => 
+            --                     state <= INIT_RANGE;
+            --             end case;
+            --         end if;
+            --     end if;
+            -- end process JuliaPlotter;
             
             -- SwissFlagToRamxP : process(clk_100MHz)
             --     variable x, y : integer;

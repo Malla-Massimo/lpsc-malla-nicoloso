@@ -33,21 +33,7 @@ set_property IOSTANDARD LVCMOS25 [get_ports Pll2V5ClkIn0LOSxSI]
 set_property PACKAGE_PIN K2 [get_ports Pll2V5ClkIn1LOSxSI]
 set_property IOSTANDARD LVCMOS25 [get_ports Pll2V5ClkIn1LOSxSI]
 
-# 1. Ignore paths between the 125MHz System Clock and the 100MHz Clock
-# set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *sys_clock*}] -group [get_clocks -filter {NAME =~ *clk_out1*}]
-set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *sys_clock*}] -group [get_clocks -filter {NAME =~ *clk_100*}]
-
-# 2. Ignore paths between the 125MHz System Clock and the VGA/HDMI Clocks
-# set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *sys_clock*}] -group [get_clocks -filter {NAME =~ *vga*}]
-set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *sys_clock*}] -group [get_clocks -filter {NAME =~ *vga*}]
-
-# 3. Ignore paths between the 100MHz Clock and the VGA/HDMI Clocks
-# set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *clk_out1*}] -group [get_clocks -filter {NAME =~ *vga*}]
-set_clock_groups -asynchronous -group [get_clocks -filter {NAME =~ *clk_100*}] -group [get_clocks -filter {NAME =~ *vga*}]
-
-
-
-
+set_property DRIVE 4 [get_ports {VgaPixCountersxDO[*]}]
 
 ##### Aurora constraints #####
 # GT reference clock 125 MHz (contrainte existante sur la pin U9/V9, mais ajoute la période)
