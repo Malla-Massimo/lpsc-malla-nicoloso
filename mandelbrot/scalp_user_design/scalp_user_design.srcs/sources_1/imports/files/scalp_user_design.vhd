@@ -1170,14 +1170,14 @@ constant COLOR_PALETTE : color_pattern := (
                                 cur_y_int <= (others => '0');
                                 ram_we    <= "0";
 
-                                -- 1. Handle Zoom Range Reset/Update
+                                -- Handle Zoom Range Reset/Update
                                 if julia_range > to_sfixed(0.1, 3, -15) then
                                     julia_range <= resize(julia_range - to_sfixed(0.005, 3, -15), julia_range);
                                 else
                                     julia_range <= to_sfixed(3.0, 3, -15);
                                 end if;
 
-                                -- 2. Calculate Steps based on the RANGE (1/720 = 0.001388)
+                                -- Calculate Steps based on the RANGE (1/720 = 0.001388)
                                 julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
                                 julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
 

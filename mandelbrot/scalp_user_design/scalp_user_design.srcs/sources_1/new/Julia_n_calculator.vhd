@@ -25,8 +25,8 @@ architecture Behavioral of Julia_n_calculator is
     
     signal x_carre : sfixed(3 downto -15) := (others => '0');
     signal y_carre : sfixed(3 downto -15) := (others => '0');
-    signal x_buff  : sfixed(3 downto -15) := (others => '0');
-    signal y_buff  : sfixed(3 downto -15) := (others => '0');
+    signal xy: sfixed(3 downto -15) := (others => '0');
+    signal sum_sq :  sfixed(3 downto -15) := (others => '0');
 
     type state_t is (IDLE, CALCULATE_0, CALCULATE_1, CALCULATE_2, DONE_STATE);
     signal state : state_t := IDLE;
@@ -48,15 +48,22 @@ begin
                             Z_re <= x;
                             Z_im <= y;
                             n_count <= (others => '0');
-                            x_carre <= (others => '0');
-                            y_carre <= (others => '0');
+                            sum_sq  <= (others => '0');
                             state <= CALCULATE_0;
                         end if;
 
                     when CALCULATE_0 =>
-                        if (x_carre + y_carre) <= to_sfixed(4, 3, -15) and (n_count < 100) then
-                            x_carre <= resize(Z_re * Z_re, 3, -15);
+                        -- With sum_sq we check one step late, we check till 99 iteration
+                        if sum_sq <= to_sfixed(4, 3, -15) and (n_count < 99) then
+                            x_carre <= Z_re * Z_re;
+                            x_carre <= resize(x_carre, 3 , -15);
+
                             y_carre <= resize(Z_im * Z_im, 3, -15);
+                            y_carre <= y_carre;
+
+                            xy <= Z_re * Z_im;
+                            xy <= resize(xy, 3 , -15);
+
                             state   <= CALCULATE_1;
                             
                         else
@@ -64,7 +71,8 @@ begin
                         end if;
                     
                     when CALCULATE_1 =>
-                        Z_im <= resize(Z_re * Z_im * 2, 3, -15);
+                        Z_im <= resize(shift_left(xy, 1), 3, -15);
+                        sum_sq <= resize(x_carre + y_carre, 3, -15);
                         state <= CALCULATE_2;
 
                     when CALCULATE_2 =>
