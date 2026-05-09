@@ -587,51 +587,17 @@ begin
         );
         end component;
         
-type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
-constant COLOR_PALETTE : color_pattern := (
-    -- 0: Background (Diverging immediately)
-    -- Pure Black
-    0  => x"000000", 
-    1  => x"000000", 
-    2  => x"000000",
-    3  => x"000000",
-    4  => x"000000",
-    5  => x"000000", 
-    
-    -- 6 to 10: Deep Space Blues (Slow escapes)
-    6  => x"00194B",
-    7  => x"001E5A",
-    8  => x"002369", 
-    9  => x"002878", 
-    10 => x"002D87",
-
-    -- 11 to 20: Electric Purples and Magentas
-    11 => x"1E1487", 12 => x"3C0A87", 13 => x"5A0087",
-    14 => x"780087", 15 => x"960087", 16 => x"B40087",
-    17 => x"D20078", 18 => x"F00069", 19 => x"FF005A",
-    20 => x"FF003C",
-
-    -- 21 to 31: Fire and Gold (Fast escapes/Edges)
-    21 => x"FF1E1E", 22 => x"FF3C00", 23 => x"FF5A00",
-    24 => x"FF7800", 25 => x"FF9600", 26 => x"FFB400",
-    27 => x"FFD200", 28 => x"FFF000", 29 => x"FFFF3C",
-    30 => x"FFFF78", 31 => x"FFFFB4"
-);
-        
         -- DECLARE SIGNALS FOR THE RAM 
         signal ram_data_in   : std_logic_vector(4 downto 0) := (others => '0');
         signal ram_data_out  : std_logic_vector(4 downto 0) := (others => '0');
         signal ram_wr_addr   : std_logic_vector(18 downto 0)  := (others => '0');
         signal ram_rd_addr   : std_logic_vector(18 downto 0)  := (others => '0');
         signal ram_we        : std_logic_vector(0 downto 0)  := (others => '0');
-        signal color_buffer : std_logic_vector(23 downto 0) := (others => '0');
         signal write_done : std_logic := '0';
-        signal write_done_sync1 : std_logic := '0';
-        signal write_done_sync2 : std_logic := '0';
         
         signal julia_start : std_logic := '0';
-        signal julia_x : sfixed(3 downto -15); 
-        signal julia_y : sfixed(3 downto -15);
+        signal julia_x_coord : sfixed(3 downto -15); 
+        signal julia_y_coord : sfixed(3 downto -15);
         signal julia_n_iter : std_logic_vector(7 downto 0);
         signal julia_done: std_logic;
         signal julia_x_step : sfixed(3 downto -15) := to_sfixed(0.0041666, 3, -15);
@@ -639,9 +605,12 @@ constant COLOR_PALETTE : color_pattern := (
         signal cur_x_int: unsigned(9 downto 0);
         signal cur_y_int: unsigned (9 downto 0);
         signal julia_range : sfixed(3 downto -15) := to_sfixed(3.0, 3, -15);
-
-        type state_t is (INIT, CALCULATE, WAIT_FOR_ACK, DONE);
-        signal state: state_t := INIT;
+        signal x_initial_left : sfixed(3 downto -15);
+        signal addr_counter : unsigned(18 downto 0);
+        signal palette_index : std_logic_vector(4 downto 0);
+        type state_t is (INIT_RANGE, INIT_STEP, INIT_COORD, CALCULATE, WAIT_FOR_ACK, DONE);
+        signal palette_index_reg : std_logic_vector(4 downto 0);
+        signal state: state_t := INIT_RANGE;
     
     component BRAM_5_500k is
       PORT (
@@ -670,6 +639,44 @@ constant COLOR_PALETTE : color_pattern := (
             done        : out std_logic
         );
     end component;
+
+    component color_palette_index is
+        Port(
+            iteration : in std_logic_vector(7 downto 0);
+            palette_index : out std_logic_vector(4 downto 0)
+        );
+    end component;
+
+    type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
+    constant COLOR_PALETTE : color_pattern := (
+        -- 0: Background (Diverging immediately)
+        -- Pure Black
+        0  => x"000000", 
+        1  => x"000000", 
+        2  => x"000000",
+        3  => x"000000",
+        4  => x"000000",
+        5  => x"000000", 
+        
+        -- 6 to 10: Deep Space Blues (Slow escapes)
+        6  => x"00194B",
+        7  => x"001E5A",
+        8  => x"002369", 
+        9  => x"002878", 
+        10 => x"002D87",
+
+        -- 11 to 20: Electric Purples and Magentas
+        11 => x"1E1487", 12 => x"3C0A87", 13 => x"5A0087",
+        14 => x"780087", 15 => x"960087", 16 => x"B40087",
+        17 => x"D20078", 18 => x"F00069", 19 => x"FF005A",
+        20 => x"FF003C",
+
+        -- 21 to 31: Fire and Gold (Fast escapes/Edges)
+        21 => x"FF1E1E", 22 => x"FF3C00", 23 => x"FF5A00",
+        24 => x"FF7800", 25 => x"FF9600", 26 => x"FFB400",
+        27 => x"FFD200", 28 => x"FFF000", 29 => x"FFFF3C",
+        30 => x"FFFF78", 31 => x"FFFFB4"
+    );
       
 --      COMPONENT aurora_8b10b
 --  PORT (
@@ -749,12 +756,18 @@ constant COLOR_PALETTE : color_pattern := (
         clk         => clk_100MHz,
         rst         => Clk125RstxR,
         start       => julia_start,
-        x           => julia_x,
-        y           => julia_y,
+        x           => julia_x_coord,
+        y           => julia_y_coord,
         c_re        => to_sfixed(-0.835, 3, -15), -- Julia Real constant
         c_im        => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
         n_iteration => julia_n_iter,
         done        => julia_done
+    );
+
+    color_index: color_palette_index
+    port map(
+        iteration => julia_n_iter,
+        palette_index => palette_index
     );
     
 --    Aurora : aurora_8b10b
@@ -1157,7 +1170,7 @@ constant COLOR_PALETTE : color_pattern := (
                     WREN   => '1');
                       
             ---------------------------------------------------------------------------
-            -- 1. WRITER PROCESS: Fill the RAM with the Swiss Flag
+            -- JULIA PROCESS 
             ---------------------------------------------------------------------------
             
             JuliaPlotter: process(clk_100MHz)
@@ -1165,71 +1178,79 @@ constant COLOR_PALETTE : color_pattern := (
                 if rising_edge(clk_100MHz) then
                     if Clk125PllLockedxS = '1' and write_done = '0' then
                         case state is 
-                            when INIT => 
+                           when INIT_RANGE => 
                                 cur_x_int <= (others => '0');
                                 cur_y_int <= (others => '0');
-                                ram_we    <= "0";
+                                addr_counter <= (others => '0');
+                                ram_we <= "0";
 
-                                -- Handle Zoom Range Reset/Update
                                 if julia_range > to_sfixed(0.1, 3, -15) then
                                     julia_range <= resize(julia_range - to_sfixed(0.005, 3, -15), julia_range);
                                 else
                                     julia_range <= to_sfixed(3.0, 3, -15);
                                 end if;
+                                state <= INIT_STEP; -- Wait for range to update
 
-                                -- Calculate Steps based on the RANGE (1/720 = 0.001388)
+                            when INIT_STEP =>
+                                -- Now julia_range is updated, we can calculate steps
                                 julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
                                 julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
+                                state <= INIT_COORD; -- Wait for steps to update
 
-                                -- 3. Initial Coordinates (Centered: -360 * step)
-                                julia_x <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
-                                julia_y <= resize(to_sfixed(-360, 10, 0) * julia_y_step, 3, -15);
-
+                            when INIT_COORD =>
+                                -- Now steps are updated, we can calculate initial coordinates
+                                julia_x_coord <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
+                                julia_y_coord <= resize(to_sfixed(-360, 10, 0) * julia_y_step, 3, -15);
+                                x_initial_left <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
                                 state <= CALCULATE;
                                 
                             when CALCULATE =>
                                 if julia_done = '1' then 
                                     julia_start <= '0';
                                     ram_we      <= "1";
-                                    ram_wr_addr <= std_logic_vector(resize(cur_x_int + (cur_y_int * 720), 19));
-                                    -- Color Mapping
-                                    ram_data_in <= std_logic_vector(resize(unsigned(julia_n_iter) / 3, 5));
                                     state <= WAIT_FOR_ACK;
-                                else
-                                    julia_start <= '1';
-                                    ram_we      <= "0";
-                                end if;
-                            
-                            when WAIT_FOR_ACK =>
-                                ram_we      <= "0";
-                                julia_start <= '0'; 
-                                
-                                if julia_done = '0' then 
+                                    
+                                    ram_wr_addr <= std_logic_vector(addr_counter);
+                                    -- Color Mapping
+                                    ram_data_in <= palette_index_reg;
+
+                                    addr_counter <= addr_counter + 1;
+                                    
                                     if cur_x_int < 719 then
                                         cur_x_int <= cur_x_int + 1;
-                                        -- Use the STEP, not julia_x, to find the next point
-                                        julia_x <= resize(to_sfixed(to_integer(cur_x_int + 1) - 360, 10, 0) * julia_x_step, 3, -15);
-                                        state   <= CALCULATE;
+                                        julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -15);
+                                    
                                     else
-                                        cur_x_int <= (others => '0');
-                                        -- Reset X to far left
-                                        julia_x <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
-                                        
                                         if cur_y_int < 719 then
+                                            cur_x_int <= (others => '0');
+                                            julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -15);
                                             cur_y_int <= cur_y_int + 1;
-                                            -- Calculate next Y based on step and center offset
-                                            julia_y <= resize(to_sfixed(to_integer(cur_y_int + 1) - 360, 10, 0) * julia_y_step, 3, -15);
-                                            state   <= CALCULATE;
-                                        else
+                                            julia_x_coord <= x_initial_left;
+                                         else
                                             state <= DONE;
                                         end if;
                                     end if;
+                                else
+                                    julia_start <= '1';
+                                    ram_we      <= "0";
+                                    palette_index_reg <= palette_index;
+                                end if;
+                            
+                            when WAIT_FOR_ACK =>
+                                ram_we <= "0"; -- CRITICAL: Stop writing immediately
+                                julia_start <= '0';
+                                
+                                -- Only go back when the calculator has reset its 'done' flag
+                                if julia_done = '0' then
+                                    state <= CALCULATE;
+                                else
+                                    state <= WAIT_FOR_ACK; -- Stay here until calculator is ready
                                 end if;
 
                             when DONE =>
-                                state <= INIT;
+                                state <= INIT_RANGE;
                             when others => 
-                                state <= INIT;
+                                state <= INIT_RANGE;
                         end case;
                     end if;
                 end if;

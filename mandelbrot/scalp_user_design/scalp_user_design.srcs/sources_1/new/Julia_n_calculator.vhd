@@ -55,14 +55,9 @@ begin
                     when CALCULATE_0 =>
                         -- With sum_sq we check one step late, we check till 99 iteration
                         if sum_sq <= to_sfixed(4, 3, -15) and (n_count < 99) then
-                            x_carre <= Z_re * Z_re;
-                            x_carre <= resize(x_carre, 3 , -15);
-
+                            x_carre <= resize(Z_re * Z_re, 3, -15);
                             y_carre <= resize(Z_im * Z_im, 3, -15);
-                            y_carre <= y_carre;
-
-                            xy <= Z_re * Z_im;
-                            xy <= resize(xy, 3 , -15);
+                            xy <= resize(Z_re * Z_im, 3, -15);
 
                             state   <= CALCULATE_1;
                             
