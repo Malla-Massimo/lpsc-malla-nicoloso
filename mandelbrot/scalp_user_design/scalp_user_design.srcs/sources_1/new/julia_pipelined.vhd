@@ -1,6 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL; -- Required for 'unsigned' math
+use IEEE.NUMERIC_STD.ALL; 
 use ieee.fixed_pkg.all;
 
 entity JuliaPipelined is
@@ -19,31 +19,36 @@ entity JuliaPipelined is
     n_iteration: out std_logic_vector(7 downto 0);
     done: out std_logic;
     addr_done: out unsigned(18 downto 0);
-    julia_busy: out std_logic
-
+    
+    -- Now means "Is the pipeline completely full?"
+    julia_busy: out std_logic 
   );
 end JuliaPipelined;
 
 architecture Behavioral of JuliaPipelined is
-    -- Stage 1 Signals: Multiplication
+    -- Stage 1 Signals
     signal s1_x_carre, s1_y_carre, s1_xy : sfixed(3 downto -15);
     signal s1_c_re, s1_c_im             : sfixed(3 downto -15);
     signal s1_active                    : std_logic := '0';
-    signal s1_addr: unsigned(18 downto 0);
+    signal s1_addr                      : unsigned(18 downto 0);
+    signal s1_count                     : unsigned(7 downto 0);
 
-    -- Stage 2 Signals: Squaring & Part 1 of Addition
+    -- Stage 2 Signals
     signal s2_sum_sq                    : sfixed(3 downto -15);
     signal s2_diff_sq                   : sfixed(3 downto -15);
     signal s2_2xy                       : sfixed(3 downto -15);
     signal s2_c_re, s2_c_im             : sfixed(3 downto -15);
     signal s2_active                    : std_logic := '0';
-    signal s2_addr: unsigned(18 downto 0);
+    signal s2_addr                      : unsigned(18 downto 0);
+    signal s2_count                     : unsigned(7 downto 0);
 
-    -- Stage 3 Signals: Final Addition & Feedback
+    -- Stage 3 Signals
     signal s3_Z_re, s3_Z_im             : sfixed(3 downto -15);
-    signal s3_count                     : unsigned(7 downto 0) := (others => '0');
+    signal s3_c_re, s3_c_im             : sfixed(3 downto -15);
     signal s3_active                    : std_logic := '0';
-    signal s3_addr: unsigned(18 downto 0);
+    signal s3_addr                      : unsigned(18 downto 0);
+    signal s3_count                     : unsigned(7 downto 0);
+    signal s3_pixel_escaped             : std_logic := '0';
 
 begin
 
@@ -51,39 +56,42 @@ begin
     begin
         if rising_edge(clk) then
             if rst = '1' then
-               s1_active <= '0'; s2_active <= '0'; s3_active <= '0';
+                s1_active <= '0'; s2_active <= '0'; s3_active <= '0';
                 done <= '0';
-                s3_count <= (others => '0');
             else
+                -- Default pulse
                 done <= '0';
 
                 -------------------------------------------------------
-                -- STAGE 1: Initialize and load data into pipeline
+                -- STAGE 1: Feed Coordinator
                 -------------------------------------------------------
-               if s3_active = '1' and (s2_sum_sq <= 4 and s3_count < 99) then 
-                    -- FEEDBACK: Loop the current pixel back for next iteration
+                -- Scenario A: A pixel in S3 is still looping
+                if s3_active = '1' and s3_pixel_escaped = '0' then 
                     s1_x_carre <= resize(s3_Z_re * s3_Z_re, 3, -15);
                     s1_y_carre <= resize(s3_Z_im * s3_Z_im, 3, -15);
                     s1_xy      <= resize(s3_Z_re * s3_Z_im, 3, -15);
                     s1_addr    <= s3_addr;
+                    s1_c_re    <= s3_c_re;
+                    s1_c_im    <= s3_c_im;
+                    s1_count   <= s3_count + 1; -- Increment looping pixel
                     s1_active  <= '1';
                 
-                elsif s3_active = '0' and start = '1' then 
-                   -- NEW PIXEL: load 
+                -- Scenario B: S3 is empty or its pixel just escaped! We can inject a new pixel.
+                elsif start = '1' then 
                     s1_x_carre <= resize(x * x, 3, -15);
                     s1_y_carre <= resize(y * y, 3, -15);
                     s1_xy      <= resize(x * y, 3, -15);
+                    s1_addr    <= ram_addr;
                     s1_c_re    <= c_re;
                     s1_c_im    <= c_im;
-                    s1_addr    <= ram_addr;
+                    s1_count   <= (others => '0'); -- Brand new pixel
                     s1_active  <= '1';
-                    s3_count   <= (others => '0'); -- Reset count for new pixel
                 else
                     s1_active  <= '0';
                 end if;
 
                 -------------------------------------------------------
-                -- STAGE 2: Continue adding
+                -- STAGE 2: Additions & Squaring
                 -------------------------------------------------------
                 s2_active  <= s1_active;
                 s2_sum_sq  <= resize(s1_x_carre + s1_y_carre, 3, -15);
@@ -91,37 +99,36 @@ begin
                 s2_2xy     <= resize(shift_left(s1_xy, 1), 3, -15);
                 s2_c_re    <= s1_c_re;
                 s2_c_im    <= s1_c_im;
-                s2_addr <= s1_addr;
+                s2_addr    <= s1_addr;
+                s2_count   <= s1_count;
 
                 -------------------------------------------------------
-                -- STAGE 3: Finale add and check
+                -- STAGE 3: Escape Check & Output
                 -------------------------------------------------------
                 s3_active  <= s2_active;
                 s3_Z_re    <= resize(s2_diff_sq + s2_c_re, 3, -15);
                 s3_Z_im    <= resize(s2_2xy + s2_c_im, 3, -15);
-                s3_addr <= s2_addr;
+                s3_c_re    <= s2_c_re;
+                s3_c_im    <= s2_c_im;
+                s3_addr    <= s2_addr;
+                s3_count   <= s2_count;
                 
-                -- Manage Active State and Counter
                 if s2_active = '1' then
-                    s3_count <= s3_count + 1;
-                    
-                    -- Check if this iteration escaped or reached max
-                    if (s2_sum_sq > 4.0) or (s3_count >= 99) then
-                        done <= '1';
+                    -- Check if it escapes right now
+                    if (s2_sum_sq > 4.0) or (s2_count >= 99) then
+                        s3_pixel_escaped <= '1'; -- Tell Stage 1 NOT to loop this
+                        done <= '1';             -- Tell FSM to write to RAM
                         addr_done <= s2_addr;
-                        n_iteration <= std_logic_vector(s3_count);
-                        s3_active <= '0'; -- Stop the feedback loop
+                        n_iteration <= std_logic_vector(s2_count);
                     else
-                        s3_active <= '1'; -- Continue iterating
+                        s3_pixel_escaped <= '0'; -- Tell Stage 1 to keep looping
                     end if;
                 else
-                    s3_active <= '0';
+                    s3_pixel_escaped <= '0';
                 end if;
                 
-                julia_busy <= s1_active or s2_active or s3_active;
-
             end if;
         end if;
     end process;
-
+    julia_busy <= '1' when (s3_active = '1' and s3_pixel_escaped = '0') else '0';
 end Behavioral;
