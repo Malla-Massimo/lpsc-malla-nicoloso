@@ -614,7 +614,11 @@ begin
 
         -- Julia Pipelined
         signal addr_done: unsigned(18 downto 0);
-        signal julia_busy: std_logic
+        signal julia_busy: std_logic;
+        signal v_sync_trigger: std_logic := '0';
+        signal v_sync_reg : std_logic_vector(2 downto 0) := "000";
+        signal v_sync_occurred:  std_logic := '0';
+        signal VidOn_delayed : std_logic := '0';
 
     component BRAM_5_500k is
       PORT (
@@ -630,19 +634,19 @@ begin
       );
       end component BRAM_5_500k;
       
-      component Julia_n_calculator is
-        Port ( 
-            clk         : in std_logic;
-            rst         : in std_logic;
-            start       : in std_logic;
-            x           : in sfixed(3 downto -15);
-            y           : in sfixed(3 downto -15);
-            c_re        : in sfixed(3 downto -15);
-            c_im        : in sfixed(3 downto -15);
-            n_iteration : out std_logic_vector(7 downto 0);
-            done        : out std_logic
-        );
-    end component;
+    --   component Julia_n_calculator is
+    --     Port ( 
+    --         clk         : in std_logic;
+    --         rst         : in std_logic;
+    --         start       : in std_logic;
+    --         x           : in sfixed(3 downto -15);
+    --         y           : in sfixed(3 downto -15);
+    --         c_re        : in sfixed(3 downto -15);
+    --         c_im        : in sfixed(3 downto -15);
+    --         n_iteration : out std_logic_vector(7 downto 0);
+    --         done        : out std_logic
+    --     );
+    -- end component;
 
     component color_palette_index is
         Port(
@@ -674,33 +678,24 @@ begin
 
     type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
     constant COLOR_PALETTE : color_pattern := (
-        -- 0: Background (Diverging immediately)
-        -- Pure Black
-        0  => x"000000", 
-        1  => x"000000", 
-        2  => x"000000",
-        3  => x"000000",
-        4  => x"000000",
-        5  => x"000000", 
+        -- 0-3: The Void (Pure Black)
+        0  => x"000000", 1  => x"000000", 2  => x"000000", 3  => x"000000",
         
-        -- 6 to 10: Deep Space Blues (Slow escapes)
-        6  => x"00194B",
-        7  => x"001E5A",
-        8  => x"002369", 
-        9  => x"002878", 
-        10 => x"002D87",
-
-        -- 11 to 20: Electric Purples and Magentas
-        11 => x"1E1487", 12 => x"3C0A87", 13 => x"5A0087",
-        14 => x"780087", 15 => x"960087", 16 => x"B40087",
-        17 => x"D20078", 18 => x"F00069", 19 => x"FF005A",
-        20 => x"FF003C",
-
-        -- 21 to 31: Fire and Gold (Fast escapes/Edges)
-        21 => x"FF1E1E", 22 => x"FF3C00", 23 => x"FF5A00",
-        24 => x"FF7800", 25 => x"FF9600", 26 => x"FFB400",
-        27 => x"FFD200", 28 => x"FFF000", 29 => x"FFFF3C",
-        30 => x"FFFF78", 31 => x"FFFFB4"
+        -- 4-9: Deep Space Blues
+        4  => x"00001A", 5  => x"000033", 6  => x"00004D", 
+        7  => x"000066", 8  => x"000080", 9  => x"0A0099",
+        
+        -- 10-16: Electric Violet to Magenta
+        10 => x"2900B3", 11 => x"4700CC", 12 => x"6600E6", 13 => x"8500FF",
+        14 => x"A300E6", 15 => x"C200CC", 16 => x"E000B3",
+        
+        -- 17-23: Magenta to Intense Red/Orange
+        17 => x"FF0099", 18 => x"FF0066", 19 => x"FF0033", 20 => x"FF1A00",
+        21 => x"FF3300", 22 => x"FF4D00", 23 => x"FF6600",
+        
+        -- 24-31: Fire, Gold, and Hot White (The Edge)
+        24 => x"FF8C00", 25 => x"FFB300", 26 => x"FFD900", 27 => x"FFFF00",
+        28 => x"FFFF4D", 29 => x"FFFF80", 30 => x"FFFFB3", 31 => x"FFFFFF"
     );
       
 --      COMPONENT aurora_8b10b
@@ -776,18 +771,18 @@ begin
         doutb => ram_data_out               -- Data out
     );
     
-    U_JULIA_GEN: Julia_n_calculator
-    port map (
-        clk         => clk_100MHz,
-        rst         => Clk125RstxR,
-        start       => julia_start,
-        x           => julia_x_coord,
-        y           => julia_y_coord,
-        c_re        => to_sfixed(-0.835, 3, -15), -- Julia Real constant
-        c_im        => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
-        n_iteration => julia_n_iter,
-        done        => julia_done
-    );
+    -- U_JULIA_GEN: Julia_n_calculator
+    -- port map (
+    --     clk         => clk_100MHz,
+    --     rst         => Clk125RstxR,
+    --     start       => julia_start,
+    --     x           => julia_x_coord,
+    --     y           => julia_y_coord,
+    --     c_re        => to_sfixed(-0.835, 3, -15), -- Julia Real constant
+    --     c_im        => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
+    --     n_iteration => julia_n_iter,
+    --     done        => julia_done
+    -- );
 
     color_index: color_palette_index
     port map(
@@ -797,21 +792,21 @@ begin
     
     julia_pipelined: JuliaPipelined
     port map (
-         clk:  => clk_100MHz,
-        rst:   => Clk125RstxR,
-        start =>  julia_start,
+        clk     => clk_100MHz,
+        rst     => '0',
+        start   =>  julia_start,
 
-        x:    => julia_x_coord,
-        y     => julia_y_coord,
-        ram_addr: addr_counter,
+        x       => julia_x_coord,
+        y       => julia_y_coord,
+        ram_addr => addr_counter,
 
-        c_re: to_sfixed(-0.835, 3, -15), -- Julia Real constant
-        c_im: to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
+        c_re    => to_sfixed(-0.835, 3, -15), -- Julia Real constant
+        c_im    => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
 
-        n_iteration: julia_n_iter,
-        done:julia_done,
-        addr_done: addr_done,
-        julia_busy: julia_busy
+        n_iteration => julia_n_iter,
+        done        => julia_done,
+        addr_done   => addr_done,
+        julia_busy  => julia_busy
     );
 
 --    Aurora : aurora_8b10b
@@ -1219,7 +1214,8 @@ begin
             JuliaPipe: process(clk_100MHz)
             begin
                 if rising_edge(clk_100MHz) then
-                    if Clk125PllLockedxS = '1' and write_done = '0' then
+
+                    if Clk125PllLockedxS = '1' then
                         case state is 
                            when INIT_RANGE => 
                                 cur_x_int <= (others => '0');
@@ -1232,7 +1228,10 @@ begin
                                 else
                                     julia_range <= to_sfixed(3.0, 3, -15);
                                 end if;
-                                state <= INIT_STEP; -- Wait for range to update
+
+                                if v_sync_occurred = '1' then
+                                    state <= INIT_STEP;
+                                end if;
 
                             when INIT_STEP =>
                                 -- Now julia_range is updated, we can calculate steps
@@ -1246,38 +1245,48 @@ begin
                                 julia_y_coord <= resize(to_sfixed(-360, 10, 0) * julia_y_step, 3, -15);
                                 x_initial_left <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
 
-                                julia_start <= '1';
+                                -- julia_start <= '1';
                                 state <= CALCULATE;
-                            
-                            when CALCULATE =>
-                                -- Calculator can accept new data to load
-                                if julia_busy = '0' then 
-                                    -- Setup next coordinates for the next time it's free
-                                    if cur_x_int < 719 then
-                                        cur_x_int <= cur_x_int + 1;
-                                        julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -15);
-                                        addr_counter <= addr_counter + 1;
-                                    else
-                                        if cur_y_int < 719 then
-                                            cur_x_int <= (others => '0');
-                                            julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -15);
-                                            cur_y_int <= cur_y_int + 1;
-                                            julia_x_coord <= x_initial_left;
-                                         else
-                                            state <= DONE;
-                                            julia_start <= '0';
-                                    end if;
-                                else
-                                    julia_start <= '1';
+                                
+                           when CALCULATE =>
+                                ram_we <= "0";
+
+                                if julia_done = '1' then
+                                    ram_we      <= "1";
+                                    ram_wr_addr <= std_logic_vector(addr_done);
+                                    ram_data_in <= palette_index;
                                 end if;
 
-                                -- SEPARATE LOGIC: Always listen for 'done' to write to RAM
-                                if julia_done = '1' then
-                                    ram_we <= "1";
-                                    ram_wr_addr <= std_logic_vector(addr_done);
-                                    ram_data_in <= palette(julia_n_iteration);
+                                -- 2. Feed new pixels safely
+                                if julia_busy = '0' then
+                                    
+                                    if julia_start = '0' then
+                                        -- PHASE 1: Assert start. 
+                                        julia_start <= '1';
+                                        
+                                    else
+                                        julia_start <= '0';
+                                        
+                                        if cur_x_int < 719 then
+                                            cur_x_int     <= cur_x_int + 1;
+                                            julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -15);
+                                            addr_counter  <= addr_counter + 1;
+                                        else
+                                            if cur_y_int < 719 then
+                                                cur_x_int     <= (others => '0');
+                                                cur_y_int     <= cur_y_int + 1;
+                                                julia_x_coord <= x_initial_left;
+                                                julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -15);
+                                                addr_counter  <= addr_counter + 1;
+                                            else
+                                                state <= DONE;
+                                            end if;
+                                        end if;
+                                    end if;
+                                    
                                 else
-                                    ram_we <= "0";
+                                    -- Ensure start remains low while busy so we don't double-feed
+                                    julia_start <= '0';
                                 end if;
                                                         
                             when DONE =>
@@ -1377,6 +1386,7 @@ begin
             --         end if;
             --     end if;
             -- end process JuliaPlotter;
+
             
             -- SwissFlagToRamxP : process(clk_100MHz)
             --     variable x, y : integer;
@@ -1407,16 +1417,39 @@ begin
             --     end if;
             -- end process SwissFlagToRamxP;
             
+
+            -- Process in clk_100MHz domain
+            sync_proc : process(clk_100MHz)
+            begin
+                if rising_edge(clk_100MHz) then
+                    v_sync_reg <= v_sync_reg(1 downto 0) & v_sync_trigger;
+                    
+                    -- Detect the toggle edge
+                    if v_sync_reg(2) /= v_sync_reg(1) then
+                        v_sync_occurred <= '1'; -- SET the flag
+                        
+                    -- CLEAR the flag ONLY when the FSM moves forward
+                    elsif state = INIT_STEP then 
+                        v_sync_occurred <= '0'; 
+                    end if;
+                end if;
+            end process;
             ---------------------------------------------------------------------------
             -- 2. READER PROCESS: Read RAM and send to HDMI
             ---------------------------------------------------------------------------
             DisplayRamxP : process(HdmiVgaClocksxC.VgaxC)
                 variable idx : integer range 0 to 31;
             begin
-
                 
                 if rising_edge(HdmiVgaClocksxC.VgaxC) then
-                    
+
+                   VidOn_delayed <= VgaPixCountersxD.VidOnxS;
+        
+                    -- If it was ON last cycle, and is OFF this cycle, the frame just ended!
+                    if VidOn_delayed = '1' and VgaPixCountersxD.VidOnxS = '0' then
+                        v_sync_trigger <= not v_sync_trigger; -- Flip the toggle
+                    end if;
+
                     if (HdmiVgaClocksxC.PllLockedxS = '0') or (HdmiVgaClocksxC.VgaResetxRNA = '0') then
                         PixelxD <= C_HDMI_VGA_PIX_IDLE;
                     elsif VgaPixCountersxD.VidOnxS = '1' then
@@ -1435,8 +1468,8 @@ begin
                             PixelxD.RxD <= COLOR_PALETTE(idx)(23 downto 16);
                             PixelxD.GxD <= COLOR_PALETTE(idx)(15 downto 8);
                             PixelxD.BxD <= COLOR_PALETTE(idx)(7 downto 0);
-                                               
                         end if;
+                    
                     else
                         PixelxD <= C_HDMI_VGA_PIX_IDLE;
                     end if;

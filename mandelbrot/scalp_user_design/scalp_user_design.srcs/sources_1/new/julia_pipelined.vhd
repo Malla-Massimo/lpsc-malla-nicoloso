@@ -60,7 +60,7 @@ begin
                 -------------------------------------------------------
                 -- STAGE 1: Initialize and load data into pipeline
                 -------------------------------------------------------
-               if s3_active = '1' then 
+               if s3_active = '1' and (s2_sum_sq <= 4 and s3_count < 99) then 
                     -- FEEDBACK: Loop the current pixel back for next iteration
                     s1_x_carre <= resize(s3_Z_re * s3_Z_re, 3, -15);
                     s1_y_carre <= resize(s3_Z_im * s3_Z_im, 3, -15);
@@ -101,18 +101,24 @@ begin
                 s3_Z_im    <= resize(s2_2xy + s2_c_im, 3, -15);
                 s3_addr <= s2_addr;
                 
+                -- Manage Active State and Counter
                 if s2_active = '1' then
                     s3_count <= s3_count + 1;
-                end if;
-
-                -- Termination Logic
-                if s2_active = '1' and (s2_sum_sq > 4 or s3_count >= 99) then
-                    done <= '1';
-                    addr_done <= s2_addr;
+                    
+                    -- Check if this iteration escaped or reached max
+                    if (s2_sum_sq > 4.0) or (s3_count >= 99) then
+                        done <= '1';
+                        addr_done <= s2_addr;
+                        n_iteration <= std_logic_vector(s3_count);
+                        s3_active <= '0'; -- Stop the feedback loop
+                    else
+                        s3_active <= '1'; -- Continue iterating
+                    end if;
+                else
                     s3_active <= '0';
-                    n_iteration <= std_logic_vector(s3_count);
                 end if;
-                julia_busy <= s3_active;
+                
+                julia_busy <= s1_active or s2_active or s3_active;
 
             end if;
         end if;

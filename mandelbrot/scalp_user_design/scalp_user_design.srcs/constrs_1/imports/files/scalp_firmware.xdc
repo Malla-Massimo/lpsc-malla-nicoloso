@@ -328,3 +328,123 @@ set_operating_conditions -airflow 0 -heatsink none -board small
 
 
 
+
+
+create_clock -period 10.000 -name sys_clk [get_ports sys_clk_pin]
+
+############################################################################
+# Missing Logical Port Constraints (Fix for NSTD-1 and UCIO-1)
+############################################################################
+
+# --- 1. System Clocks & Resets (Bank 34) ---
+set_property -dict { PACKAGE_PIN K4   IOSTANDARD LVCMOS25 } [get_ports { ClocksxCI[VgaxC] }];
+set_property -dict { PACKAGE_PIN T2   IOSTANDARD LVCMOS25 } [get_ports { ClocksxCI[HdmixC] }];
+set_property -dict { PACKAGE_PIN L5   IOSTANDARD LVCMOS25 } [get_ports { ClocksxCI[VgaResetxR] }];
+set_property -dict { PACKAGE_PIN K2   IOSTANDARD LVCMOS25 } [get_ports { ClocksxCI[PllLockedxS] }];
+
+# --- 2. HDMI Control (Bank 34) ---
+set_property -dict { PACKAGE_PIN K5   IOSTANDARD LVCMOS25 } [get_ports { HdmiTxxDIO[OutxD][SclxS] }];
+
+# --- 3. Pixel Data - RED Channel (North Connector - Bank 35) ---
+set_property -dict { PACKAGE_PIN E8   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][0] }];
+set_property -dict { PACKAGE_PIN D8   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][1] }];
+set_property -dict { PACKAGE_PIN D7   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][2] }];
+set_property -dict { PACKAGE_PIN D6   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][3] }];
+set_property -dict { PACKAGE_PIN C8   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][4] }];
+set_property -dict { PACKAGE_PIN B8   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][5] }];
+set_property -dict { PACKAGE_PIN B7   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][6] }];
+set_property -dict { PACKAGE_PIN B6   IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[RxD][7] }];
+
+# --- 4. Pixel Data - GREEN Channel (South Connector - Bank 13) ---
+set_property -dict { PACKAGE_PIN V15  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][0] }];
+set_property -dict { PACKAGE_PIN W15  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][1] }];
+set_property -dict { PACKAGE_PIN AB13 IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][2] }];
+set_property -dict { PACKAGE_PIN AB14 IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][3] }];
+set_property -dict { PACKAGE_PIN V13  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][4] }];
+set_property -dict { PACKAGE_PIN V14  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][5] }];
+set_property -dict { PACKAGE_PIN Y12  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][6] }];
+set_property -dict { PACKAGE_PIN Y13  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[GxD][7] }];
+
+# --- 5. Pixel Data - BLUE Channel (East Connector - Bank 13) ---
+set_property -dict { PACKAGE_PIN V16  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][0] }];
+set_property -dict { PACKAGE_PIN W16  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][1] }];
+set_property -dict { PACKAGE_PIN W17  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][2] }];
+set_property -dict { PACKAGE_PIN Y17  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][3] }];
+set_property -dict { PACKAGE_PIN U13  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][4] }];
+set_property -dict { PACKAGE_PIN U14  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][5] }];
+set_property -dict { PACKAGE_PIN V18  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][6] }];
+set_property -dict { PACKAGE_PIN W18  IOSTANDARD LVCMOS25 } [get_ports { PixelxDI[BxD][7] }];
+
+# --- 6. VGA Counters & Control (West Connector - Bank 35) ---
+# Setting low drive strength to mitigate the heat warnings you received
+set_property IOSTANDARD LVCMOS25 [get_ports {VgaPixCountersxDO[*]}]
+set_property DRIVE 4 [get_ports {VgaPixCountersxDO[*]}]
+
+set_property PACKAGE_PIN J8 [get_ports VgaPixCountersxDO[VidOnxS]]
+
+# HxD Mapping (Bits 0-7)
+set_property PACKAGE_PIN H4 [get_ports {VgaPixCountersxDO[HxD][0]}]
+set_property PACKAGE_PIN H3 [get_ports {VgaPixCountersxDO[HxD][1]}]
+set_property PACKAGE_PIN H1 [get_ports {VgaPixCountersxDO[HxD][2]}]
+set_property PACKAGE_PIN G1 [get_ports {VgaPixCountersxDO[HxD][3]}]
+set_property PACKAGE_PIN G3 [get_ports {VgaPixCountersxDO[HxD][4]}]
+set_property PACKAGE_PIN G2 [get_ports {VgaPixCountersxDO[HxD][5]}]
+set_property PACKAGE_PIN F2 [get_ports {VgaPixCountersxDO[HxD][6]}]
+set_property PACKAGE_PIN F1 [get_ports {VgaPixCountersxDO[HxD][7]}]
+# HxD (Bits 8-15 - Mapping to unused West pins)
+set_property PACKAGE_PIN E2 [get_ports {VgaPixCountersxDO[HxD][8]}]
+set_property PACKAGE_PIN D2 [get_ports {VgaPixCountersxDO[HxD][9]}]
+set_property PACKAGE_PIN E4 [get_ports {VgaPixCountersxDO[HxD][10]}]
+set_property PACKAGE_PIN E3 [get_ports {VgaPixCountersxDO[HxD][11]}]
+set_property PACKAGE_PIN D1 [get_ports {VgaPixCountersxDO[HxD][12]}]
+set_property PACKAGE_PIN C1 [get_ports {VgaPixCountersxDO[HxD][13]}]
+set_property PACKAGE_PIN G4 [get_ports {VgaPixCountersxDO[HxD][14]}]
+set_property PACKAGE_PIN F4 [get_ports {VgaPixCountersxDO[HxD][15]}]
+
+# VxD Mapping (Bits 0-15) - Note: If you run out of pins, these can be set to virtual 
+# but for Bitstream they must have pins. Using miscellaneous bank 34/13 pins.
+set_property PACKAGE_PIN N6 [get_ports {VgaPixCountersxDO[VxD][0]}]
+set_property PACKAGE_PIN N5 [get_ports {VgaPixCountersxDO[VxD][1]}]
+set_property PACKAGE_PIN P6 [get_ports {VgaPixCountersxDO[VxD][2]}]
+set_property PACKAGE_PIN P5 [get_ports {VgaPixCountersxDO[VxD][3]}]
+set_property PACKAGE_PIN R5 [get_ports {VgaPixCountersxDO[VxD][4]}]
+set_property PACKAGE_PIN R4 [get_ports {VgaPixCountersxDO[VxD][5]}]
+set_property PACKAGE_PIN R3 [get_ports {VgaPixCountersxDO[VxD][6]}]
+set_property PACKAGE_PIN R2 [get_ports {VgaPixCountersxDO[VxD][7]}]
+set_property PACKAGE_PIN P3 [get_ports {VgaPixCountersxDO[VxD][8]}]
+set_property PACKAGE_PIN P2 [get_ports {VgaPixCountersxDO[VxD][9]}]
+set_property PACKAGE_PIN N1 [get_ports {VgaPixCountersxDO[VxD][10]}]
+set_property PACKAGE_PIN P1 [get_ports {VgaPixCountersxDO[VxD][11]}]
+set_property PACKAGE_PIN N4 [get_ports {VgaPixCountersxDO[VxD][12]}]
+set_property PACKAGE_PIN N3 [get_ports {VgaPixCountersxDO[VxD][13]}]
+set_property PACKAGE_PIN M2 [get_ports {VgaPixCountersxDO[VxD][14]}]
+set_property PACKAGE_PIN M1 [get_ports {VgaPixCountersxDO[VxD][15]}]
+
+
+############################################################################
+# HDMI DIFFERENTIAL PAIRS (Fix for UCIO-1)
+############################################################################
+
+# --- HDMI Data Lane 2 (Blue) ---
+set_property -dict { PACKAGE_PIN N8  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][DataxD][PxD][2]}]
+set_property -dict { PACKAGE_PIN P8  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][DataxD][NxD][2]}]
+
+# --- HDMI Data Lane 1 (Green) ---
+set_property -dict { PACKAGE_PIN M8  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][DataxD][PxD][1]}]
+set_property -dict { PACKAGE_PIN M7  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][DataxD][NxD][1]}]
+
+# --- HDMI Data Lane 0 (Red) ---
+set_property -dict { PACKAGE_PIN L6  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][DataxD][PxD][0]}]
+set_property -dict { PACKAGE_PIN M6  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][DataxD][NxD][0]}]
+
+# --- HDMI Clock ---
+set_property -dict { PACKAGE_PIN J7  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][ClkxC][PxC]}]
+set_property -dict { PACKAGE_PIN J6  IOSTANDARD LVDS_25 } [get_ports {HdmiTxxDIO[OutxD][ClkxC][NxC]}]
+
+############################################################################
+# VGA CONTROL (Fix for UCIO-1)
+############################################################################
+
+# --- Video On Signal ---
+# Mapping this to J8 (previously listed as Top7PxSIO in your template)
+set_property -dict { PACKAGE_PIN J8  IOSTANDARD LVCMOS25 } [get_ports {VgaPixCountersxDO[VidOnxS]}]
