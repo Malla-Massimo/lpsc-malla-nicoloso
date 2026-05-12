@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="71" Path="C:/lpsc/mandelbrot/scalp_user_design/scalp_user_design.xpr">
+<Project Product="Vivado" Version="7" Minor="71" Path="C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="d415e326586b40799ad8db0f84c4160a"/>
@@ -216,17 +216,15 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/ip/BRAM_5_500k/BRAM_5_500k.xci">
+      <File Path="$PSRCDIR/sources_1/new/julia_pipelined_parra.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../scalp_zynqps/scalp_zynqps.bd">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -273,14 +271,12 @@
       </File>
       <File Path="$PSRCDIR/sources_1/new/color_palette.vhd">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/julia_pipelined.vhd">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -288,7 +284,6 @@
       <File Path="$PSRCDIR/sources_1/imports/files/scalp_axi_pkg.vhd">
         <FileInfo SFType="VHDL2008">
           <Attr Name="Library" Val="scalp_lib"/>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_axi_pkg.vhd"/>
           <Attr Name="ImportTime" Val="1711378947"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -297,7 +292,6 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/files/scalp_cplx_num_regs.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_cplx_num_regs.vhd"/>
           <Attr Name="ImportTime" Val="1711468971"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -306,36 +300,8 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/files/scalp_firmwareid.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_firmwareid.vhd"/>
           <Attr Name="ImportTime" Val="1711379206"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/files/scalp_pwm.vhd">
-        <FileInfo SFType="VHDL2008">
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_pwm.vhd"/>
-          <Attr Name="ImportTime" Val="1709809462"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/files/scalp_zynqps_user.vhd">
-        <FileInfo SFType="VHDL2008">
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_zynqps_user.vhd"/>
-          <Attr Name="ImportTime" Val="1711369193"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/files/scalp_user_design.vhd">
-        <FileInfo SFType="VHDL2008">
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_user_design.vhd"/>
-          <Attr Name="ImportTime" Val="1711437819"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -405,9 +371,33 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sources_1/imports/files/scalp_pwm.vhd">
+        <FileInfo SFType="VHDL2008">
+          <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_pwm.vhd"/>
+          <Attr Name="ImportTime" Val="1709809462"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/files/scalp_zynqps_user.vhd">
+        <FileInfo SFType="VHDL2008">
+          <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_zynqps_user.vhd"/>
+          <Attr Name="ImportTime" Val="1711369193"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/files/scalp_user_design.vhd">
+        <FileInfo SFType="VHDL2008">
+          <Attr Name="ImportPath" Val="$PPRDIR/../files/scalp_user_design.vhd"/>
+          <Attr Name="ImportTime" Val="1711437819"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="scalp_hdmi"/>
+        <Option Name="TopModule" Val="scalp_user_design"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
       </Config>
     </FileSet>
@@ -464,7 +454,7 @@
       <Filter Type="Srcs"/>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="scalp_hdmi"/>
+        <Option Name="TopModule" Val="scalp_user_design"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
@@ -633,6 +623,19 @@
       </File>
       <Config>
         <Option Name="TopModule" Val="aurora_8b10b"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="BRAM_5_500k" Type="BlockSrcs" RelSrcDir="$PSRCDIR/BRAM_5_500k" RelGenDir="$PGENDIR/BRAM_5_500k">
+      <File Path="$PSRCDIR/sources_1/ip/BRAM_5_500k/BRAM_5_500k.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="TopModule" Val="BRAM_5_500k"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
@@ -826,9 +829,20 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="aurora_8b10b_synth_1" Type="Ft3:Synth" SrcSet="aurora_8b10b" Part="xc7z015clg485-2" ConstrsSet="aurora_8b10b" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/aurora_8b10b_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/aurora_8b10b_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/aurora_8b10b_synth_1" ParallelReportGen="true">
+    <Run Id="aurora_8b10b_synth_1" Type="Ft3:Synth" SrcSet="aurora_8b10b" Part="xc7z015clg485-2" ConstrsSet="aurora_8b10b" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/aurora_8b10b_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/aurora_8b10b_synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="BRAM_5_500k_synth_1" Type="Ft3:Synth" SrcSet="BRAM_5_500k" Part="xc7z015clg485-2" ConstrsSet="BRAM_5_500k" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/BRAM_5_500k_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/BRAM_5_500k_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/BRAM_5_500k_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -836,7 +850,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z015clg485-2" ConstrsSet="constrs_1" Description="Combines power optimization (power_opt_design) with sequential area reduction to reduce power consumption." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_1" LaunchOptions="-jobs 14 " AutoRQSDir="$PSRCDIR/utils_1/imports/impl_1" ParallelReportGen="true">
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z015clg485-2" ConstrsSet="constrs_1" Description="Combines power optimization (power_opt_design) with sequential area reduction to reduce power consumption." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_1" LaunchOptions="-jobs 22 " AutoRQSDir="$PSRCDIR/utils_1/imports/impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Power_ExploreArea" Flow="Vivado Implementation 2025"/>
         <Step Id="init_design"/>
@@ -1131,6 +1145,25 @@
     <Run Id="aurora_8b10b_impl_1" Type="Ft2:EntireDesign" Part="xc7z015clg485-2" ConstrsSet="aurora_8b10b" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="aurora_8b10b_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/aurora_8b10b_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/aurora_8b10b_impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="BRAM_5_500k_impl_1" Type="Ft2:EntireDesign" Part="xc7z015clg485-2" ConstrsSet="BRAM_5_500k" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="BRAM_5_500k_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/BRAM_5_500k_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/BRAM_5_500k_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
