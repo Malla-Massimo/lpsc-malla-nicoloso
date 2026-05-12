@@ -672,7 +672,7 @@ begin
         );
     end component;
 
-    component JuliaPipelined is
+    component JuliaPipelinedParallel is
     Port ( 
         clk: in std_logic;
         rst: in std_logic;
@@ -692,6 +692,27 @@ begin
 
     );
     end component;
+
+    -- component JuliaPipelined is
+    -- Port ( 
+    --     clk: in std_logic;
+    --     rst: in std_logic;
+    --     start: in std_logic;
+
+    --     x:   in sfixed(3 downto -15);
+    --     y:   in sfixed(3 downto -15);
+    --     ram_addr: in unsigned(18 downto 0);
+
+    --     c_re: in sfixed(3 downto -15);
+    --     c_im: in sfixed(3 downto -15);
+
+    --     n_iteration: out std_logic_vector(7 downto 0);
+    --     done: out std_logic;
+    --     addr_done: out unsigned(18 downto 0);
+    --     julia_busy: std_logic
+
+    -- );
+    -- end component;
 
     type color_pattern is array (0 to 31) of std_logic_vector(23 downto 0);
     constant COLOR_PALETTE : color_pattern := (
@@ -813,7 +834,7 @@ begin
         palette_index => palette_index_1
     );
     
-    julia_pipelined: JuliaPipelined
+    julia_pipelined_parra: JuliaPipelinedParallel
     port map (
         clk     => clk_100MHz,
         rst     => '0',
@@ -831,25 +852,44 @@ begin
         addr_done   => addr_done,
         julia_busy  => julia_busy
     );
+    
+    -- julia_pipelined: JuliaPipelined
+    -- port map (
+    --     clk     => clk_100MHz,
+    --     rst     => '0',
+    --     start   =>  julia_start,
 
-    julia_pipelined_1: JuliaPipelined
-    port map (
-        clk     => clk_100MHz,
-        rst     => '0',
-        start   =>  julia_start_1,
+    --     x       => julia_x_coord,
+    --     y       => julia_y_coord,
+    --     ram_addr => addr_counter,
 
-        x       => julia_x_coord_1,
-        y       => julia_y_coord_1,
-        ram_addr => addr_counter_1,
+    --     c_re    => to_sfixed(-0.835, 3, -15), -- Julia Real constant
+    --     c_im    => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
 
-        c_re    => to_sfixed(-0.835, 3, -15), -- Julia Real constant
-        c_im    => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
+    --     n_iteration => julia_n_iter,
+    --     done        => julia_done,
+    --     addr_done   => addr_done,
+    --     julia_busy  => julia_busy
+    -- );
 
-        n_iteration => julia_n_iter_1,
-        done        => julia_done_1,
-        addr_done   => addr_done_1,
-        julia_busy  => julia_busy_1
-    );
+    -- julia_pipelined_1: JuliaPipelined
+    -- port map (
+    --     clk     => clk_100MHz,
+    --     rst     => '0',
+    --     start   =>  julia_start_1,
+
+    --     x       => julia_x_coord_1,
+    --     y       => julia_y_coord_1,
+    --     ram_addr => addr_counter_1,
+
+    --     c_re    => to_sfixed(-0.835, 3, -15), -- Julia Real constant
+    --     c_im    => to_sfixed(-0.232, 3, -15), -- Julia Imaginary constant
+
+    --     n_iteration => julia_n_iter_1,
+    --     done        => julia_done_1,
+    --     addr_done   => addr_done_1,
+    --     julia_busy  => julia_busy_1
+    -- );
 
 --    Aurora : aurora_8b10b
 --  PORT MAP (

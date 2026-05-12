@@ -59,3 +59,13 @@ set_property PROGRAM.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_
 program_hw_devices [get_hw_devices xc7z015_1]
 refresh_hw_device [lindex [get_hw_devices xc7z015_1] 0]
 display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z015_1] -filter {CELL_NAME=~"PSxB.ZynqxI/PlatformxB.ScalpZynqPSxI/system_ila_0/U0/ila_lib"}]]
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 22
+wait_on_run impl_1
+open_bd_design {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/scalp_zynqps.bd}
+set_property PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property FULL_PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property PROGRAM.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.bit} [get_hw_devices xc7z015_1]
+program_hw_devices [get_hw_devices xc7z015_1]
+refresh_hw_device [lindex [get_hw_devices xc7z015_1] 0]
