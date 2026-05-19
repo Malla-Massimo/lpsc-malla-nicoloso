@@ -1,18 +1,23 @@
-set hw_vio [get_hw_vios]
+set vio [lindex [get_hw_vios -of_objects [current_hw_device]] 0]
+set probe [lindex [get_hw_probes -of_objects $vio] 0]
+
 set results {}
 for {set i 0} {$i < 360} {incr i} {
-    # Wait for the FSM to finish a frame (probe value changes)
-    set prev [get_property INPUT_VALUE [get_hw_probes probe_in0 -of $hw_vio]]
+    set prev [get_property INPUT_VALUE $probe]
     after 100
-    set curr [get_property INPUT_VALUE [get_hw_probes probe_in0 -of $hw_vio]]
-    while {$curr == $prev} {
+    refresh_hw_vio $vio
+    set curr [get_property INPUT_VALUE $probe]
+    while {$curr eq $prev} {
         after 50
-        set curr [get_property INPUT_VALUE [get_hw_probes probe_in0 -of $hw_vio]]
+        refresh_hw_vio $vio
+        set curr [get_property INPUT_VALUE $probe]
     }
-    lappend results $curr
-    puts "Frame $i: $curr cycles"
+
+    scan $curr %i dec
+    lappend results $dec
+    puts "Frame $i: $dec cycles"
 }
-# Write to CSV for Excel
+
 set fh [open "julia_cycle_counts.csv" w]
 puts $fh "frame,cycles"
 for {set i 0} {$i < [llength $results]} {incr i} {
