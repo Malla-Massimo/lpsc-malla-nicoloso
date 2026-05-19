@@ -7,19 +7,20 @@ entity JuliaRegion is
   generic (
     REGION_HEIGHT : integer := 180;
     REGION_WIDTH  : integer := 720;
-    N_WORKERS     : integer := 4
+    N_WORKERS     : integer := 4;
+    JULIA_NEGATIVE_DEPTH : integer := 20
   );
   Port (
     clk          : in  std_logic;
     rst          : in  std_logic;
     frame_start  : in  std_logic;
 
-    c_re         : in  sfixed(3 downto -15);
-    c_im         : in  sfixed(3 downto -15);
-    julia_x_step : in  sfixed(3 downto -15);
-    julia_y_step : in  sfixed(3 downto -15);
-    x_coord_init : in  sfixed(3 downto -15);
-    y_coord_init : in  sfixed(3 downto -15);
+    c_re         : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    c_im         : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    julia_x_step : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    julia_y_step : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    x_coord_init : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    y_coord_init : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
     ram_we      : out std_logic_vector(0 downto 0);
     ram_addr    : out std_logic_vector(16 downto 0);
@@ -32,16 +33,19 @@ end JuliaRegion;
 architecture Behavioral of JuliaRegion is
 
     component JuliaPipelinedParallel is
-      generic ( N_WORKERS : integer := 4 );
+      generic ( 
+        N_WORKERS : integer := 4;
+        JULIA_NEGATIVE_DEPTH : integer
+        );
       Port (
         clk         : in std_logic;
         rst         : in std_logic;
         start       : in std_logic;
-        x           : in sfixed(3 downto -15);
-        y           : in sfixed(3 downto -15);
+        x           : in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+        y           : in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         ram_addr    : in unsigned(18 downto 0);
-        c_re        : in sfixed(3 downto -15);
-        c_im        : in sfixed(3 downto -15);
+        c_re        : in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+        c_im        : in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         n_iteration : out std_logic_vector(7 downto 0);
         done        : out std_logic;
         addr_done   : out unsigned(18 downto 0);
@@ -74,13 +78,16 @@ architecture Behavioral of JuliaRegion is
     signal jpp_n_iter    : std_logic_vector(7 downto 0);
     signal palette_idx   : std_logic_vector(4 downto 0);
 
-    signal julia_x_coord : sfixed(3 downto -15);
-    signal julia_y_coord : sfixed(3 downto -15);
+    signal julia_x_coord : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    signal julia_y_coord : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
 begin
 
     jpp_inst : JuliaPipelinedParallel
-      generic map ( N_WORKERS => N_WORKERS )
+      generic map ( 
+        N_WORKERS => N_WORKERS ,
+        JULIA_NEGATIVE_DEPTH => JULIA_NEGATIVE_DEPTH
+        )
       port map (
         clk         => clk,
         rst         => rst,
@@ -145,13 +152,13 @@ begin
                             pixels_dispatched <= pixels_dispatched + 1;
                             if cur_x < REGION_WIDTH - 1 then
                                 cur_x         <= cur_x + 1;
-                                julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -15);
+                                julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -JULIA_NEGATIVE_DEPTH);
                                 addr_counter  <= addr_counter + 1;
                             else
                                 cur_x         <= (others => '0');
                                 cur_y         <= cur_y + 1;
                                 julia_x_coord <= x_coord_init;
-                                julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -15);
+                                julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -JULIA_NEGATIVE_DEPTH);
                                 addr_counter  <= addr_counter + 1;
                             end if;
                         elsif jpp_busy = '0' and pixels_dispatched < TOTAL_PIXELS then

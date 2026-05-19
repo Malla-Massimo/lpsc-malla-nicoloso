@@ -5,19 +5,20 @@ use ieee.fixed_pkg.all;
 
 entity JuliaPipelinedParallel is
   generic (
-    N_WORKERS : integer := 4
+    N_WORKERS : integer := 4;
+    JULIA_NEGATIVE_DEPTH : integer := 20
   );
   Port (
     clk: in std_logic;
     rst: in std_logic;
     start: in std_logic;
 
-    x:   in sfixed(3 downto -15);
-    y:   in sfixed(3 downto -15);
+    x:   in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    y:   in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     ram_addr: in unsigned(18 downto 0);
 
-    c_re: in sfixed(3 downto -15);
-    c_im: in sfixed(3 downto -15);
+    c_re: in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    c_im: in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
     n_iteration: out std_logic_vector(7 downto 0);
     done: out std_logic;
@@ -27,18 +28,20 @@ entity JuliaPipelinedParallel is
   );
 end JuliaPipelinedParallel;
 
-architecture Behavioral of JuliaPipelinedParallel is
-
+architecture Behavioral of JuliaPipelinedParallel is    
     component JuliaPipelined is
+        generic(
+            JULIA_NEGATIVE_DEPTH : integer
+        );
       Port (
         clk: in std_logic;
         rst: in std_logic;
         start: in std_logic;
-        x:   in sfixed(3 downto -15);
-        y:   in sfixed(3 downto -15);
+        x:   in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+        y:   in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         ram_addr: in unsigned(18 downto 0);
-        c_re: in sfixed(3 downto -15);
-        c_im: in sfixed(3 downto -15);
+        c_re: in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+        c_im: in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         n_iteration: out std_logic_vector(7 downto 0);
         done: out std_logic;
         addr_done: out unsigned(18 downto 0);
@@ -48,7 +51,7 @@ architecture Behavioral of JuliaPipelinedParallel is
 
     type iter_arr    is array (0 to N_WORKERS-1) of std_logic_vector(7 downto 0);
     type addr_arr    is array (0 to N_WORKERS-1) of unsigned(18 downto 0);
-    type sfx_arr     is array (0 to N_WORKERS-1) of sfixed(3 downto -15);
+    type sfx_arr     is array (0 to N_WORKERS-1) of sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
     signal w_start     : std_logic_vector(N_WORKERS-1 downto 0) := (others => '0');
     signal w_busy      : std_logic_vector(N_WORKERS-1 downto 0);
@@ -75,6 +78,9 @@ begin
 
     gen_workers: for i in 0 to N_WORKERS-1 generate
         worker_inst: JuliaPipelined
+        generic map (
+            JULIA_NEGATIVE_DEPTH => JULIA_NEGATIVE_DEPTH
+        )
         port map (
             clk         => clk,
             rst         => rst,

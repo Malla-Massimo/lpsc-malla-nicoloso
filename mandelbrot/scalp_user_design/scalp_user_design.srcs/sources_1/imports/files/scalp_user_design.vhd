@@ -39,7 +39,9 @@ entity scalp_user_design is
         C_DEBUG_MODE         : boolean               := false;
         C_GPIO_SWITCHES_SIZE : integer range 0 to 32 := 2;
         C_GPIO_JOYSTICK_SIZE : integer range 0 to 32 := 5;
-        C_HDMI_LANES         : integer range 0 to 3  := 3);
+        C_HDMI_LANES         : integer range 0 to 3  := 3;
+        JULIA_NEGATIVE_DEPTH : integer := 20
+        );
 
     port (
         -----------------------------------------------------------------------
@@ -608,7 +610,7 @@ begin
         constant N_REGIONS     : integer := 4;
         constant REGION_HEIGHT : integer := 720 / N_REGIONS;
         -- Bram 128k
-        type sfx_arr     is array (0 to N_REGIONS-1) of sfixed(3 downto -15);
+        type sfx_arr     is array (0 to N_REGIONS-1) of sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         type ram_addr_t  is array (0 to N_REGIONS-1) of std_logic_vector(16 downto 0);
         type ram_data_t  is array (0 to N_REGIONS-1) of std_logic_vector(4 downto 0);
         type ram_we_t    is array (0 to N_REGIONS-1) of std_logic_vector(0 downto 0);
@@ -624,9 +626,9 @@ begin
         signal region_done       : std_logic_vector(N_REGIONS-1 downto 0);
         signal frame_start       : std_logic := '0';
 
-        signal julia_range  : sfixed(3 downto -15) := to_sfixed(3.0, 3, -15);
-        signal julia_x_step : sfixed(3 downto -15) := to_sfixed(0.0041666, 3, -15);
-        signal julia_y_step : sfixed(3 downto -15) := to_sfixed(0.0041666, 3, -15);
+        signal julia_range  : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
+        signal julia_x_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
+        signal julia_y_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
 
 
         component JuliaRegion is
@@ -639,12 +641,12 @@ begin
             clk          : in  std_logic;
             rst          : in  std_logic;
             frame_start  : in  std_logic;
-            c_re         : in  sfixed(3 downto -15);
-            c_im         : in  sfixed(3 downto -15);
-            julia_x_step : in  sfixed(3 downto -15);
-            julia_y_step : in  sfixed(3 downto -15);
-            x_coord_init : in  sfixed(3 downto -15);
-            y_coord_init : in  sfixed(3 downto -15);
+            c_re         : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+            c_im         : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+            julia_x_step : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+            julia_y_step : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+            x_coord_init : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+            y_coord_init : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
             ram_we       : out std_logic_vector(0 downto 0);
             ram_addr     : out std_logic_vector(16 downto 0);
             ram_data     : out std_logic_vector(4 downto 0);
@@ -763,18 +765,19 @@ begin
         
     -- Initialize BRAM
     gen_regions : for i in 0 to N_REGIONS-1 generate
-            region_inst : JuliaRegion
+            region_inst : entity work.JuliaRegion
                 generic map (
                     REGION_HEIGHT => REGION_HEIGHT,
                     REGION_WIDTH  => 720,
-                    N_WORKERS     => 4
+                    N_WORKERS     => 2,
+                    JULIA_NEGATIVE_DEPTH => 20
                 )
                 port map (
                     clk          => clk_100MHz,
                     rst          => '0',
                     frame_start  => frame_start,
-                    c_re         => to_sfixed(-0.835, 3, -15),
-                    c_im         => to_sfixed(-0.232, 3, -15),
+                    c_re         => to_sfixed(-0.835, 3, -JULIA_NEGATIVE_DEPTH),
+                    c_im         => to_sfixed(-0.232, 3, -JULIA_NEGATIVE_DEPTH),
                     julia_x_step => julia_x_step,
                     julia_y_step => julia_y_step,
                     x_coord_init => region_x_init(i),
@@ -1231,24 +1234,24 @@ begin
                         case state is
                             when INIT_RANGE =>
                                 frame_start <= '0';
-                                if julia_range > to_sfixed(0.1, 3, -15) then
-                                    julia_range <= resize(julia_range - to_sfixed(0.005, 3, -15), julia_range);
+                                if julia_range > to_sfixed(0.1, 3, -JULIA_NEGATIVE_DEPTH) then
+                                    julia_range <= resize(julia_range - to_sfixed(0.005, 3, -JULIA_NEGATIVE_DEPTH), julia_range);
                                 else
-                                    julia_range <= to_sfixed(3.0, 3, -15);
+                                    julia_range <= to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
                                 end if;
                                 if v_sync_occurred = '1' then
                                     state <= INIT_STEP;
                                 end if;
 
                             when INIT_STEP =>
-                                julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
-                                julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -15), 3, -15);
+                                julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -JULIA_NEGATIVE_DEPTH), 3, -JULIA_NEGATIVE_DEPTH);
+                                julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -JULIA_NEGATIVE_DEPTH), 3, -JULIA_NEGATIVE_DEPTH);
                                 state <= INIT_COORD;
 
                             when INIT_COORD =>
                                 for i in 0 to N_REGIONS-1 loop
-                                    region_x_init(i) <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -15);
-                                    region_y_init(i) <= resize(to_sfixed(i * REGION_HEIGHT - 360, 10, 0) * julia_y_step, 3, -15);
+                                    region_x_init(i) <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -JULIA_NEGATIVE_DEPTH);
+                                    region_y_init(i) <= resize(to_sfixed(i * REGION_HEIGHT - 360, 10, 0) * julia_y_step, 3, -JULIA_NEGATIVE_DEPTH);
                                 end loop;
                                 state <= CALCULATE;
 
