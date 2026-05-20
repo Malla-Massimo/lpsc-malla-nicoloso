@@ -1,17 +1,17 @@
--- (c) Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
--- (c) Copyright 2022-2026 Advanced Micro Devices, Inc. All rights reserved.
--- 
+-- (c) Copyright 2023 Advanced Micro Devices, Inc. All rights reserved.
+--
 -- This file contains confidential and proprietary information
--- of AMD and is protected under U.S. and international copyright
--- and other intellectual property laws.
--- 
+-- of AMD and is protected under U.S. and
+-- international copyright and other intellectual property
+-- laws.
+--
 -- DISCLAIMER
 -- This disclaimer is not a license and does not grant any
 -- rights to the materials distributed herewith. Except as
 -- otherwise provided in a valid license issued to you by
 -- AMD, and to the maximum extent permitted by applicable
 -- law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
--- WITH ALL FAULTS, AND AMD HEREBY DISCLAIMS ALL WARRANTIES
+-- WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
 -- AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
 -- BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
 -- INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
@@ -26,7 +26,7 @@
 -- by a third party) even if such damage or loss was
 -- reasonably foreseeable or AMD had been advised of the
 -- possibility of the same.
--- 
+--
 -- CRITICAL APPLICATIONS
 -- AMD products are not designed or intended to be fail-
 -- safe, or for use in any application requiring fail-safe
@@ -40,41 +40,23 @@
 -- liability of any use of AMD products in Critical
 -- Applications, subject only to applicable laws and
 -- regulations governing limitations on product liability.
--- 
+--
 -- THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
 -- PART OF THIS FILE AT ALL TIMES.
--- 
+--
 -- DO NOT MODIFY THIS FILE.
--- IP VLNV: xilinx.com:ip:vio:3.0
--- IP Revision: 27
 
--- The following code must appear in the VHDL architecture header.
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
 
-------------- Begin Cut here for COMPONENT Declaration ------ COMP_TAG
-COMPONENT vio_0
-  PORT (
-    clk : IN STD_LOGIC;
-    probe_in0 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-    probe_out0 : OUT STD_LOGIC_VECTOR(0 DOWNTO 0) 
-  );
-END COMPONENT;
--- COMP_TAG_END ------ End COMPONENT Declaration ------------
-
--- The following code must appear in the VHDL architecture
--- body. Substitute your own instance name and net names.
-
-------------- Begin Cut here for INSTANTIATION Template ----- INST_TAG
-your_instance_name : vio_0
-  PORT MAP (
-    clk => clk,
-    probe_in0 => probe_in0,
-    probe_out0 => probe_out0
-  );
--- INST_TAG_END ------ End INSTANTIATION Template ---------
-
--- You must compile the wrapper file vio_0.vhd when simulating
--- the core, vio_0. When compiling the wrapper file, be sure to
--- reference the VHDL simulation library.
-
-
-
+ENTITY vio_0 IS
+PORT (
+CLK : IN STD_LOGIC;
+probe_in0 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+probe_out0 : OUT STD_LOGIC_VECTOR(0 DOWNTO 0) := "0"
+);
+END vio_0;
+ARCHITECTURE vio_0_arch OF vio_0 IS
+BEGIN
+END vio_0_arch;

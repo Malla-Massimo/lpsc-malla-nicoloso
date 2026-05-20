@@ -40,7 +40,7 @@ entity scalp_user_design is
         C_GPIO_SWITCHES_SIZE : integer range 0 to 32 := 2;
         C_GPIO_JOYSTICK_SIZE : integer range 0 to 32 := 5;
         C_HDMI_LANES         : integer range 0 to 3  := 3;
-        JULIA_NEGATIVE_DEPTH : integer := 20
+        JULIA_NEGATIVE_DEPTH : integer := 25
         );
 
     port (
@@ -629,7 +629,10 @@ begin
         signal julia_range  : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
         signal julia_x_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
         signal julia_y_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
-
+        
+        signal probe_in0: std_logic_vector(31 downto 0) := (others => '0');
+        signal probe_out0: std_logic_vector(0 downto 0) := (others => '0');
+        signal probe_counter: unsigned(31 downto 0) := (others => '0');
 
         component JuliaRegion is
         generic (
@@ -653,6 +656,14 @@ begin
             region_done  : out std_logic
         );
         end component;
+
+        COMPONENT vio_0
+        PORT (
+            clk : IN STD_LOGIC;
+            probe_in0 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            probe_out0 : OUT STD_LOGIC_VECTOR(0 DOWNTO 0) 
+        );
+        END COMPONENT;
 
     -- component BRAM_5_500k is 
     --   PORT (
@@ -769,8 +780,8 @@ begin
                 generic map (
                     REGION_HEIGHT => REGION_HEIGHT,
                     REGION_WIDTH  => 720,
-                    N_WORKERS     => 2,
-                    JULIA_NEGATIVE_DEPTH => 20
+                    N_WORKERS     => 3,
+                    JULIA_NEGATIVE_DEPTH => JULIA_NEGATIVE_DEPTH
                 )
                 port map (
                     clk          => clk_100MHz,
@@ -801,6 +812,13 @@ begin
                 doutb => r_ram_data_out(i)
             );
     end generate;
+
+    vio : vio_0
+    PORT MAP (
+        clk => clk_100MHz,
+        probe_in0 => probe_in0,
+        probe_out0 => probe_out0
+    );
     
 
     -- component color_palette_index is
@@ -1172,7 +1190,21 @@ begin
             -- attribute keep of BramAddrxD              : signal is "true";
             -- attribute mark_debug of BramWexD          : signal is "true";
             -- attribute keep of BramWexD                : signal is "true";
-        
+            
+            -- LUT for address
+            type y_offset_arr_t is array(0 to REGION_HEIGHT-1) of integer;
+            
+            function init_y_lut return y_offset_arr_t is
+                variable ret : y_offset_arr_t;
+            begin
+                for i in 0 to REGION_HEIGHT-1 loop
+                    ret(i) := i * 720;
+                end loop;
+                return ret;
+            end function;
+            
+            constant Y_MULT_LUT : y_offset_arr_t := init_y_lut;
+
         begin  -- block ImGenxB
 
             BramSDPMacro1xI : BRAM_SDP_MACRO
@@ -1232,15 +1264,21 @@ begin
                 if rising_edge(clk_100MHz) then
                     if Clk125PllLockedxS = '1' then
                         case state is
-                            when INIT_RANGE =>
+                           when INIT_RANGE =>
                                 frame_start <= '0';
-                                if julia_range > to_sfixed(0.1, 3, -JULIA_NEGATIVE_DEPTH) then
-                                    julia_range <= resize(julia_range - to_sfixed(0.005, 3, -JULIA_NEGATIVE_DEPTH), julia_range);
-                                else
-                                    julia_range <= to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
-                                end if;
+                                
+                                -- Wait for the screen to finish drawing
                                 if v_sync_occurred = '1' then
+                                
+                                    -- ONLY calculate the next zoom step right as we leave the state
+                                    if julia_range > to_sfixed(0.001, 3, -JULIA_NEGATIVE_DEPTH) then
+                                        julia_range <= resize(julia_range - to_sfixed(0.008, 3, -JULIA_NEGATIVE_DEPTH), julia_range);
+                                    else
+                                        julia_range <= to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
+                                    end if;
+                                    
                                     state <= INIT_STEP;
+                                    probe_counter <= (others => '0');
                                 end if;
 
                             when INIT_STEP =>
@@ -1256,6 +1294,7 @@ begin
                                 state <= CALCULATE;
 
                             when CALCULATE =>
+                                probe_counter <= probe_counter + 1;
                                 if region_done = (region_done'range => '1') then
                                     frame_start <= '0';
                                     state <= DONE;
@@ -1264,6 +1303,7 @@ begin
                                 end if;
 
                             when DONE =>
+                                probe_in0 <= std_logic_vector(probe_counter);
                                 frame_start <= '0';
                                 state <= INIT_RANGE;
                         end case;
@@ -1272,33 +1312,32 @@ begin
             end process JuliaTopFSM;
 
             -- Process in clk_100MHz domain
-            sync_proc : process(clk_100MHz)
+           sync_proc : process(clk_100MHz)
             begin
                 if rising_edge(clk_100MHz) then
                     v_sync_reg <= v_sync_reg(1 downto 0) & v_sync_trigger;
                     
-                    -- Detect the toggle edge
-                    if v_sync_reg(2) /= v_sync_reg(1) then
-                        v_sync_occurred <= '1'; -- SET the flag
-                        
-                    -- CLEAR the flag ONLY when the FSM moves forward
-                    elsif state = INIT_STEP then 
-                        v_sync_occurred <= '0'; 
+                    if state = INIT_RANGE then
+                        -- Detect the toggle edge
+                        if v_sync_reg(2) /= v_sync_reg(1) then
+                            v_sync_occurred <= '1';
+                        end if;
+                    else
+                        v_sync_occurred <= '0';
                     end if;
                 end if;
             end process;
 
-            
             -- reader proccess, read and send to hdmi
             DisplayRamxP : process(HdmiVgaClocksxC.VgaxC)
                 variable idx        : integer range 0 to 31;
                 variable v_int      : integer range 0 to 1023;
                 variable v_local    : integer range 0 to REGION_HEIGHT-1;
                 variable region_sel : integer range 0 to N_REGIONS-1;
+                variable base_addr  : integer; -- NEW: Holds our instant LUT answer
             begin
                 if rising_edge(HdmiVgaClocksxC.VgaxC) then
-                    VidOn_delayed <= VgaPixCountersxD.VidOnxS;
-                    if VidOn_delayed = '1' and VgaPixCountersxD.VidOnxS = '0' then
+                    if (unsigned(VgaPixCountersxD.HxD) = 719) and (unsigned(VgaPixCountersxD.VxD) = 719) then
                         v_sync_trigger <= not v_sync_trigger;
                     end if;
 
@@ -1307,15 +1346,21 @@ begin
                     elsif VgaPixCountersxD.VidOnxS = '1' then
                         if (unsigned(VgaPixCountersxD.HxD) < 720) and (unsigned(VgaPixCountersxD.VxD) < 720) then
                             v_int := to_integer(unsigned(VgaPixCountersxD.VxD));
+                            
                             if    v_int < REGION_HEIGHT     then region_sel := 0;
                             elsif v_int < REGION_HEIGHT * 2 then region_sel := 1;
                             elsif v_int < REGION_HEIGHT * 3 then region_sel := 2;
                             else                                 region_sel := 3;
                             end if;
+                            
                             v_local := v_int - region_sel * REGION_HEIGHT;
 
+                            -- THE FIX: Instant lookup instead of a slow multiplication!
+                            base_addr := Y_MULT_LUT(v_local);
+
+                            -- Now we just do one simple addition
                             r_ram_rd_addr <= std_logic_vector(to_unsigned(
-                                v_local * 720 + to_integer(unsigned(VgaPixCountersxD.HxD)), 17));
+                                base_addr + to_integer(unsigned(VgaPixCountersxD.HxD)), 17));
 
                             idx := to_integer(unsigned(r_ram_data_out(region_sel)));
                             PixelxD.RxD <= COLOR_PALETTE(idx)(23 downto 16);

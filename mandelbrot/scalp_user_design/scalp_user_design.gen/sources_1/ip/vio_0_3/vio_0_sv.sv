@@ -1,10 +1,10 @@
-// (c) Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
-// (c) Copyright 2022-2026 Advanced Micro Devices, Inc. All rights reserved.
-// 
+// Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+// Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+// -------------------------------------------------------------------------------
 // This file contains confidential and proprietary information
 // of AMD and is protected under U.S. and international copyright
 // and other intellectual property laws.
-// 
+//
 // DISCLAIMER
 // This disclaimer is not a license and does not grant any
 // rights to the materials distributed herewith. Except as
@@ -26,7 +26,7 @@
 // by a third party) even if such damage or loss was
 // reasonably foreseeable or AMD had been advised of the
 // possibility of the same.
-// 
+//
 // CRITICAL APPLICATIONS
 // AMD products are not designed or intended to be fail-
 // safe, or for use in any application requiring fail-safe
@@ -40,28 +40,31 @@
 // liability of any use of AMD products in Critical
 // Applications, subject only to applicable laws and
 // regulations governing limitations on product liability.
-// 
+//
 // THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
 // PART OF THIS FILE AT ALL TIMES.
-// 
+//
 // DO NOT MODIFY THIS FILE.
 
-// IP VLNV: xilinx.com:ip:vio:3.0
-// IP Revision: 27
+// MODULE VLNV: xilinx.com:ip:vio:3.0
 
-// The following must be inserted into your Verilog file for this
-// core to be instantiated. Change the instance name and port connections
-// (in parentheses) to your own signal names.
+`timescale 1ps / 1ps
 
-//----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG
-vio_0 your_instance_name (
-  .clk(clk),                // input wire clk
-  .probe_in0(probe_in0),    // input wire [31 : 0] probe_in0
-  .probe_out0(probe_out0)  // output wire [0 : 0] probe_out0
+`include "vivado_interfaces.svh"
+
+module vio_0_sv (
+  (* X_INTERFACE_IGNORE = "true" *)
+  input wire clk,
+  (* X_INTERFACE_IGNORE = "true" *)
+  input wire [31:0] probe_in0,
+  (* X_INTERFACE_IGNORE = "true" *)
+  output wire [0:0] probe_out0
 );
-// INST_TAG_END ------ End INSTANTIATION Template ---------
 
-// You must compile the wrapper file vio_0.v when simulating
-// the core, vio_0. When compiling the wrapper file, be sure to
-// reference the Verilog simulation library.
+  vio_0 inst (
+    .clk(clk),
+    .probe_in0(probe_in0),
+    .probe_out0(probe_out0)
+  );
 
+endmodule

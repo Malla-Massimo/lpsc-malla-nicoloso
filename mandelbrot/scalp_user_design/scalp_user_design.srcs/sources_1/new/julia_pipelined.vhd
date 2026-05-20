@@ -30,117 +30,162 @@ generic (
     julia_busy: out std_logic 
   );
 end JuliaPipelined;
-
 architecture Behavioral of JuliaPipelined is
     
-    -- Stage 1 Signals
-    signal s1_x_carre, s1_y_carre, s1_xy : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    -- STAGE 0: Input Latch (The Wall)
+    signal s0_x, s0_y                   : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    signal s0_c_re, s0_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    signal s0_active                    : std_logic := '0';
+    signal s0_addr                      : unsigned(18 downto 0);
+    signal s0_count                     : unsigned(7 downto 0);
+
+    -- attribute dont_touch : string;
+    -- attribute dont_touch of s0_x : signal is "true";
+    -- attribute dont_touch of s0_y : signal is "true";
+
+    -- STAGE 1: Full-Width Multiplication (48-bit results!)
+    -- Notice the size is doubled to hold the true result of a 24x24 multiplication
+    signal s1_x_carre_full, s1_y_carre_full, s1_xy_full : sfixed(7 downto -JULIA_NEGATIVE_DEPTH*2);
     signal s1_c_re, s1_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s1_active                    : std_logic := '0';
     signal s1_addr                      : unsigned(18 downto 0);
     signal s1_count                     : unsigned(7 downto 0);
 
+    -- Force DSPs
     attribute use_dsp : string;
-    attribute use_dsp of s1_x_carre : signal is "yes";
-    attribute use_dsp of s1_y_carre : signal is "yes";
-    attribute use_dsp of s1_xy      : signal is "yes";
+    attribute use_dsp of s1_x_carre_full : signal is "yes";
+    attribute use_dsp of s1_y_carre_full : signal is "yes";
+    attribute use_dsp of s1_xy_full      : signal is "yes";
     
-    -- Stage 2 Signals
-    signal s2_sum_sq                    : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
-    signal s2_diff_sq                   : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
-    signal s2_2xy                       : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    -- STAGE 2: Resizing / Trimming 
+    signal s2_x_carre, s2_y_carre, s2_xy : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s2_c_re, s2_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s2_active                    : std_logic := '0';
     signal s2_addr                      : unsigned(18 downto 0);
     signal s2_count                     : unsigned(7 downto 0);
 
-    -- Stage 3 Signals
+    -- STAGE 3: Additions
+    signal s3_sum_sq                    : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s3_Z_re, s3_Z_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s3_c_re, s3_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s3_active                    : std_logic := '0';
     signal s3_addr                      : unsigned(18 downto 0);
     signal s3_count                     : unsigned(7 downto 0);
-    signal s3_pixel_escaped             : std_logic := '0';
+
+    -- STAGE 4: Escape Check
+    signal s4_Z_re, s4_Z_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    signal s4_c_re, s4_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+    signal s4_active                    : std_logic := '0';
+    signal s4_addr                      : unsigned(18 downto 0);
+    signal s4_count                     : unsigned(7 downto 0);
+    signal s4_pixel_escaped             : std_logic := '0';
 
 begin
 
-    process(clk)
+   process(clk)
     begin
         if rising_edge(clk) then
             if rst = '1' then
-                s1_active <= '0'; s2_active <= '0'; s3_active <= '0';
+                s0_active <= '0'; s1_active <= '0'; s2_active <= '0'; 
+                s3_active <= '0'; s4_active <= '0';
                 done <= '0';
             else
-                -- Default pulse
                 done <= '0';
 
                 -------------------------------------------------------
-                -- STAGE 1: Feed Coordinator
+                -- STAGE 0: Input Latch
                 -------------------------------------------------------
-                -- Scenario A: A pixel in S3 is still looping
-                if s3_active = '1' and s3_pixel_escaped = '0' then 
-                    s1_x_carre <= resize(s3_Z_re * s3_Z_re, 3, -JULIA_NEGATIVE_DEPTH);
-                    s1_y_carre <= resize(s3_Z_im * s3_Z_im, 3, -JULIA_NEGATIVE_DEPTH);
-                    s1_xy      <= resize(s3_Z_re * s3_Z_im, 3, -JULIA_NEGATIVE_DEPTH);
-                    s1_addr    <= s3_addr;
-                    s1_c_re    <= s3_c_re;
-                    s1_c_im    <= s3_c_im;
-                    s1_count   <= s3_count + 1; -- Increment looping pixel
-                    s1_active  <= '1';
-                
-                -- Scenario B: S3 is empty or its pixel just escaped! We can inject a new pixel.
+                -- We now check Stage 4 to see if the pixel needs to loop
+                if s4_active = '1' and s4_pixel_escaped = '0' then 
+                    s0_x      <= s4_Z_re;
+                    s0_y      <= s4_Z_im;
+                    s0_addr   <= s4_addr;
+                    s0_c_re   <= s4_c_re;
+                    s0_c_im   <= s4_c_im;
+                    s0_count  <= s4_count + 1;
+                    s0_active <= '1';
                 elsif start = '1' then 
-                    s1_x_carre <= resize(x * x, 3, -JULIA_NEGATIVE_DEPTH);
-                    s1_y_carre <= resize(y * y, 3, -JULIA_NEGATIVE_DEPTH);
-                    s1_xy      <= resize(x * y, 3, -JULIA_NEGATIVE_DEPTH);
-                    s1_addr    <= ram_addr;
-                    s1_c_re    <= c_re;
-                    s1_c_im    <= c_im;
-                    s1_count   <= (others => '0'); -- Brand new pixel
-                    s1_active  <= '1';
+                    s0_x      <= x;
+                    s0_y      <= y;
+                    s0_addr   <= ram_addr;
+                    s0_c_re   <= c_re;
+                    s0_c_im   <= c_im;
+                    s0_count  <= (others => '0');
+                    s0_active <= '1';
                 else
-                    s1_active  <= '0';
+                    s0_active <= '0';
                 end if;
 
                 -------------------------------------------------------
-                -- STAGE 2: Additions & Squaring
+                -- STAGE 1: Pure Math (Generates 48-bit numbers)
                 -------------------------------------------------------
-                s2_active  <= s1_active;
-                s2_sum_sq  <= resize(s1_x_carre + s1_y_carre, 3, -JULIA_NEGATIVE_DEPTH);
-                s2_diff_sq <= resize(s1_x_carre - s1_y_carre, 3, -JULIA_NEGATIVE_DEPTH);
-                s2_2xy     <= resize(shift_left(s1_xy, 1), 3, -JULIA_NEGATIVE_DEPTH);
-                s2_c_re    <= s1_c_re;
-                s2_c_im    <= s1_c_im;
-                s2_addr    <= s1_addr;
-                s2_count   <= s1_count;
+                s1_active  <= s0_active;
+                s1_addr    <= s0_addr;
+                s1_c_re    <= s0_c_re;
+                s1_c_im    <= s0_c_im;
+                s1_count   <= s0_count;
+                
+                -- No resizing here. The DSPs just crunch the numbers.
+                s1_x_carre_full <= s0_x * s0_x;
+                s1_y_carre_full <= s0_y * s0_y;
+                s1_xy_full      <= s0_x * s0_y;
 
                 -------------------------------------------------------
-                -- STAGE 3: Escape Check & Output
+                -- STAGE 2: Resize (Trims the 48-bit back to 24-bit)
+                -------------------------------------------------------
+                s2_active  <= s1_active;
+                s2_addr    <= s1_addr;
+                s2_c_re    <= s1_c_re;
+                s2_c_im    <= s1_c_im;
+                s2_count   <= s1_count;
+
+                s2_x_carre <= resize(s1_x_carre_full, 3, -JULIA_NEGATIVE_DEPTH);
+                s2_y_carre <= resize(s1_y_carre_full, 3, -JULIA_NEGATIVE_DEPTH);
+                s2_xy      <= resize(s1_xy_full, 3, -JULIA_NEGATIVE_DEPTH);
+
+                -------------------------------------------------------
+                -- STAGE 3: Additions
                 -------------------------------------------------------
                 s3_active  <= s2_active;
-                s3_Z_re    <= resize(s2_diff_sq + s2_c_re, 3, -JULIA_NEGATIVE_DEPTH);
-                s3_Z_im    <= resize(s2_2xy + s2_c_im, 3, -JULIA_NEGATIVE_DEPTH);
+                s3_addr    <= s2_addr;
                 s3_c_re    <= s2_c_re;
                 s3_c_im    <= s2_c_im;
-                s3_addr    <= s2_addr;
                 s3_count   <= s2_count;
+
+                -- Carry chains handle the additions here
+                s3_sum_sq  <= resize(s2_x_carre + s2_y_carre, 3, -JULIA_NEGATIVE_DEPTH);
+                s3_Z_re    <= resize((s2_x_carre - s2_y_carre) + s2_c_re, 3, -JULIA_NEGATIVE_DEPTH);
+                s3_Z_im    <= resize(shift_left(s2_xy, 1) + s2_c_im, 3, -JULIA_NEGATIVE_DEPTH);
+
+                -------------------------------------------------------
+                -- STAGE 4: Escape Check & Output
+                -------------------------------------------------------
+                s4_active  <= s3_active;
+                s4_addr    <= s3_addr;
+                s4_c_re    <= s3_c_re;
+                s4_c_im    <= s3_c_im;
+                s4_count   <= s3_count;
+                s4_Z_re    <= s3_Z_re;
+                s4_Z_im    <= s3_Z_im;
                 
-                if s2_active = '1' then
-                    -- Check if it escapes right now
-                    if (s2_sum_sq > 4.0) or (s2_count >= 99) then
-                        s3_pixel_escaped <= '1'; -- Tell Stage 1 NOT to loop this
-                        done <= '1';             -- Tell FSM to write to RAM
-                        addr_done <= s2_addr;
-                        n_iteration <= std_logic_vector(s2_count);
+                if s3_active = '1' then
+                    if (s3_sum_sq > 4.0) or (s3_count >= 99) then
+                        s4_pixel_escaped <= '1'; 
+                        done <= '1';             
+                        addr_done <= s3_addr;
+                        n_iteration <= std_logic_vector(s3_count);
                     else
-                        s3_pixel_escaped <= '0'; -- Tell Stage 1 to keep looping
+                        s4_pixel_escaped <= '0'; 
                     end if;
                 else
-                    s3_pixel_escaped <= '0';
+                    s4_pixel_escaped <= '0';
                 end if;
                 
             end if;
         end if;
     end process;
-    julia_busy <= '1' when (s3_active = '1' and s3_pixel_escaped = '0') else '0';
+    
+    -- Update the busy flag to watch Stage 4 instead of Stage 3
+    julia_busy <= '1' when (s4_active = '1' and s4_pixel_escaped = '0') else '0';
+    
 end Behavioral;
