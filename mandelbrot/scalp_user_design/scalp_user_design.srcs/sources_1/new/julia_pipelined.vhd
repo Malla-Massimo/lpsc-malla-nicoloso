@@ -32,19 +32,12 @@ generic (
 end JuliaPipelined;
 architecture Behavioral of JuliaPipelined is
     
-    -- STAGE 0: Input Latch (The Wall)
     signal s0_x, s0_y                   : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s0_c_re, s0_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s0_active                    : std_logic := '0';
     signal s0_addr                      : unsigned(18 downto 0);
     signal s0_count                     : unsigned(7 downto 0);
 
-    -- attribute dont_touch : string;
-    -- attribute dont_touch of s0_x : signal is "true";
-    -- attribute dont_touch of s0_y : signal is "true";
-
-    -- STAGE 1: Full-Width Multiplication (48-bit results!)
-    -- Notice the size is doubled to hold the true result of a 24x24 multiplication
     signal s1_x_carre_full, s1_y_carre_full, s1_xy_full : sfixed(7 downto -JULIA_NEGATIVE_DEPTH*2);
     signal s1_c_re, s1_c_im             : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal s1_active                    : std_logic := '0';
@@ -117,7 +110,7 @@ begin
                 end if;
 
                 -------------------------------------------------------
-                -- STAGE 1: Pure Math (Generates 48-bit numbers)
+                -- STAGE 1: Pure Math 
                 -------------------------------------------------------
                 s1_active  <= s0_active;
                 s1_addr    <= s0_addr;
@@ -131,7 +124,7 @@ begin
                 s1_xy_full      <= s0_x * s0_y;
 
                 -------------------------------------------------------
-                -- STAGE 2: Resize (Trims the 48-bit back to 24-bit)
+                -- STAGE 2: Resize 
                 -------------------------------------------------------
                 s2_active  <= s1_active;
                 s2_addr    <= s1_addr;
@@ -158,7 +151,7 @@ begin
                 s3_Z_im    <= resize(shift_left(s2_xy, 1) + s2_c_im, 3, -JULIA_NEGATIVE_DEPTH);
 
                 -------------------------------------------------------
-                -- STAGE 4: Escape Check & Output
+                -- STAGE 4: Escape Check and Output
                 -------------------------------------------------------
                 s4_active  <= s3_active;
                 s4_addr    <= s3_addr;
@@ -185,7 +178,7 @@ begin
         end if;
     end process;
     
-    -- Update the busy flag to watch Stage 4 instead of Stage 3
+    -- Update the busy flag 
     julia_busy <= '1' when (s4_active = '1' and s4_pixel_escaped = '0') else '0';
     
 end Behavioral;

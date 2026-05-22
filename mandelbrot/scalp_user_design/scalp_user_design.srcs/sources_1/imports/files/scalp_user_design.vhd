@@ -40,7 +40,9 @@ entity scalp_user_design is
         C_GPIO_SWITCHES_SIZE : integer range 0 to 32 := 2;
         C_GPIO_JOYSTICK_SIZE : integer range 0 to 32 := 5;
         C_HDMI_LANES         : integer range 0 to 3  := 3;
-        JULIA_NEGATIVE_DEPTH : integer := 25
+        JULIA_NEGATIVE_DEPTH : integer := 25;
+        -- value scaled (0.0013888 * 2^25)
+        SCREEN_STEP_SCALED   : integer := 46614
         );
 
     port (
@@ -593,7 +595,7 @@ begin
         end component;
         
         -- type state_t is (INIT_RANGE, INIT_STEP, INIT_COORD, CALCULATE, WAIT_FOR_ACK, DONE);
-        type state_t is (INIT_RANGE, INIT_STEP, INIT_COORD, CALCULATE, DONE);
+        type state_t is (INIT_RANGE, INIT_STEP_TMP, INIT_STEP, INIT_COORD, CALCULATE, DONE);
 
         signal palette_index_reg : std_logic_vector(4 downto 0);
         signal state: state_t := INIT_RANGE;
@@ -629,7 +631,14 @@ begin
         signal julia_range  : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
         signal julia_x_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
         signal julia_y_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
-        
+        signal julia_step_const : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+
+        signal julia_x_step_tmp : sfixed(4 downto -2*JULIA_NEGATIVE_DEPTH) := (others => '0');
+        signal julia_y_step_tmp : sfixed(4 downto -2*JULIA_NEGATIVE_DEPTH) := (others => '0');
+        attribute dont_touch : string;
+        attribute dont_touch of julia_x_step_tmp : signal is "true";
+        attribute dont_touch of julia_y_step_tmp : signal is "true";
+
         signal probe_in0: std_logic_vector(31 downto 0) := (others => '0');
         signal probe_out0: std_logic_vector(0 downto 0) := (others => '0');
         signal probe_counter: unsigned(31 downto 0) := (others => '0');
@@ -1261,6 +1270,8 @@ begin
             -- JULIA PROCESS PIPELINED AND PARRALELIZED     
             JuliaTopFSM : process(clk_100MHz)
             begin
+                julia_step_const <= to_sfixed(real(SCREEN_STEP_SCALED) / (2.0**JULIA_NEGATIVE_DEPTH), 3, -JULIA_NEGATIVE_DEPTH);
+
                 if rising_edge(clk_100MHz) then
                     if Clk125PllLockedxS = '1' then
                         case state is
@@ -1269,25 +1280,32 @@ begin
                                 
                                 -- Wait for the screen to finish drawing
                                 if v_sync_occurred = '1' then
-                                
-                                    -- ONLY calculate the next zoom step right as we leave the state
-                                    if julia_range > to_sfixed(0.001, 3, -JULIA_NEGATIVE_DEPTH) then
-                                        julia_range <= resize(julia_range - to_sfixed(0.008, 3, -JULIA_NEGATIVE_DEPTH), julia_range);
+                                    -- Calculate new window range. 
+                                    if julia_range > to_sfixed(0.05, 3, -JULIA_NEGATIVE_DEPTH) then
+                                        -- Window step 0.01
+                                        julia_range <= resize(julia_range - to_sfixed(0.01, 3, -JULIA_NEGATIVE_DEPTH), julia_range);
                                     else
+                                        -- Reset window range to 3x3
                                         julia_range <= to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
                                     end if;
-                                    
-                                    state <= INIT_STEP;
+                                    state <= INIT_STEP_TMP;
                                     probe_counter <= (others => '0');
                                 end if;
+                                        
+                            when INIT_STEP_TMP =>
+                                julia_x_step_tmp <= resize(julia_range * julia_step_const, julia_x_step_tmp);
+                                julia_y_step_tmp <= resize(julia_range * julia_step_const, julia_y_step_tmp);
+                                state <= INIT_STEP;
 
                             when INIT_STEP =>
-                                julia_x_step <= resize(julia_range * to_sfixed(0.001388, 0, -JULIA_NEGATIVE_DEPTH), 3, -JULIA_NEGATIVE_DEPTH);
-                                julia_y_step <= resize(julia_range * to_sfixed(0.001388, 0, -JULIA_NEGATIVE_DEPTH), 3, -JULIA_NEGATIVE_DEPTH);
+                                -- 1/720 = 0.001388
+                                julia_x_step <= resize(julia_x_step_tmp, 3, -JULIA_NEGATIVE_DEPTH);
+                                julia_y_step <= resize(julia_y_step_tmp, 3, -JULIA_NEGATIVE_DEPTH);
                                 state <= INIT_COORD;
 
                             when INIT_COORD =>
                                 for i in 0 to N_REGIONS-1 loop
+                                    -- Center window in the middle of screen
                                     region_x_init(i) <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -JULIA_NEGATIVE_DEPTH);
                                     region_y_init(i) <= resize(to_sfixed(i * REGION_HEIGHT - 360, 10, 0) * julia_y_step, 3, -JULIA_NEGATIVE_DEPTH);
                                 end loop;
@@ -1355,10 +1373,8 @@ begin
                             
                             v_local := v_int - region_sel * REGION_HEIGHT;
 
-                            -- THE FIX: Instant lookup instead of a slow multiplication!
                             base_addr := Y_MULT_LUT(v_local);
 
-                            -- Now we just do one simple addition
                             r_ram_rd_addr <= std_logic_vector(to_unsigned(
                                 base_addr + to_integer(unsigned(VgaPixCountersxD.HxD)), 17));
 
