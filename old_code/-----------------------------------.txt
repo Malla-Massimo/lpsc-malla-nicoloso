@@ -1,0 +1,63 @@
+            ---------------------------------------------------------------------------
+            -- 1. WRITER PROCESS: Fill the RAM with the Swiss Flag
+            ---------------------------------------------------------------------------
+            SwissFlagToRamxP : process(clk_100MHz)
+                variable x, y : integer;
+            begin
+                if rising_edge(clk_100MHz) then
+                    if Clk125PllLockedxS = '1' then
+                        -- Convert linear address (0-1023) to 2D coordinates (0-31)
+                        x := to_integer(v_addr_write mod 32);
+                        y := to_integer(v_addr_write / 32);
+        
+                        -- Determine color based on shape (Relative to 32x32)
+                        -- Background (Red)
+                        ram_data_in <= PatternPortsxD(0).RegxD; 
+        
+                        -- Vertical bar of the cross
+                        if (x >= 12 and x < 20) and (y >= 6 and y < 26) then
+                            ram_data_in <= PatternPortsxD(1).RegxD;
+                        -- Horizontal bar of the cross
+                        elsif (x >= 6 and x < 26) and (y >= 12 and y < 20) then
+                            ram_data_in <= PatternPortsxD(1).RegxD;
+                        end if;
+        
+                        -- Apply write address and increment
+                        ram_wr_addr <= std_logic_vector(v_addr_write);
+                        v_addr_write <= v_addr_write + 1;
+                    end if;
+                end if;
+            end process SwissFlagToRamxP;
+            
+            ---------------------------------------------------------------------------
+            -- 2. READER PROCESS: Read RAM and send to HDMI
+            ---------------------------------------------------------------------------
+            DisplayRamxP : process(HdmiVgaClocksxC.VgaxC)
+            begin
+                if rising_edge(HdmiVgaClocksxC.VgaxC) then
+                    if (HdmiVgaClocksxC.PllLockedxS = '0') or (HdmiVgaClocksxC.VgaResetxRNA = '0') then
+                        PixelxD <= C_HDMI_VGA_PIX_IDLE;
+                    elsif VgaPixCountersxD.VidOnxS = '1' then
+                        
+                        -- Check if the HDMI beam is inside our 32x32 display window
+                        if (unsigned(VgaPixCountersxD.HxD) < 32) and (unsigned(VgaPixCountersxD.VxD) < 32) then
+                            -- Calculate address: (Y * 32) + X
+                            -- Concatenating VxD(4..0) and HxD(4..0) is mathmatically (Y*32 + X)
+                            ram_rd_addr <= std_logic_vector(unsigned(VgaPixCountersxD.VxD(4 downto 0)) & 
+                                                           unsigned(VgaPixCountersxD.HxD(4 downto 0)));
+                            
+                            -- Assign RAM data to the Pixel output
+                            PixelxD.RxD <= ram_data_out(23 downto 16);
+                            PixelxD.GxD <= ram_data_out(15 downto 8);
+                            PixelxD.BxD <= ram_data_out(7 downto 0);
+                        else
+                            -- Outside the 32x32 box, show a default color (e.g. background from Reg0)
+                            PixelxD.RxD <= PatternPortsxD(0).RegxD(23 downto 16);
+                            PixelxD.GxD <= PatternPortsxD(0).RegxD(15 downto 8);
+                            PixelxD.BxD <= PatternPortsxD(0).RegxD(7 downto 0);
+                        end if;
+                    else
+                        PixelxD <= C_HDMI_VGA_PIX_IDLE;
+                    end if;
+                end if;
+            end process DisplayRamxP;

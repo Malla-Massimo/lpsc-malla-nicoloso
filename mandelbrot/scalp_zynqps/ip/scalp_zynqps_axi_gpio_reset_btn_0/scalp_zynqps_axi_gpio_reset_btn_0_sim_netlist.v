@@ -2,10 +2,10 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-// Date        : Tue Mar 10 19:00:36 2026
+// Date        : Tue Jun  2 10:41:14 2026
 // Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               c:/MA_LPSC/scalp_zynqps/ip/scalp_zynqps_axi_gpio_reset_btn_0/scalp_zynqps_axi_gpio_reset_btn_0_sim_netlist.v
+//               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/ip/scalp_zynqps_axi_gpio_reset_btn_0/scalp_zynqps_axi_gpio_reset_btn_0_sim_netlist.v
 // Design      : scalp_zynqps_axi_gpio_reset_btn_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CHECK_LICENSE_TYPE = "scalp_zynqps_axi_gpio_reset_btn_0,axi_gpio,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "axi_gpio,Vivado 2023.2" *) 
+(* CHECK_LICENSE_TYPE = "scalp_zynqps_axi_gpio_reset_btn_0,axi_gpio,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "axi_gpio,Vivado 2025.2" *) 
 (* NotValidForBitStream *)
 module scalp_zynqps_axi_gpio_reset_btn_0
    (s_axi_aclk,
@@ -36,9 +36,9 @@ module scalp_zynqps_axi_gpio_reset_btn_0
     s_axi_rvalid,
     s_axi_rready,
     gpio_io_o);
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 S_AXI_ACLK CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI_ACLK, ASSOCIATED_BUSIF S_AXI, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, INSERT_VIP 0" *) input s_axi_aclk;
-  (* x_interface_info = "xilinx.com:signal:reset:1.0 S_AXI_ARESETN RST" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI_ARESETN, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input s_axi_aresetn;
-  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI AWADDR" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [8:0]s_axi_awaddr;
+  (* x_interface_info = "xilinx.com:signal:clock:1.0 S_AXI_ACLK CLK" *) (* x_interface_mode = "slave S_AXI_ACLK" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI_ACLK, ASSOCIATED_BUSIF S_AXI, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, INSERT_VIP 0" *) input s_axi_aclk;
+  (* x_interface_info = "xilinx.com:signal:reset:1.0 S_AXI_ARESETN RST" *) (* x_interface_mode = "slave S_AXI_ARESETN" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI_ARESETN, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input s_axi_aresetn;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI AWADDR" *) (* x_interface_mode = "slave S_AXI" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [8:0]s_axi_awaddr;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI AWVALID" *) input s_axi_awvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI AWREADY" *) output s_axi_awready;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI WDATA" *) input [31:0]s_axi_wdata;
@@ -55,7 +55,7 @@ module scalp_zynqps_axi_gpio_reset_btn_0
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI RRESP" *) output [1:0]s_axi_rresp;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI RVALID" *) output s_axi_rvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI RREADY" *) input s_axi_rready;
-  (* x_interface_info = "xilinx.com:interface:gpio:1.0 GPIO TRI_O" *) (* x_interface_parameter = "XIL_INTERFACENAME GPIO, BOARD.ASSOCIATED_PARAM GPIO_BOARD_INTERFACE" *) output [0:0]gpio_io_o;
+  (* x_interface_info = "xilinx.com:interface:gpio:1.0 GPIO TRI_O" *) (* x_interface_mode = "master GPIO" *) (* x_interface_parameter = "XIL_INTERFACENAME GPIO, BOARD.ASSOCIATED_PARAM GPIO_BOARD_INTERFACE" *) output [0:0]gpio_io_o;
 
   wire \<const0> ;
   wire [0:0]gpio_io_o;
@@ -140,8 +140,9 @@ module scalp_zynqps_axi_gpio_reset_btn_0_GPIO_Core
     ip2bus_wrack_i,
     ip2bus_rdack_i,
     D,
-    rst,
+    gpio_io_i,
     s_axi_aclk,
+    rst,
     bus2ip_cs,
     \Not_Dual.gpio_Data_Out_reg[0]_0 ,
     bus2ip_rnw,
@@ -154,8 +155,9 @@ module scalp_zynqps_axi_gpio_reset_btn_0_GPIO_Core
   output ip2bus_wrack_i;
   output ip2bus_rdack_i;
   output [1:0]D;
-  input rst;
+  input [0:0]gpio_io_i;
   input s_axi_aclk;
+  input rst;
   input [0:0]bus2ip_cs;
   input \Not_Dual.gpio_Data_Out_reg[0]_0 ;
   input bus2ip_rnw;
@@ -177,6 +179,7 @@ module scalp_zynqps_axi_gpio_reset_btn_0_GPIO_Core
   wire \Not_Dual.gpio_Data_Out_reg[0]_0 ;
   wire [0:0]bus2ip_cs;
   wire bus2ip_rnw;
+  wire [0:0]gpio_io_i;
   wire [0:0]gpio_io_o;
   wire gpio_xferAck_Reg;
   wire iGPIO_xferAck__0;
@@ -184,6 +187,7 @@ module scalp_zynqps_axi_gpio_reset_btn_0_GPIO_Core
   wire ip2bus_wrack_i;
   wire rst;
   wire s_axi_aclk;
+  wire [0:0]\NLW_Not_Dual.INPUT_DOUBLE_REGS3_dest_out_UNCONNECTED ;
 
   (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT5 #(
@@ -201,6 +205,19 @@ module scalp_zynqps_axi_gpio_reset_btn_0_GPIO_Core
         .D(\Not_Dual.ALLOUT_ND.READ_REG_GEN[0].reg1[31]_i_1_n_0 ),
         .Q(\Not_Dual.ALLOUT_ND.READ_REG_GEN[0].reg1_reg ),
         .R(1'b0));
+  (* DEST_SYNC_FF = "4" *) 
+  (* INIT_SYNC_FF = "0" *) 
+  (* SIM_ASSERT_CHK = "0" *) 
+  (* SRC_INPUT_REG = "0" *) 
+  (* VERSION = "0" *) 
+  (* WIDTH = "1" *) 
+  (* XPM_CDC = "ARRAY_SINGLE" *) 
+  (* XPM_MODULE = "TRUE" *) 
+  scalp_zynqps_axi_gpio_reset_btn_0_xpm_cdc_array_single \Not_Dual.INPUT_DOUBLE_REGS3 
+       (.dest_clk(s_axi_aclk),
+        .dest_out(\NLW_Not_Dual.INPUT_DOUBLE_REGS3_dest_out_UNCONNECTED [0]),
+        .src_clk(1'b0),
+        .src_in(gpio_io_i));
   FDRE #(
     .INIT(1'b0)) 
     \Not_Dual.gpio_Data_Out_reg[0] 
@@ -530,6 +547,7 @@ module scalp_zynqps_axi_gpio_reset_btn_0_axi_gpio
   wire \I_SLAVE_ATTACHMENT/rst ;
   wire [0:0]bus2ip_cs;
   wire bus2ip_rnw;
+  wire [0:0]gpio_io_i;
   wire [0:0]gpio_io_o;
   wire [0:31]ip2bus_data;
   wire [0:31]ip2bus_data_i_D1;
@@ -697,6 +715,7 @@ module scalp_zynqps_axi_gpio_reset_btn_0_axi_gpio
         .\Not_Dual.gpio_Data_Out_reg[0]_0 (AXI_LITE_IPIF_I_n_12),
         .bus2ip_cs(bus2ip_cs),
         .bus2ip_rnw(bus2ip_rnw),
+        .gpio_io_i(gpio_io_i),
         .gpio_io_o(gpio_io_o),
         .ip2bus_rdack_i(ip2bus_rdack_i),
         .ip2bus_wrack_i(ip2bus_wrack_i),
@@ -1401,6 +1420,67 @@ module scalp_zynqps_axi_gpio_reset_btn_0_slave_attachment
         .D(\state[1]_i_1_n_0 ),
         .Q(\state_reg_n_0_[1] ),
         .R(SS));
+endmodule
+
+(* DEST_SYNC_FF = "4" *) (* INIT_SYNC_FF = "0" *) (* ORIG_REF_NAME = "xpm_cdc_array_single" *) 
+(* SIM_ASSERT_CHK = "0" *) (* SRC_INPUT_REG = "0" *) (* VERSION = "0" *) 
+(* WIDTH = "1" *) (* XPM_MODULE = "TRUE" *) (* keep_hierarchy = "soft" *) 
+(* xpm_cdc = "ARRAY_SINGLE" *) 
+module scalp_zynqps_axi_gpio_reset_btn_0_xpm_cdc_array_single
+   (src_clk,
+    src_in,
+    dest_clk,
+    dest_out);
+  input src_clk;
+  input [0:0]src_in;
+  input dest_clk;
+  output [0:0]dest_out;
+
+  wire [0:0]async_path_bit;
+  wire dest_clk;
+  (* RTL_KEEP = "true" *) (* async_reg = "true" *) (* xpm_cdc = "ARRAY_SINGLE" *) wire [0:0]\syncstages_ff[0] ;
+  (* RTL_KEEP = "true" *) (* async_reg = "true" *) (* xpm_cdc = "ARRAY_SINGLE" *) wire [0:0]\syncstages_ff[1] ;
+  (* RTL_KEEP = "true" *) (* async_reg = "true" *) (* xpm_cdc = "ARRAY_SINGLE" *) wire [0:0]\syncstages_ff[2] ;
+  (* RTL_KEEP = "true" *) (* async_reg = "true" *) (* xpm_cdc = "ARRAY_SINGLE" *) wire [0:0]\syncstages_ff[3] ;
+
+  assign async_path_bit = src_in[0];
+  assign dest_out[0] = \syncstages_ff[3] ;
+  (* ASYNC_REG *) 
+  (* KEEP = "true" *) 
+  (* XPM_CDC = "ARRAY_SINGLE" *) 
+  FDRE \syncstages_ff_reg[0][0] 
+       (.C(dest_clk),
+        .CE(1'b1),
+        .D(async_path_bit),
+        .Q(\syncstages_ff[0] ),
+        .R(1'b0));
+  (* ASYNC_REG *) 
+  (* KEEP = "true" *) 
+  (* XPM_CDC = "ARRAY_SINGLE" *) 
+  FDRE \syncstages_ff_reg[1][0] 
+       (.C(dest_clk),
+        .CE(1'b1),
+        .D(\syncstages_ff[0] ),
+        .Q(\syncstages_ff[1] ),
+        .R(1'b0));
+  (* ASYNC_REG *) 
+  (* KEEP = "true" *) 
+  (* XPM_CDC = "ARRAY_SINGLE" *) 
+  FDRE \syncstages_ff_reg[2][0] 
+       (.C(dest_clk),
+        .CE(1'b1),
+        .D(\syncstages_ff[1] ),
+        .Q(\syncstages_ff[2] ),
+        .R(1'b0));
+  (* ASYNC_REG *) 
+  (* KEEP = "true" *) 
+  (* XPM_CDC = "ARRAY_SINGLE" *) 
+  FDRE \syncstages_ff_reg[3][0] 
+       (.C(dest_clk),
+        .CE(1'b1),
+        .D(\syncstages_ff[2] ),
+        .Q(\syncstages_ff[3] ),
+        .R(1'b0));
 endmodule
 `ifndef GLBL
 `define GLBL

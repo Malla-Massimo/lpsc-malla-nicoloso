@@ -57,6 +57,7 @@ entity scalp_zynqps_wrapper is
         Clk125RstxRO        : out   std_logic;
         Clk125RstxRNAO      : out   std_logic;
         Clk125PllLockedxSO  : out   std_logic;
+        Clk100xCO           : out   std_logic;
         -- DDR interface
         DDR_addr            : inout std_logic_vector (14 downto 0);
         DDR_ba              : inout std_logic_vector (2 downto 0);
@@ -202,6 +203,7 @@ begin
                 Clk125RstxRO(0)                                            => Clk125RstxRO,
                 Clk125RstxRNAO(0)                                          => Clk125RstxRNAO,
                 Clk125PllLockedxS                                          => Clk125PllLockedxSO,
+                Clk100xCO                                                  => Clk100xCO,
                 ClkHdmixCO                                                 => HdmiVgaClocksxCO.HdmixC,
                 ClkHdmiRstxRO(0)                                           => HdmiVgaClocksxCO.HdmiResetxR,
                 ClkHdmiRstxRNAO(0)                                         => HdmiVgaClocksxCO.HdmiResetxRNA,

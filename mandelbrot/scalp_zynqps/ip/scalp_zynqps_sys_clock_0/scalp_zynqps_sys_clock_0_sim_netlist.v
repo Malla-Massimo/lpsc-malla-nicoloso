@@ -2,10 +2,10 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-// Date        : Tue Mar 10 19:01:52 2026
+// Date        : Tue Jun  2 10:41:06 2026
 // Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               c:/MA_LPSC/scalp_zynqps/ip/scalp_zynqps_sys_clock_0/scalp_zynqps_sys_clock_0_sim_netlist.v
+//               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/ip/scalp_zynqps_sys_clock_0/scalp_zynqps_sys_clock_0_sim_netlist.v
 // Design      : scalp_zynqps_sys_clock_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -16,21 +16,25 @@
 (* NotValidForBitStream *)
 module scalp_zynqps_sys_clock_0
    (clk_125,
+    clk_100,
     resetn,
     locked,
     clk_in1);
   output clk_125;
+  output clk_100;
   input resetn;
   output locked;
   input clk_in1;
 
+  wire clk_100;
   wire clk_125;
   wire clk_in1;
   wire locked;
   wire resetn;
 
   scalp_zynqps_sys_clock_0_clk_wiz inst
-       (.clk_125(clk_125),
+       (.clk_100(clk_100),
+        .clk_125(clk_125),
         .clk_in1(clk_in1),
         .locked(locked),
         .resetn(resetn));
@@ -38,14 +42,18 @@ endmodule
 
 module scalp_zynqps_sys_clock_0_clk_wiz
    (clk_125,
+    clk_100,
     resetn,
     locked,
     clk_in1);
   output clk_125;
+  output clk_100;
   input resetn;
   output locked;
   input clk_in1;
 
+  wire clk_100;
+  wire clk_100_scalp_zynqps_sys_clock_0;
   wire clk_125;
   wire clk_125_scalp_zynqps_sys_clock_0;
   wire clk_in1;
@@ -59,7 +67,6 @@ module scalp_zynqps_sys_clock_0_clk_wiz
   wire NLW_mmcm_adv_inst_CLKFBSTOPPED_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED;
-  wire NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT2_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED;
@@ -85,6 +92,10 @@ module scalp_zynqps_sys_clock_0_clk_wiz
        (.I(clk_125_scalp_zynqps_sys_clock_0),
         .O(clk_125));
   (* BOX_TYPE = "PRIMITIVE" *) 
+  BUFG clkout2_buf
+       (.I(clk_100_scalp_zynqps_sys_clock_0),
+        .O(clk_100));
+  (* BOX_TYPE = "PRIMITIVE" *) 
   MMCME2_ADV #(
     .BANDWIDTH("OPTIMIZED"),
     .CLKFBOUT_MULT_F(8.000000),
@@ -96,7 +107,7 @@ module scalp_zynqps_sys_clock_0_clk_wiz
     .CLKOUT0_DUTY_CYCLE(0.500000),
     .CLKOUT0_PHASE(0.000000),
     .CLKOUT0_USE_FINE_PS("FALSE"),
-    .CLKOUT1_DIVIDE(1),
+    .CLKOUT1_DIVIDE(10),
     .CLKOUT1_DUTY_CYCLE(0.500000),
     .CLKOUT1_PHASE(0.000000),
     .CLKOUT1_USE_FINE_PS("FALSE"),
@@ -145,7 +156,7 @@ module scalp_zynqps_sys_clock_0_clk_wiz
         .CLKINSTOPPED(NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED),
         .CLKOUT0(clk_125_scalp_zynqps_sys_clock_0),
         .CLKOUT0B(NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED),
-        .CLKOUT1(NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED),
+        .CLKOUT1(clk_100_scalp_zynqps_sys_clock_0),
         .CLKOUT1B(NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED),
         .CLKOUT2(NLW_mmcm_adv_inst_CLKOUT2_UNCONNECTED),
         .CLKOUT2B(NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED),

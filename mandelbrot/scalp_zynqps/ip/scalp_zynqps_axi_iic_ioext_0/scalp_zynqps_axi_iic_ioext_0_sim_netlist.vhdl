@@ -2,10 +2,10 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
--- Date        : Tue Mar 10 19:02:01 2026
+-- Date        : Tue Jun  2 10:42:14 2026
 -- Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               c:/MA_LPSC/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/scalp_zynqps_axi_iic_ioext_0_sim_netlist.vhdl
+--               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/ip/scalp_zynqps_axi_iic_ioext_0/scalp_zynqps_axi_iic_ioext_0_sim_netlist.vhdl
 -- Design      : scalp_zynqps_axi_iic_ioext_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -471,7 +471,7 @@ entity scalp_zynqps_axi_iic_ioext_0_SRL_FIFO_0 is
     earlyAckHdr : in STD_LOGIC;
     callingReadAccess : in STD_LOGIC;
     shift_reg_ld : in STD_LOGIC;
-    scndry_out : in STD_LOGIC
+    Sda_clean : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_SRL_FIFO_0 : entity is "SRL_FIFO";
@@ -871,7 +871,7 @@ Data_Exists_DFF: unisim.vcomponents.FDRE
         port map (
       I0 => \^tx_fifo_data_0\(0),
       I1 => shift_reg_ld,
-      I2 => scndry_out,
+      I2 => Sda_clean,
       O => \FIFO_RAM[7].SRL16E_I_0\(0)
     );
 rdCntrFrmTxFifo_i_1: unisim.vcomponents.LUT3
@@ -2723,200 +2723,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
-entity scalp_zynqps_axi_iic_ioext_0_cdc_sync is
-  port (
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ : out STD_LOGIC;
-    scndry_out : out STD_LOGIC;
-    sda_rin_d1 : in STD_LOGIC;
-    sda_i : in STD_LOGIC;
-    s_axi_aclk : in STD_LOGIC
-  );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_cdc_sync : entity is "cdc_sync";
-end scalp_zynqps_axi_iic_ioext_0_cdc_sync;
-
-architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_cdc_sync is
-  signal \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d2\ : STD_LOGIC;
-  signal \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d3\ : STD_LOGIC;
-  signal Q : STD_LOGIC;
-  signal \^scndry_out\ : STD_LOGIC;
-  attribute ASYNC_REG : boolean;
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM : string;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP : string;
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is "VCC:CE";
-  attribute box_type : string;
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is "PRIMITIVE";
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is "VCC:CE";
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is "PRIMITIVE";
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is "VCC:CE";
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is "PRIMITIVE";
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "VCC:CE";
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "PRIMITIVE";
-begin
-  scndry_out <= \^scndry_out\;
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => sda_i,
-      Q => Q,
-      R => '0'
-    );
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => Q,
-      Q => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d2\,
-      R => '0'
-    );
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d2\,
-      Q => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d3\,
-      R => '0'
-    );
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d3\,
-      Q => \^scndry_out\,
-      R => '0'
-    );
-detect_stop_i_3: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"2"
-    )
-        port map (
-      I0 => \^scndry_out\,
-      I1 => sda_rin_d1,
-      O => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\
-    );
-end STRUCTURE;
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-library UNISIM;
-use UNISIM.VCOMPONENTS.ALL;
-entity scalp_zynqps_axi_iic_ioext_0_cdc_sync_4 is
-  port (
-    scl_rising_edge0 : out STD_LOGIC;
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ : out STD_LOGIC;
-    scl_rin_d1 : in STD_LOGIC;
-    scl_i : in STD_LOGIC;
-    s_axi_aclk : in STD_LOGIC
-  );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_cdc_sync_4 : entity is "cdc_sync";
-end scalp_zynqps_axi_iic_ioext_0_cdc_sync_4;
-
-architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_cdc_sync_4 is
-  signal \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4_0\ : STD_LOGIC;
-  signal \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d2\ : STD_LOGIC;
-  signal \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d3\ : STD_LOGIC;
-  signal Q : STD_LOGIC;
-  attribute ASYNC_REG : boolean;
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM : string;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP : string;
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is "VCC:CE";
-  attribute box_type : string;
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : label is "PRIMITIVE";
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is "VCC:CE";
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\ : label is "PRIMITIVE";
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is "VCC:CE";
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : label is "PRIMITIVE";
-  attribute ASYNC_REG of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is std.standard.true;
-  attribute XILINX_LEGACY_PRIM of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "FDR";
-  attribute XILINX_TRANSFORM_PINMAP of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "VCC:CE";
-  attribute box_type of \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : label is "PRIMITIVE";
-begin
-  \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ <= \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4_0\;
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => scl_i,
-      Q => Q,
-      R => '0'
-    );
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => Q,
-      Q => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d2\,
-      R => '0'
-    );
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d2\,
-      Q => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d3\,
-      R => '0'
-    );
-\GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => s_axi_aclk,
-      CE => '1',
-      D => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.s_level_out_d3\,
-      Q => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4_0\,
-      R => '0'
-    );
-scl_rising_edge_i_1: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"2"
-    )
-        port map (
-      I0 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4_0\,
-      I1 => scl_rin_d1,
-      O => scl_rising_edge0
-    );
-end STRUCTURE;
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-library UNISIM;
-use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_axi_iic_ioext_0_dynamic_master is
   port (
     callingReadAccess : out STD_LOGIC;
@@ -3622,7 +3428,7 @@ entity scalp_zynqps_axi_iic_ioext_0_reg_interface is
     \timing_param_thigh_i_reg[1]_0\ : out STD_LOGIC;
     \timing_param_thigh_i_reg[0]_0\ : out STD_LOGIC;
     \timing_param_tsusto_i_reg[0]_0\ : out STD_LOGIC;
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : out STD_LOGIC_VECTOR ( 0 to 0 );
+    \syncstages_ff_reg[3]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     \FIFO_GEN_DTR.Tx_fifo_wr_reg_0\ : out STD_LOGIC;
     D_1 : out STD_LOGIC;
     \RD_FIFO_CNTRL.Rc_fifo_rd_reg_0\ : out STD_LOGIC;
@@ -3664,9 +3470,9 @@ entity scalp_zynqps_axi_iic_ioext_0_reg_interface is
     \sda_setup0_inferred__0/i__carry\ : in STD_LOGIC_VECTOR ( 10 downto 0 );
     \s_axi_rdata_i_reg[10]\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     \FSM_onehot_scl_state_reg[5]\ : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \FSM_onehot_scl_state_reg[5]_0\ : in STD_LOGIC;
-    \FSM_onehot_scl_state_reg[5]_1\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    \FSM_onehot_scl_state_reg[5]_2\ : in STD_LOGIC_VECTOR ( 0 to 0 );
+    Scl_clean : in STD_LOGIC;
+    \FSM_onehot_scl_state_reg[5]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    \FSM_onehot_scl_state_reg[5]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     Rc_fifo_wr_d : in STD_LOGIC;
     Rc_fifo_rd_d : in STD_LOGIC;
     Data_Exists_DFF_2 : in STD_LOGIC;
@@ -3837,11 +3643,11 @@ Data_Exists_DFF_i_1: unisim.vcomponents.LUT6
     )
         port map (
       I0 => \FSM_onehot_scl_state_reg[5]\(0),
-      I1 => \FSM_onehot_scl_state_reg[5]_0\,
-      I2 => \FSM_onehot_scl_state_reg[5]_1\(0),
-      I3 => \FSM_onehot_scl_state_reg[5]_2\(0),
-      I4 => \FSM_onehot_scl_state_reg[5]_1\(1),
-      O => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\(0)
+      I1 => Scl_clean,
+      I2 => \FSM_onehot_scl_state_reg[5]_0\(0),
+      I3 => \FSM_onehot_scl_state_reg[5]_1\(0),
+      I4 => \FSM_onehot_scl_state_reg[5]_0\(1),
+      O => \syncstages_ff_reg[3]\(0)
     );
 \FSM_onehot_scl_state[9]_i_1\: unisim.vcomponents.LUT1
     generic map(
@@ -5889,7 +5695,7 @@ entity scalp_zynqps_axi_iic_ioext_0_shift8_1 is
     \data_int_reg[0]_1\ : in STD_LOGIC;
     E : in STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_aclk : in STD_LOGIC;
-    scndry_out : in STD_LOGIC
+    Sda_clean : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_shift8_1 : entity is "shift8";
@@ -6026,7 +5832,7 @@ abgc_i_i_3: unisim.vcomponents.LUT6
      port map (
       C => s_axi_aclk,
       CE => E(0),
-      D => scndry_out,
+      D => Sda_clean,
       Q => i2c_header(0),
       R => \data_int_reg[0]_1\
     );
@@ -6154,7 +5960,9 @@ architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_soft_reset is
   signal \^reset_flops[3].rst_flops_0\ : STD_LOGIC;
   signal \RESET_FLOPS[3].RST_FLOPS_i_1_n_0\ : STD_LOGIC;
   signal S : STD_LOGIC;
-  signal flop_q_chain : STD_LOGIC_VECTOR ( 1 to 3 );
+  signal flop_q_chain_1 : STD_LOGIC;
+  signal flop_q_chain_2 : STD_LOGIC;
+  signal flop_q_chain_3 : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
   attribute SOFT_HLUTNM of \FIFO_RAM[0].SRL16E_I_i_1\ : label is "soft_lutpair63";
   attribute SOFT_HLUTNM of \FIFO_RAM[1].SRL16E_I_i_1\ : label is "soft_lutpair63";
@@ -6220,7 +6028,7 @@ begin
       C => s_axi_aclk,
       CE => '1',
       D => S,
-      Q => flop_q_chain(1),
+      Q => flop_q_chain_3,
       R => \^axi_bus2ip_reset\
     );
 \RESET_FLOPS[1].RST_FLOPS\: unisim.vcomponents.FDRE
@@ -6234,7 +6042,7 @@ begin
       C => s_axi_aclk,
       CE => '1',
       D => \RESET_FLOPS[1].RST_FLOPS_i_1_n_0\,
-      Q => flop_q_chain(2),
+      Q => flop_q_chain_2,
       R => \^axi_bus2ip_reset\
     );
 \RESET_FLOPS[1].RST_FLOPS_i_1\: unisim.vcomponents.LUT2
@@ -6243,7 +6051,7 @@ begin
     )
         port map (
       I0 => S,
-      I1 => flop_q_chain(1),
+      I1 => flop_q_chain_3,
       O => \RESET_FLOPS[1].RST_FLOPS_i_1_n_0\
     );
 \RESET_FLOPS[2].RST_FLOPS\: unisim.vcomponents.FDRE
@@ -6257,7 +6065,7 @@ begin
       C => s_axi_aclk,
       CE => '1',
       D => \RESET_FLOPS[2].RST_FLOPS_i_1_n_0\,
-      Q => flop_q_chain(3),
+      Q => flop_q_chain_1,
       R => \^axi_bus2ip_reset\
     );
 \RESET_FLOPS[2].RST_FLOPS_i_1\: unisim.vcomponents.LUT2
@@ -6266,7 +6074,7 @@ begin
     )
         port map (
       I0 => S,
-      I1 => flop_q_chain(2),
+      I1 => flop_q_chain_2,
       O => \RESET_FLOPS[2].RST_FLOPS_i_1_n_0\
     );
 \RESET_FLOPS[3].RST_FLOPS\: unisim.vcomponents.FDRE
@@ -6289,7 +6097,7 @@ begin
     )
         port map (
       I0 => S,
-      I1 => flop_q_chain(3),
+      I1 => flop_q_chain_1,
       O => \RESET_FLOPS[3].RST_FLOPS_i_1_n_0\
     );
 reset_trig_reg: unisim.vcomponents.FDRE
@@ -6340,8 +6148,8 @@ entity scalp_zynqps_axi_iic_ioext_0_upcnt_n is
     \FSM_onehot_scl_state_reg[1]_0\ : in STD_LOGIC;
     \FSM_onehot_scl_state_reg[2]\ : in STD_LOGIC;
     \q_int_reg[0]_2\ : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \q_int_reg[0]_3\ : in STD_LOGIC;
-    \q_int_reg[0]_4\ : in STD_LOGIC_VECTOR ( 0 to 0 );
+    Scl_clean : in STD_LOGIC;
+    \q_int_reg[0]_3\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \q_int_reg[10]_0\ : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC
   );
@@ -6543,8 +6351,8 @@ begin
       I0 => \FSM_onehot_scl_state_reg[1]\,
       I1 => \q_int_reg[0]_2\(0),
       I2 => \q_int_reg[0]_0\(0),
-      I3 => \q_int_reg[0]_3\,
-      I4 => \q_int_reg[0]_4\(0),
+      I3 => Scl_clean,
+      I4 => \q_int_reg[0]_3\(0),
       I5 => \q_int_reg[0]_0\(4),
       O => \q_int[0]_i_4_n_0\
     );
@@ -6880,10 +6688,10 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_axi_iic_ioext_0_upcnt_n_2 is
   port (
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : out STD_LOGIC;
+    \syncstages_ff_reg[3]\ : out STD_LOGIC;
     Q : out STD_LOGIC_VECTOR ( 10 downto 0 );
     sda_setup : in STD_LOGIC;
-    scndry_out : in STD_LOGIC;
+    Sda_clean : in STD_LOGIC;
     sda_rin_d1 : in STD_LOGIC;
     \q_int[0]_i_3_0\ : in STD_LOGIC;
     tx_under_prev_d1 : in STD_LOGIC;
@@ -6899,7 +6707,6 @@ entity scalp_zynqps_axi_iic_ioext_0_upcnt_n_2 is
 end scalp_zynqps_axi_iic_ioext_0_upcnt_n_2;
 
 architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_upcnt_n_2 is
-  signal \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\ : STD_LOGIC;
   signal \^q\ : STD_LOGIC_VECTOR ( 10 downto 0 );
   signal \p_0_in__0\ : STD_LOGIC_VECTOR ( 10 downto 0 );
   signal \q_int[0]_i_1_n_0\ : STD_LOGIC;
@@ -6912,6 +6719,7 @@ architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_upcnt_n_2 is
   signal \q_int[4]_i_1__0_n_0\ : STD_LOGIC;
   signal \q_int[5]_i_1__0_n_0\ : STD_LOGIC;
   signal \q_int[5]_i_2__0_n_0\ : STD_LOGIC;
+  signal \^syncstages_ff_reg[3]\ : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
   attribute SOFT_HLUTNM of \q_int[0]_i_2\ : label is "soft_lutpair12";
   attribute SOFT_HLUTNM of \q_int[0]_i_4__0\ : label is "soft_lutpair13";
@@ -6924,15 +6732,15 @@ architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_upcnt_n_2 is
   attribute SOFT_HLUTNM of \q_int[8]_i_1\ : label is "soft_lutpair11";
   attribute SOFT_HLUTNM of \q_int[9]_i_1\ : label is "soft_lutpair14";
 begin
-  \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ <= \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\;
   Q(10 downto 0) <= \^q\(10 downto 0);
+  \syncstages_ff_reg[3]\ <= \^syncstages_ff_reg[3]\;
 \q_int[0]_i_1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"E"
     )
         port map (
       I0 => sda_setup,
-      I1 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I1 => \^syncstages_ff_reg[3]\,
       O => \q_int[0]_i_1_n_0\
     );
 \q_int[0]_i_2\: unisim.vcomponents.LUT4
@@ -6943,7 +6751,7 @@ begin
       I0 => \q_int[0]_i_4__0_n_0\,
       I1 => \^q\(9),
       I2 => \^q\(10),
-      I3 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I3 => \^syncstages_ff_reg[3]\,
       O => \p_0_in__0\(10)
     );
 \q_int[0]_i_3\: unisim.vcomponents.LUT3
@@ -6952,9 +6760,9 @@ begin
     )
         port map (
       I0 => \q_int[0]_i_5_n_0\,
-      I1 => scndry_out,
+      I1 => Sda_clean,
       I2 => sda_rin_d1,
-      O => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\
+      O => \^syncstages_ff_reg[3]\
     );
 \q_int[0]_i_4__0\: unisim.vcomponents.LUT4
     generic map(
@@ -6986,7 +6794,7 @@ begin
     )
         port map (
       I0 => \^q\(0),
-      I1 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I1 => \^syncstages_ff_reg[3]\,
       O => \p_0_in__0\(0)
     );
 \q_int[1]_i_1__1\: unisim.vcomponents.LUT6
@@ -6994,7 +6802,7 @@ begin
       INIT => X"5515555500400000"
     )
         port map (
-      I0 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I0 => \^syncstages_ff_reg[3]\,
       I1 => \^q\(8),
       I2 => \^q\(7),
       I3 => \q_int[1]_i_2__0_n_0\,
@@ -7020,7 +6828,7 @@ begin
       INIT => X"51550400"
     )
         port map (
-      I0 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I0 => \^syncstages_ff_reg[3]\,
       I1 => \^q\(6),
       I2 => \q_int[1]_i_2__0_n_0\,
       I3 => \^q\(7),
@@ -7032,7 +6840,7 @@ begin
       INIT => X"4510"
     )
         port map (
-      I0 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I0 => \^syncstages_ff_reg[3]\,
       I1 => \q_int[1]_i_2__0_n_0\,
       I2 => \^q\(6),
       I3 => \^q\(7),
@@ -7043,7 +6851,7 @@ begin
       INIT => X"41"
     )
         port map (
-      I0 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I0 => \^syncstages_ff_reg[3]\,
       I1 => \q_int[1]_i_2__0_n_0\,
       I2 => \^q\(6),
       O => \q_int[4]_i_1__0_n_0\
@@ -7053,7 +6861,7 @@ begin
       INIT => X"41"
     )
         port map (
-      I0 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I0 => \^syncstages_ff_reg[3]\,
       I1 => \q_int[5]_i_2__0_n_0\,
       I2 => \^q\(5),
       O => \q_int[5]_i_1__0_n_0\
@@ -7080,7 +6888,7 @@ begin
       I2 => \^q\(0),
       I3 => \^q\(3),
       I4 => \^q\(4),
-      I5 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I5 => \^syncstages_ff_reg[3]\,
       O => \p_0_in__0\(4)
     );
 \q_int[7]_i_1\: unisim.vcomponents.LUT5
@@ -7092,7 +6900,7 @@ begin
       I1 => \^q\(1),
       I2 => \^q\(2),
       I3 => \^q\(3),
-      I4 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I4 => \^syncstages_ff_reg[3]\,
       O => \p_0_in__0\(3)
     );
 \q_int[8]_i_1\: unisim.vcomponents.LUT4
@@ -7103,7 +6911,7 @@ begin
       I0 => \^q\(1),
       I1 => \^q\(0),
       I2 => \^q\(2),
-      I3 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I3 => \^syncstages_ff_reg[3]\,
       O => \p_0_in__0\(2)
     );
 \q_int[9]_i_1\: unisim.vcomponents.LUT3
@@ -7113,7 +6921,7 @@ begin
         port map (
       I0 => \^q\(0),
       I1 => \^q\(1),
-      I2 => \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_s_level_out_d4\,
+      I2 => \^syncstages_ff_reg[3]\,
       O => \p_0_in__0\(1)
     );
 \q_int_reg[0]\: unisim.vcomponents.FDRE
@@ -7449,27 +7257,225 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
+entity scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single is
+  port (
+    src_clk : in STD_LOGIC;
+    src_in : in STD_LOGIC;
+    dest_clk : in STD_LOGIC;
+    dest_out : out STD_LOGIC
+  );
+  attribute DEST_SYNC_FF : integer;
+  attribute DEST_SYNC_FF of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is 4;
+  attribute INIT_SYNC_FF : integer;
+  attribute INIT_SYNC_FF of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is 0;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is "xpm_cdc_single";
+  attribute SIM_ASSERT_CHK : integer;
+  attribute SIM_ASSERT_CHK of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is 0;
+  attribute SRC_INPUT_REG : integer;
+  attribute SRC_INPUT_REG of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is 0;
+  attribute VERSION : integer;
+  attribute VERSION of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is 0;
+  attribute XPM_MODULE : string;
+  attribute XPM_MODULE of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is "TRUE";
+  attribute keep_hierarchy : string;
+  attribute keep_hierarchy of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is "soft";
+  attribute xpm_cdc : string;
+  attribute xpm_cdc of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single : entity is "SINGLE";
+end scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single;
+
+architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single is
+  signal syncstages_ff : STD_LOGIC_VECTOR ( 3 downto 0 );
+  attribute RTL_KEEP : string;
+  attribute RTL_KEEP of syncstages_ff : signal is "true";
+  attribute async_reg : string;
+  attribute async_reg of syncstages_ff : signal is "true";
+  attribute xpm_cdc of syncstages_ff : signal is "SINGLE";
+  attribute ASYNC_REG_boolean : boolean;
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[0]\ : label is std.standard.true;
+  attribute KEEP : string;
+  attribute KEEP of \syncstages_ff_reg[0]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[0]\ : label is "SINGLE";
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[1]\ : label is std.standard.true;
+  attribute KEEP of \syncstages_ff_reg[1]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[1]\ : label is "SINGLE";
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[2]\ : label is std.standard.true;
+  attribute KEEP of \syncstages_ff_reg[2]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[2]\ : label is "SINGLE";
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[3]\ : label is std.standard.true;
+  attribute KEEP of \syncstages_ff_reg[3]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[3]\ : label is "SINGLE";
+begin
+  dest_out <= syncstages_ff(3);
+\syncstages_ff_reg[0]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => src_in,
+      Q => syncstages_ff(0),
+      R => '0'
+    );
+\syncstages_ff_reg[1]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => syncstages_ff(0),
+      Q => syncstages_ff(1),
+      R => '0'
+    );
+\syncstages_ff_reg[2]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => syncstages_ff(1),
+      Q => syncstages_ff(2),
+      R => '0'
+    );
+\syncstages_ff_reg[3]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => syncstages_ff(2),
+      Q => syncstages_ff(3),
+      R => '0'
+    );
+end STRUCTURE;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+library UNISIM;
+use UNISIM.VCOMPONENTS.ALL;
+entity \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ is
+  port (
+    src_clk : in STD_LOGIC;
+    src_in : in STD_LOGIC;
+    dest_clk : in STD_LOGIC;
+    dest_out : out STD_LOGIC
+  );
+  attribute DEST_SYNC_FF : integer;
+  attribute DEST_SYNC_FF of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is 4;
+  attribute INIT_SYNC_FF : integer;
+  attribute INIT_SYNC_FF of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is 0;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is "xpm_cdc_single";
+  attribute SIM_ASSERT_CHK : integer;
+  attribute SIM_ASSERT_CHK of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is 0;
+  attribute SRC_INPUT_REG : integer;
+  attribute SRC_INPUT_REG of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is 0;
+  attribute VERSION : integer;
+  attribute VERSION of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is 0;
+  attribute XPM_MODULE : string;
+  attribute XPM_MODULE of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is "TRUE";
+  attribute keep_hierarchy : string;
+  attribute keep_hierarchy of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is "soft";
+  attribute xpm_cdc : string;
+  attribute xpm_cdc of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ : entity is "SINGLE";
+end \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\;
+
+architecture STRUCTURE of \scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\ is
+  signal syncstages_ff : STD_LOGIC_VECTOR ( 3 downto 0 );
+  attribute RTL_KEEP : string;
+  attribute RTL_KEEP of syncstages_ff : signal is "true";
+  attribute async_reg : string;
+  attribute async_reg of syncstages_ff : signal is "true";
+  attribute xpm_cdc of syncstages_ff : signal is "SINGLE";
+  attribute ASYNC_REG_boolean : boolean;
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[0]\ : label is std.standard.true;
+  attribute KEEP : string;
+  attribute KEEP of \syncstages_ff_reg[0]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[0]\ : label is "SINGLE";
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[1]\ : label is std.standard.true;
+  attribute KEEP of \syncstages_ff_reg[1]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[1]\ : label is "SINGLE";
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[2]\ : label is std.standard.true;
+  attribute KEEP of \syncstages_ff_reg[2]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[2]\ : label is "SINGLE";
+  attribute ASYNC_REG_boolean of \syncstages_ff_reg[3]\ : label is std.standard.true;
+  attribute KEEP of \syncstages_ff_reg[3]\ : label is "true";
+  attribute XPM_CDC of \syncstages_ff_reg[3]\ : label is "SINGLE";
+begin
+  dest_out <= syncstages_ff(3);
+\syncstages_ff_reg[0]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => src_in,
+      Q => syncstages_ff(0),
+      R => '0'
+    );
+\syncstages_ff_reg[1]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => syncstages_ff(0),
+      Q => syncstages_ff(1),
+      R => '0'
+    );
+\syncstages_ff_reg[2]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => syncstages_ff(1),
+      Q => syncstages_ff(2),
+      R => '0'
+    );
+\syncstages_ff_reg[3]\: unisim.vcomponents.FDRE
+     port map (
+      C => dest_clk,
+      CE => '1',
+      D => syncstages_ff(2),
+      Q => syncstages_ff(3),
+      R => '0'
+    );
+end STRUCTURE;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+library UNISIM;
+use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_axi_iic_ioext_0_debounce is
   port (
+    Scl_clean : out STD_LOGIC;
     scl_rising_edge0 : out STD_LOGIC;
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : out STD_LOGIC;
-    scl_rin_d1 : in STD_LOGIC;
     scl_i : in STD_LOGIC;
-    s_axi_aclk : in STD_LOGIC
+    s_axi_aclk : in STD_LOGIC;
+    scl_rin_d1 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_debounce : entity is "debounce";
 end scalp_zynqps_axi_iic_ioext_0_debounce;
 
 architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_debounce is
+  signal \^scl_clean\ : STD_LOGIC;
+  attribute DEST_SYNC_FF : integer;
+  attribute DEST_SYNC_FF of INPUT_DOUBLE_REGS : label is 4;
+  attribute INIT_SYNC_FF : integer;
+  attribute INIT_SYNC_FF of INPUT_DOUBLE_REGS : label is 0;
+  attribute SIM_ASSERT_CHK : integer;
+  attribute SIM_ASSERT_CHK of INPUT_DOUBLE_REGS : label is 0;
+  attribute SRC_INPUT_REG : integer;
+  attribute SRC_INPUT_REG of INPUT_DOUBLE_REGS : label is 0;
+  attribute VERSION : integer;
+  attribute VERSION of INPUT_DOUBLE_REGS : label is 0;
+  attribute XPM_CDC : string;
+  attribute XPM_CDC of INPUT_DOUBLE_REGS : label is "SINGLE";
+  attribute XPM_MODULE : string;
+  attribute XPM_MODULE of INPUT_DOUBLE_REGS : label is "TRUE";
 begin
-INPUT_DOUBLE_REGS: entity work.scalp_zynqps_axi_iic_ioext_0_cdc_sync_4
+  Scl_clean <= \^scl_clean\;
+INPUT_DOUBLE_REGS: entity work.\scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single__1\
      port map (
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\,
-      s_axi_aclk => s_axi_aclk,
-      scl_i => scl_i,
-      scl_rin_d1 => scl_rin_d1,
-      scl_rising_edge0 => scl_rising_edge0
+      dest_clk => s_axi_aclk,
+      dest_out => \^scl_clean\,
+      src_clk => '0',
+      src_in => scl_i
+    );
+scl_rising_edge_i_1: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^scl_clean\,
+      I1 => scl_rin_d1,
+      O => scl_rising_edge0
     );
 end STRUCTURE;
 library IEEE;
@@ -7478,25 +7484,49 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_axi_iic_ioext_0_debounce_3 is
   port (
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : out STD_LOGIC;
-    scndry_out : out STD_LOGIC;
-    sda_rin_d1 : in STD_LOGIC;
+    Sda_clean : out STD_LOGIC;
+    \syncstages_ff_reg[3]\ : out STD_LOGIC;
     sda_i : in STD_LOGIC;
-    s_axi_aclk : in STD_LOGIC
+    s_axi_aclk : in STD_LOGIC;
+    sda_rin_d1 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of scalp_zynqps_axi_iic_ioext_0_debounce_3 : entity is "debounce";
 end scalp_zynqps_axi_iic_ioext_0_debounce_3;
 
 architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_debounce_3 is
+  signal \^sda_clean\ : STD_LOGIC;
+  attribute DEST_SYNC_FF : integer;
+  attribute DEST_SYNC_FF of INPUT_DOUBLE_REGS : label is 4;
+  attribute INIT_SYNC_FF : integer;
+  attribute INIT_SYNC_FF of INPUT_DOUBLE_REGS : label is 0;
+  attribute SIM_ASSERT_CHK : integer;
+  attribute SIM_ASSERT_CHK of INPUT_DOUBLE_REGS : label is 0;
+  attribute SRC_INPUT_REG : integer;
+  attribute SRC_INPUT_REG of INPUT_DOUBLE_REGS : label is 0;
+  attribute VERSION : integer;
+  attribute VERSION of INPUT_DOUBLE_REGS : label is 0;
+  attribute XPM_CDC : string;
+  attribute XPM_CDC of INPUT_DOUBLE_REGS : label is "SINGLE";
+  attribute XPM_MODULE : string;
+  attribute XPM_MODULE of INPUT_DOUBLE_REGS : label is "TRUE";
 begin
-INPUT_DOUBLE_REGS: entity work.scalp_zynqps_axi_iic_ioext_0_cdc_sync
+  Sda_clean <= \^sda_clean\;
+INPUT_DOUBLE_REGS: entity work.scalp_zynqps_axi_iic_ioext_0_xpm_cdc_single
      port map (
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\,
-      s_axi_aclk => s_axi_aclk,
-      scndry_out => scndry_out,
-      sda_i => sda_i,
-      sda_rin_d1 => sda_rin_d1
+      dest_clk => s_axi_aclk,
+      dest_out => \^sda_clean\,
+      src_clk => '0',
+      src_in => sda_i
+    );
+detect_stop_i_3: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^sda_clean\,
+      I1 => sda_rin_d1,
+      O => \syncstages_ff_reg[3]\
     );
 end STRUCTURE;
 library IEEE;
@@ -7538,8 +7568,8 @@ entity scalp_zynqps_axi_iic_ioext_0_iic_control is
     \data_i2c_i_reg[7]_0\ : out STD_LOGIC_VECTOR ( 7 downto 0 );
     \q_int_reg[0]_1\ : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
-    scndry_out : in STD_LOGIC;
-    scl_rin_d1_reg_0 : in STD_LOGIC;
+    Sda_clean : in STD_LOGIC;
+    Scl_clean : in STD_LOGIC;
     scl_rising_edge0 : in STD_LOGIC;
     Ro_prev : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 4 downto 0 );
@@ -7910,6 +7940,7 @@ CLKCNT: entity work.scalp_zynqps_axi_iic_ioext_0_upcnt_n
       \FSM_onehot_scl_state_reg[2]\ => \FSM_onehot_scl_state[2]_i_5_n_0\,
       Q(10 downto 0) => \q_int_reg[0]_0\(10 downto 0),
       S(0) => CLKCNT_n_11,
+      Scl_clean => Scl_clean,
       arb_lost => arb_lost,
       arb_lost_reg => \^arb_lost_reg_0\,
       \clk_cnt_en1_inferred__2/i__carry__0\(10 downto 0) => \clk_cnt_en1_inferred__2/i__carry__0_1\(10 downto 0),
@@ -7923,8 +7954,7 @@ CLKCNT: entity work.scalp_zynqps_axi_iic_ioext_0_upcnt_n
       \q_int_reg[0]_0\(0) => \FSM_onehot_scl_state_reg_n_0_[0]\,
       \q_int_reg[0]_1\ => \q_int_reg[0]_2\,
       \q_int_reg[0]_2\(0) => \clk_cnt_en1_inferred__2/i__carry__0_n_2\,
-      \q_int_reg[0]_3\ => scl_rin_d1_reg_0,
-      \q_int_reg[0]_4\(0) => \^timing_param_thddat_i_reg[10]\(0),
+      \q_int_reg[0]_3\(0) => \^timing_param_thddat_i_reg[10]\(0),
       \q_int_reg[10]_0\ => \q_int_reg[0]_1\,
       \q_int_reg[1]_0\ => \q_int_reg[1]\,
       \q_int_reg[3]_0\(3) => CLKCNT_n_17,
@@ -8012,7 +8042,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^arb_lost_reg_0\,
       I1 => Q(3),
-      I2 => scndry_out,
+      I2 => Sda_clean,
       I3 => detect_stop_b,
       I4 => \FSM_onehot_scl_state_reg_n_0_[1]\,
       I5 => stop_start_wait1,
@@ -8023,7 +8053,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
       INIT => X"4F44"
     )
         port map (
-      I0 => scndry_out,
+      I0 => Sda_clean,
       I1 => detect_stop_b,
       I2 => \next_scl_state1_inferred__0/i__carry_n_0\,
       I3 => \^fsm_onehot_scl_state_reg[5]_0\(0),
@@ -8035,7 +8065,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
     )
         port map (
       I0 => \^timing_param_thddat_i_reg[10]\(0),
-      I1 => scl_rin_d1_reg_0,
+      I1 => Scl_clean,
       I2 => \^fsm_onehot_scl_state_reg[5]_0\(1),
       I3 => \^fsm_onehot_scl_state_reg[5]_0\(0),
       I4 => \next_scl_state1_inferred__0/i__carry_n_0\,
@@ -8060,7 +8090,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^timing_param_tlow_i_reg[10]\(0),
       I1 => \^fsm_onehot_scl_state_reg[5]_0\(2),
-      I2 => scl_rin_d1_reg_0,
+      I2 => Scl_clean,
       I3 => \FSM_onehot_scl_state_reg_n_0_[6]\,
       O => \FSM_onehot_scl_state[6]_i_1_n_0\
     );
@@ -8070,7 +8100,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
     )
         port map (
       I0 => \FSM_onehot_scl_state_reg_n_0_[6]\,
-      I1 => scl_rin_d1_reg_0,
+      I1 => Scl_clean,
       O => \FSM_onehot_scl_state[7]_i_1_n_0\
     );
 \FSM_onehot_scl_state[8]_i_1\: unisim.vcomponents.LUT6
@@ -8082,7 +8112,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
       I1 => \FSM_onehot_scl_state_reg_n_0_[7]\,
       I2 => \^stop_scl_reg\,
       I3 => Q(3),
-      I4 => scndry_out,
+      I4 => Sda_clean,
       I5 => \FSM_onehot_scl_state_reg_n_0_[8]\,
       O => \FSM_onehot_scl_state[8]_i_1_n_0\
     );
@@ -8105,7 +8135,7 @@ EarlyAckHdr_reg: unisim.vcomponents.FDRE
     )
         port map (
       I0 => \FSM_onehot_scl_state_reg_n_0_[8]\,
-      I1 => scndry_out,
+      I1 => Sda_clean,
       I2 => stop_start_wait1,
       I3 => \FSM_onehot_scl_state_reg_n_0_[9]\,
       O => \FSM_onehot_scl_state[9]_i_3_n_0\
@@ -8366,6 +8396,7 @@ I2CHEADER_REG: entity work.scalp_zynqps_axi_iic_ioext_0_shift8_1
       Q(1) => Q(2),
       Q(0) => Q(0),
       Ro_prev => Ro_prev,
+      Sda_clean => Sda_clean,
       abgc_i_reg => \^detect_stop_reg_0\,
       arb_lost => arb_lost,
       \data_int_reg[0]_0\ => I2CHEADER_REG_n_12,
@@ -8377,7 +8408,6 @@ I2CHEADER_REG: entity work.scalp_zynqps_axi_iic_ioext_0_shift8_1
       master_slave => master_slave,
       master_slave_reg => I2CHEADER_REG_n_2,
       s_axi_aclk => s_axi_aclk,
-      scndry_out => scndry_out,
       sda_sample => sda_sample,
       shift_reg_ld0 => shift_reg_ld0,
       shift_reg_ld_reg => \^tx_under_prev\,
@@ -8419,8 +8449,8 @@ I2CHEADER_REG: entity work.scalp_zynqps_axi_iic_ioext_0_shift8_1
     );
 SETUP_CNT: entity work.scalp_zynqps_axi_iic_ioext_0_upcnt_n_2
      port map (
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ => SETUP_CNT_n_0,
       Q(10 downto 0) => \q_int_reg[0]\(10 downto 0),
+      Sda_clean => Sda_clean,
       gen_stop => gen_stop,
       gen_stop_d1 => gen_stop_d1,
       \q_int[0]_i_3_0\ => \^tx_under_prev\,
@@ -8428,9 +8458,9 @@ SETUP_CNT: entity work.scalp_zynqps_axi_iic_ioext_0_upcnt_n_2
       \q_int_reg[0]_0\ => \q_int_reg[0]_1\,
       rsta_d1 => rsta_d1,
       s_axi_aclk => s_axi_aclk,
-      scndry_out => scndry_out,
       sda_rin_d1 => \^sda_rin_d1\,
       sda_setup => sda_setup,
+      \syncstages_ff_reg[3]\ => SETUP_CNT_n_0,
       tx_under_prev_d1 => tx_under_prev_d1
     );
 aas_i_i_1: unisim.vcomponents.LUT5
@@ -8530,7 +8560,7 @@ arb_lost_i_1: unisim.vcomponents.LUT6
       I0 => arb_lost,
       I1 => master_slave,
       I2 => msms_rst_i_i_2_n_0,
-      I3 => scndry_out,
+      I3 => Sda_clean,
       I4 => sda_cout_reg,
       I5 => msms_rst_i_i_3_n_0,
       O => arb_lost_i_1_n_0
@@ -8774,9 +8804,9 @@ detect_start_i_1: unisim.vcomponents.LUT6
       INIT => X"00000000FB080000"
     )
         port map (
-      I0 => scl_rin_d1_reg_0,
+      I0 => Scl_clean,
       I1 => \^sda_rin_d1\,
-      I2 => scndry_out,
+      I2 => Sda_clean,
       I3 => detect_start,
       I4 => Q(0),
       I5 => detect_start_i_2_n_0,
@@ -8808,7 +8838,7 @@ detect_stop_b_i_1: unisim.vcomponents.LUT6
       I0 => detect_stop_b_reg_n_0,
       I1 => detect_stop_reg_1,
       I2 => detect_stop_b,
-      I3 => scl_rin_d1_reg_0,
+      I3 => Scl_clean,
       I4 => Q(0),
       I5 => detect_start,
       O => detect_stop_b_i_1_n_0
@@ -8829,7 +8859,7 @@ detect_stop_i_1: unisim.vcomponents.LUT6
       I0 => \^detect_stop_reg_0\,
       I1 => detect_stop0,
       I2 => detect_stop_reg_1,
-      I3 => scl_rin_d1_reg_0,
+      I3 => Scl_clean,
       I4 => Q(0),
       I5 => detect_start,
       O => detect_stop_i_1_n_0
@@ -9014,7 +9044,7 @@ msms_rst_i_i_1: unisim.vcomponents.LUT6
         port map (
       I0 => msms_rst_i_i_2_n_0,
       I1 => sda_cout_reg,
-      I2 => scndry_out,
+      I2 => Sda_clean,
       I3 => master_slave,
       I4 => msms_rst_i,
       I5 => msms_rst_i_i_3_n_0,
@@ -9199,7 +9229,7 @@ scl_falling_edge_i_1: unisim.vcomponents.LUT2
     )
         port map (
       I0 => \^scl_rin_d1\,
-      I1 => scl_rin_d1_reg_0,
+      I1 => Scl_clean,
       O => scl_falling_edge0
     );
 scl_falling_edge_reg: unisim.vcomponents.FDRE
@@ -9214,7 +9244,7 @@ scl_rin_d1_reg: unisim.vcomponents.FDRE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => scl_rin_d1_reg_0,
+      D => Scl_clean,
       Q => \^scl_rin_d1\,
       R => '0'
     );
@@ -9274,7 +9304,7 @@ sda_rin_d1_reg: unisim.vcomponents.FDRE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => scndry_out,
+      D => Sda_clean,
       Q => \^sda_rin_d1\,
       R => '0'
     );
@@ -9283,7 +9313,7 @@ sda_sample_i_1: unisim.vcomponents.LUT3
       INIT => X"B8"
     )
         port map (
-      I0 => scndry_out,
+      I0 => Sda_clean,
       I1 => scl_rising_edge,
       I2 => sda_sample,
       O => sda_sample_i_1_n_0
@@ -9316,7 +9346,7 @@ sda_setup_i_1: unisim.vcomponents.LUT5
       I0 => \sda_setup0_inferred__0/i__carry_n_0\,
       I1 => \^tx_under_prev\,
       I2 => SETUP_CNT_n_0,
-      I3 => scl_rin_d1_reg_0,
+      I3 => Scl_clean,
       I4 => sda_setup,
       O => sda_setup_i_1_n_0
     );
@@ -11387,10 +11417,10 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity scalp_zynqps_axi_iic_ioext_0_filter is
   port (
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : out STD_LOGIC;
-    scndry_out : out STD_LOGIC;
+    \syncstages_ff_reg[3]\ : out STD_LOGIC;
+    Sda_clean : out STD_LOGIC;
     scl_rising_edge0 : out STD_LOGIC;
-    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ : out STD_LOGIC;
+    Scl_clean : out STD_LOGIC;
     sda_rin_d1 : in STD_LOGIC;
     scl_rin_d1 : in STD_LOGIC;
     scl_i : in STD_LOGIC;
@@ -11405,7 +11435,7 @@ architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0_filter is
 begin
 SCL_DEBOUNCE: entity work.scalp_zynqps_axi_iic_ioext_0_debounce
      port map (
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\,
+      Scl_clean => Scl_clean,
       s_axi_aclk => s_axi_aclk,
       scl_i => scl_i,
       scl_rin_d1 => scl_rin_d1,
@@ -11413,11 +11443,11 @@ SCL_DEBOUNCE: entity work.scalp_zynqps_axi_iic_ioext_0_debounce
     );
 SDA_DEBOUNCE: entity work.scalp_zynqps_axi_iic_ioext_0_debounce_3
      port map (
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\,
+      Sda_clean => Sda_clean,
       s_axi_aclk => s_axi_aclk,
-      scndry_out => scndry_out,
       sda_i => sda_i,
-      sda_rin_d1 => sda_rin_d1
+      sda_rin_d1 => sda_rin_d1,
+      \syncstages_ff_reg[3]\ => \syncstages_ff_reg[3]\
     );
 end STRUCTURE;
 library IEEE;
@@ -11948,15 +11978,15 @@ DYN_MASTER_I: entity work.scalp_zynqps_axi_iic_ioext_0_dynamic_master
     );
 FILTER_I: entity work.scalp_zynqps_axi_iic_ioext_0_filter
      port map (
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ => FILTER_I_n_0,
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4_0\ => scl_clean,
+      Scl_clean => scl_clean,
+      Sda_clean => sda_clean,
       s_axi_aclk => s_axi_aclk,
       scl_i => scl_i,
       scl_rin_d1 => scl_rin_d1,
       scl_rising_edge0 => scl_rising_edge0,
-      scndry_out => sda_clean,
       sda_i => sda_i,
-      sda_rin_d1 => sda_rin_d1
+      sda_rin_d1 => sda_rin_d1,
+      \syncstages_ff_reg[3]\ => FILTER_I_n_0
     );
 IIC_CONTROL_I: entity work.scalp_zynqps_axi_iic_ioext_0_iic_control
      port map (
@@ -12012,6 +12042,8 @@ IIC_CONTROL_I: entity work.scalp_zynqps_axi_iic_ioext_0_iic_control
       S(2) => REG_INTERFACE_I_n_71,
       S(1) => REG_INTERFACE_I_n_72,
       S(0) => REG_INTERFACE_I_n_73,
+      Scl_clean => scl_clean,
+      Sda_clean => sda_clean,
       Tx_data_exists_sgl => Tx_data_exists_sgl,
       Tx_fifo_data_0(6 downto 0) => Tx_fifo_data_0(7 downto 1),
       Tx_under_prev => Tx_under_prev,
@@ -12071,10 +12103,8 @@ IIC_CONTROL_I: entity work.scalp_zynqps_axi_iic_ioext_0_iic_control
       s_axi_wdata(0) => s_axi_wdata(2),
       \s_axi_wdata[2]\(0) => IIC_CONTROL_I_n_46,
       scl_rin_d1 => scl_rin_d1,
-      scl_rin_d1_reg_0 => scl_clean,
       scl_rising_edge0 => scl_rising_edge0,
       scl_t => scl_t,
-      scndry_out => sda_clean,
       sda_cout_reg_reg_0(3) => REG_INTERFACE_I_n_74,
       sda_cout_reg_reg_0(2) => REG_INTERFACE_I_n_75,
       sda_cout_reg_reg_0(1) => REG_INTERFACE_I_n_76,
@@ -12154,12 +12184,10 @@ REG_INTERFACE_I: entity work.scalp_zynqps_axi_iic_ioext_0_reg_interface
       \FIFO_GEN_DTR.Tx_fifo_rd_reg_0\ => REG_INTERFACE_I_n_138,
       \FIFO_GEN_DTR.Tx_fifo_wr_reg_0\ => REG_INTERFACE_I_n_155,
       \FSM_onehot_scl_state_reg[5]\(0) => clk_cnt_en2,
-      \FSM_onehot_scl_state_reg[5]_0\ => scl_clean,
-      \FSM_onehot_scl_state_reg[5]_1\(1) => IIC_CONTROL_I_n_47,
-      \FSM_onehot_scl_state_reg[5]_1\(0) => IIC_CONTROL_I_n_48,
-      \FSM_onehot_scl_state_reg[5]_2\(0) => IIC_CONTROL_I_n_17,
+      \FSM_onehot_scl_state_reg[5]_0\(1) => IIC_CONTROL_I_n_47,
+      \FSM_onehot_scl_state_reg[5]_0\(0) => IIC_CONTROL_I_n_48,
+      \FSM_onehot_scl_state_reg[5]_1\(0) => IIC_CONTROL_I_n_17,
       \FSM_sequential_state_reg[2]\ => IIC_CONTROL_I_n_18,
-      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\(0) => REG_INTERFACE_I_n_154,
       \GPO_GEN.gpo_i_reg[31]_0\ => X_AXI_IPIF_SSP1_n_27,
       IIC2Bus_IntrEvent(0 to 7) => IIC2Bus_IntrEvent(0 to 7),
       \IIC2Bus_IntrEvent_reg[0]_0\(4) => Al,
@@ -12199,6 +12227,7 @@ REG_INTERFACE_I: entity work.scalp_zynqps_axi_iic_ioext_0_reg_interface
       S(2) => REG_INTERFACE_I_n_71,
       S(1) => REG_INTERFACE_I_n_72,
       S(0) => REG_INTERFACE_I_n_73,
+      Scl_clean => scl_clean,
       Tx_fifo_rd => Tx_fifo_rd,
       Tx_fifo_rd_d => Tx_fifo_rd_d,
       Tx_fifo_rst => Tx_fifo_rst,
@@ -12273,6 +12302,7 @@ REG_INTERFACE_I: entity work.scalp_zynqps_axi_iic_ioext_0_reg_interface
       \sr_i_reg[1]_0\(0) => Abgc,
       stop_scl_reg => stop_scl_reg,
       stop_scl_reg_reg => REG_INTERFACE_I_n_68,
+      \syncstages_ff_reg[3]\(0) => REG_INTERFACE_I_n_154,
       \timing_param_tbuf_i_reg[10]_0\(2) => REG_INTERFACE_I_n_38,
       \timing_param_tbuf_i_reg[10]_0\(1) => REG_INTERFACE_I_n_39,
       \timing_param_tbuf_i_reg[10]_0\(0) => REG_INTERFACE_I_n_40,
@@ -12383,6 +12413,7 @@ WRITE_FIFO_I: entity work.scalp_zynqps_axi_iic_ioext_0_SRL_FIFO_0
       \FIFO_RAM[7].SRL16E_I_0\(0) => \p_2_in__0\(0),
       \FIFO_RAM[7].SRL16E_I_1\ => DYN_MASTER_I_n_7,
       \FIFO_RAM[7].SRL16E_I_2\ => REG_INTERFACE_I_n_155,
+      Sda_clean => sda_clean,
       Tx_addr_0(3 downto 0) => Tx_addr_0(3 downto 0),
       Tx_data_exists_sgl => Tx_data_exists_sgl,
       Tx_fifo_data_0(7 downto 0) => Tx_fifo_data_0(7 downto 0),
@@ -12399,7 +12430,6 @@ WRITE_FIFO_I: entity work.scalp_zynqps_axi_iic_ioext_0_SRL_FIFO_0
       rdCntrFrmTxFifo0 => rdCntrFrmTxFifo0,
       s_axi_aclk => s_axi_aclk,
       s_axi_wdata(7 downto 0) => s_axi_wdata(7 downto 0),
-      scndry_out => sda_clean,
       shift_reg_ld => shift_reg_ld
     );
 X_AXI_IPIF_SSP1: entity work.scalp_zynqps_axi_iic_ioext_0_axi_ipif_ssp1
@@ -12675,7 +12705,7 @@ entity scalp_zynqps_axi_iic_ioext_0 is
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of scalp_zynqps_axi_iic_ioext_0 : entity is "yes";
   attribute x_core_info : string;
-  attribute x_core_info of scalp_zynqps_axi_iic_ioext_0 : entity is "axi_iic,Vivado 2023.2";
+  attribute x_core_info of scalp_zynqps_axi_iic_ioext_0 : entity is "axi_iic,Vivado 2025.2";
 end scalp_zynqps_axi_iic_ioext_0;
 
 architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0 is
@@ -12721,11 +12751,15 @@ architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0 is
   attribute downgradeipidentifiedwarnings of U0 : label is "yes";
   attribute x_interface_info : string;
   attribute x_interface_info of iic2intc_irpt : signal is "xilinx.com:signal:interrupt:1.0 INTERRUPT INTERRUPT";
+  attribute x_interface_mode : string;
+  attribute x_interface_mode of iic2intc_irpt : signal is "master INTERRUPT";
   attribute x_interface_parameter : string;
-  attribute x_interface_parameter of iic2intc_irpt : signal is "XIL_INTERFACENAME INTERRUPT, SENSITIVITY LEVEL_HIGH, PORTWIDTH 1";
+  attribute x_interface_parameter of iic2intc_irpt : signal is "XIL_INTERFACENAME INTERRUPT, SENSITIVITY LEVEL_HIGH, PortWidth 1";
   attribute x_interface_info of s_axi_aclk : signal is "xilinx.com:signal:clock:1.0 S_AXI_ACLK CLK";
+  attribute x_interface_mode of s_axi_aclk : signal is "slave S_AXI_ACLK";
   attribute x_interface_parameter of s_axi_aclk : signal is "XIL_INTERFACENAME S_AXI_ACLK, ASSOCIATED_BUSIF S_AXI, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, INSERT_VIP 0";
   attribute x_interface_info of s_axi_aresetn : signal is "xilinx.com:signal:reset:1.0 S_AXI_ARESETN RST";
+  attribute x_interface_mode of s_axi_aresetn : signal is "slave S_AXI_ARESETN";
   attribute x_interface_parameter of s_axi_aresetn : signal is "XIL_INTERFACENAME S_AXI_ARESETN, POLARITY ACTIVE_LOW, INSERT_VIP 0";
   attribute x_interface_info of s_axi_arready : signal is "xilinx.com:interface:aximm:1.0 S_AXI ARREADY";
   attribute x_interface_info of s_axi_arvalid : signal is "xilinx.com:interface:aximm:1.0 S_AXI ARVALID";
@@ -12741,12 +12775,14 @@ architecture STRUCTURE of scalp_zynqps_axi_iic_ioext_0 is
   attribute x_interface_info of scl_o : signal is "xilinx.com:interface:iic:1.0 IIC SCL_O";
   attribute x_interface_info of scl_t : signal is "xilinx.com:interface:iic:1.0 IIC SCL_T";
   attribute x_interface_info of sda_i : signal is "xilinx.com:interface:iic:1.0 IIC SDA_I";
+  attribute x_interface_mode of sda_i : signal is "master IIC";
   attribute x_interface_parameter of sda_i : signal is "XIL_INTERFACENAME IIC, BOARD.ASSOCIATED_PARAM IIC_BOARD_INTERFACE";
   attribute x_interface_info of sda_o : signal is "xilinx.com:interface:iic:1.0 IIC SDA_O";
   attribute x_interface_info of sda_t : signal is "xilinx.com:interface:iic:1.0 IIC SDA_T";
   attribute x_interface_info of s_axi_araddr : signal is "xilinx.com:interface:aximm:1.0 S_AXI ARADDR";
   attribute x_interface_info of s_axi_awaddr : signal is "xilinx.com:interface:aximm:1.0 S_AXI AWADDR";
-  attribute x_interface_parameter of s_axi_awaddr : signal is "XIL_INTERFACENAME S_AXI, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute x_interface_mode of s_axi_awaddr : signal is "slave S_AXI";
+  attribute x_interface_parameter of s_axi_awaddr : signal is "XIL_INTERFACENAME S_AXI, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /sys_clock_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute x_interface_info of s_axi_bresp : signal is "xilinx.com:interface:aximm:1.0 S_AXI BRESP";
   attribute x_interface_info of s_axi_rdata : signal is "xilinx.com:interface:aximm:1.0 S_AXI RDATA";
   attribute x_interface_info of s_axi_rresp : signal is "xilinx.com:interface:aximm:1.0 S_AXI RRESP";

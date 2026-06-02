@@ -3,10 +3,10 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Tue Mar 31 18:58:11 2026
-# Process ID         : 22532
+# Start of session at: Tue Jun  2 10:33:43 2026
+# Process ID         : 14068
 # Current directory  : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design
-# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent32156 C:\MA_LPSC\lpsc-malla-nicoloso\mandelbrot\scalp_user_design\scalp_user_design.xpr
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent43788 C:\MA_LPSC\lpsc-malla-nicoloso\mandelbrot\scalp_user_design\scalp_user_design.xpr
 # Log file           : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/vivado.log
 # Journal file       : C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design\vivado.jou
 # Running On         : LAPTOP-E00F6MUN
@@ -17,14 +17,45 @@
 # CPU Physical cores : 16
 # CPU Logical cores  : 22
 # Host memory        : 33832 MB
-# Swap memory        : 2147 MB
-# Total Virtual      : 35980 MB
-# Available Virtual  : 16403 MB
+# Swap memory        : 21085 MB
+# Total Virtual      : 54918 MB
+# Available Virtual  : 9231 MB
 #-----------------------------------------------------------
 start_gui
 open_project C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.xpr
 update_compile_order -fileset sources_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 11
+launch_runs impl_1 -to_step write_bitstream -jobs 22
 wait_on_run impl_1
 open_run impl_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.bit} [get_hw_devices xc7z015_1]
+set_property PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property FULL_PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+current_hw_device [get_hw_devices xc7z015_1]
+refresh_hw_device [lindex [get_hw_devices xc7z015_1] 0]
+set_property PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property FULL_PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property PROGRAM.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.bit} [get_hw_devices xc7z015_1]
+program_hw_devices [get_hw_devices xc7z015_1]
+refresh_hw_device [lindex [get_hw_devices xc7z015_1] 0]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z015_1] -filter {CELL_NAME=~"PSxB.ZynqxI/PlatformxB.ScalpZynqPSxI/system_ila_0/U0/ila_lib"}]]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 22
+wait_on_run impl_1
+open_bd_design {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/scalp_zynqps.bd}
+set_property PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property FULL_PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property PROGRAM.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.bit} [get_hw_devices xc7z015_1]
+program_hw_devices [get_hw_devices xc7z015_1]
+refresh_hw_device [lindex [get_hw_devices xc7z015_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 22
+wait_on_run impl_1
+open_bd_design {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/scalp_zynqps.bd}
+set_property PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property FULL_PROBES.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.ltx} [get_hw_devices xc7z015_1]
+set_property PROGRAM.FILE {C:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_user_design/scalp_user_design.runs/impl_1/scalp_user_design.bit} [get_hw_devices xc7z015_1]
+program_hw_devices [get_hw_devices xc7z015_1]
+refresh_hw_device [lindex [get_hw_devices xc7z015_1] 0]
