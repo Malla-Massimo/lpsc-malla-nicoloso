@@ -15,13 +15,17 @@ entity JuliaRegion is
     rst          : in  std_logic;
     frame_start  : in  std_logic;
 
+    -- real and imaginary constants for julia
     c_re         : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     c_im         : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+
+    -- for calculating the coordinates of each pixel
     julia_x_step : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     julia_y_step : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     x_coord_init : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     y_coord_init : in  sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
+    -- memory interface
     ram_we      : out std_logic_vector(0 downto 0);
     ram_addr    : out std_logic_vector(16 downto 0);
     ram_data    : out std_logic_vector(4 downto 0);
@@ -60,24 +64,39 @@ architecture Behavioral of JuliaRegion is
       );
     end component;
 
+    -- state machine states
     type state_t is (IDLE, CALCULATE, FINISHED);
     signal state : state_t := IDLE;
 
     constant TOTAL_PIXELS : integer := REGION_WIDTH * REGION_HEIGHT;
 
+    -- pixel position for end of screen test
+    -- range is [0 ; 719] 
     signal cur_x             : unsigned(9 downto 0)  := (others => '0');
+    -- range is [0 ; 179]
     signal cur_y             : unsigned(9 downto 0)  := (others => '0');
+
+    -- know where to write in BRAM, and how many pixels have been dispatched or done
     signal addr_counter      : unsigned(18 downto 0) := (others => '0');
+    -- how many pixels have been sent to workers
     signal pixels_dispatched : unsigned(18 downto 0) := (others => '0');
+    -- how many resuls came back
+    -- region ends when pixels_done = pixels_dispatched = TOTAL_PIXELS
     signal pixels_done       : unsigned(18 downto 0) := (others => '0');
 
+    -- jula pipeline parallel signals
     signal jpp_start     : std_logic := '0';
+    -- at '1' when all workers are busy
     signal jpp_busy      : std_logic;
+    -- results from one worker
     signal jpp_done      : std_logic;
     signal jpp_addr_done : unsigned(18 downto 0);
     signal jpp_n_iter    : std_logic_vector(7 downto 0);
+    
+    -- ouput of 5 bits of color palette index
     signal palette_idx   : std_logic_vector(4 downto 0);
 
+    -- coordinates of julia grid
     signal julia_x_coord : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
     signal julia_y_coord : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
@@ -132,7 +151,8 @@ begin
                 end if;
 
                 case state is
-                    when IDLE =>
+                  -- init
+                  when IDLE => 
                         cur_x             <= (others => '0');
                         cur_y             <= (others => '0');
                         addr_counter      <= (others => '0');
@@ -141,26 +161,34 @@ begin
                         julia_x_coord     <= x_coord_init;
                         julia_y_coord     <= y_coord_init;
                         jpp_start         <= '0';
+
                         if frame_start = '1' then
                             state <= CALCULATE;
                         end if;
 
+                    
                     when CALCULATE =>
-                        -- Two-phase dispatch: pulse start, then advance coords
+                        -- pulse start then advance coords
                         if jpp_start = '1' then
-                            jpp_start         <= '0';
+                            jpp_start <= '0';
                             pixels_dispatched <= pixels_dispatched + 1;
+
+                            -- advance the coordinates of the next pixel
                             if cur_x < REGION_WIDTH - 1 then
                                 cur_x         <= cur_x + 1;
                                 julia_x_coord <= resize(julia_x_coord + julia_x_step, 3, -JULIA_NEGATIVE_DEPTH);
                                 addr_counter  <= addr_counter + 1;
+
+                            -- start next row
                             else
-                                cur_x         <= (others => '0');
-                                cur_y         <= cur_y + 1;
+                                cur_x <= (others => '0');
+                                cur_y <= cur_y + 1;
                                 julia_x_coord <= x_coord_init;
                                 julia_y_coord <= resize(julia_y_coord + julia_y_step, 3, -JULIA_NEGATIVE_DEPTH);
-                                addr_counter  <= addr_counter + 1;
+                                addr_counter <= addr_counter + 1;
                             end if;
+
+                        -- if not busy and not all dispatched
                         elsif jpp_busy = '0' and pixels_dispatched < TOTAL_PIXELS then
                             jpp_start <= '1';
                         end if;

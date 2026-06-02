@@ -9,6 +9,7 @@ entity color_palette_index is
     );
 end color_palette_index;
 
+-- transform number of iterations into a color in 5 bits (32 colors)
 architecture Behavioral of color_palette_index is
 begin
     process(iteration)

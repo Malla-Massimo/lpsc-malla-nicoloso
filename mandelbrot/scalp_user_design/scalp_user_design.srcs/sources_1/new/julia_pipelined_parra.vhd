@@ -37,14 +37,22 @@ architecture Behavioral of JuliaPipelinedParallel is
         clk: in std_logic;
         rst: in std_logic;
         start: in std_logic;
+
+        -- pixels and memory
         x:   in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         y:   in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         ram_addr: in unsigned(18 downto 0);
+
+        -- real and imaginary constants for julia
         c_re: in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
         c_im: in sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
+
+        -- outputs
         n_iteration: out std_logic_vector(7 downto 0);
         done: out std_logic;
         addr_done: out unsigned(18 downto 0);
+
+        -- are all workers busy ?
         julia_busy: out std_logic
       );
     end component;
@@ -53,6 +61,7 @@ architecture Behavioral of JuliaPipelinedParallel is
     type addr_arr    is array (0 to N_WORKERS-1) of unsigned(18 downto 0);
     type sfx_arr     is array (0 to N_WORKERS-1) of sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
+    -- workers signals
     signal w_start     : std_logic_vector(N_WORKERS-1 downto 0) := (others => '0');
     signal w_busy      : std_logic_vector(N_WORKERS-1 downto 0);
     signal w_done      : std_logic_vector(N_WORKERS-1 downto 0);
@@ -60,28 +69,36 @@ architecture Behavioral of JuliaPipelinedParallel is
     signal w_n_iter    : iter_arr;
     signal w_inflight  : std_logic_vector(N_WORKERS-1 downto 0) := (others => '0');
 
-    -- Per-worker latched inputs (captured at dispatch time)
+    -- per workers latch
+    -- dispatcher copy x, y and ram_addr in the slot of the worker
     signal w_x       : sfx_arr;
     signal w_y       : sfx_arr;
     signal w_addr_in : addr_arr;
 
-    -- Tiny output FIFO so simultaneous worker completions are never lost
+    -- if multiple workers finish in the same cycle
+    -- depth = 4
+    -- without this, finishing on the same cycle loses information
     constant FIFO_DEPTH : integer := N_WORKERS + 1;
+
     type fifo_iter_t is array (0 to FIFO_DEPTH-1) of std_logic_vector(7 downto 0);
     type fifo_addr_t is array (0 to FIFO_DEPTH-1) of unsigned(18 downto 0);
+
     signal fifo_iter : fifo_iter_t := (others => (others => '0'));
     signal fifo_addr : fifo_addr_t := (others => (others => '0'));
     signal head, tail : integer range 0 to FIFO_DEPTH-1 := 0;
     signal count      : integer range 0 to FIFO_DEPTH   := 0;
 
 begin
+    -- 3 processes are running: dispatch_proc, busy_proc, collect_proc
 
+    -- each worker is an instance of JuliaPipelined
+    -- so generate the workers here based on an index "i"
     gen_workers: for i in 0 to N_WORKERS-1 generate
         worker_inst: JuliaPipelined
         generic map (
             JULIA_NEGATIVE_DEPTH => JULIA_NEGATIVE_DEPTH
         )
-        port map (
+        port map ( -- route the workers 
             clk         => clk,
             rst         => rst,
             start       => w_start(i),
@@ -97,26 +114,32 @@ begin
         );
     end generate;
 
-    -- Route the external start pulse to the lowest-indexed free worker
+    -- route the start to the worker with the lowest index
     dispatch_proc: process(clk)
         variable dispatched : boolean;
     begin
         if rising_edge(clk) then
-            if rst = '1' then
+            if rst = '1' then -- reset
                 w_start    <= (others => '0');
                 w_inflight <= (others => '0');
-            else
+            else -- start
                 w_start <= (others => '0');
 
+                -- for all workers
                 for i in 0 to N_WORKERS-1 loop
+                    -- has the current worker finished ?
                     if w_done(i) = '1' then
+                        -- push the result in the FIFO
                         w_inflight(i) <= '0';
                     end if;
                 end loop;
 
+                -- start assigning to the first worker that is not inflight and not busy
                 if start = '1' then
                     dispatched := false;
+                    -- for all workers
                     for i in 0 to N_WORKERS-1 loop
+                        -- if the current worker is not inflight and not busy, dispatch to it
                         if (not dispatched) and w_inflight(i) = '0' and w_busy(i) = '0' then
                             w_start(i)    <= '1';
                             w_inflight(i) <= '1';
@@ -131,7 +154,8 @@ begin
         end if;
     end process;
 
-    -- julia_busy = '1' only when every worker is full
+    -- sets the status of julia_busy based on the status of the workers
+    -- julia_busy is "1" only when every worker is full
     busy_proc: process(w_inflight, w_busy)
         variable v : std_logic;
     begin
@@ -142,7 +166,8 @@ begin
         julia_busy <= v;
     end process;
 
-    -- Push every worker that signals done; pop one entry per cycle to outputs
+    -- each cycle, push every worker that signals done
+    -- also pop one entry per cycle to outputs
     collect_proc: process(clk)
         variable v_count : integer range 0 to FIFO_DEPTH;
         variable v_head, v_tail : integer range 0 to FIFO_DEPTH-1;
@@ -170,7 +195,8 @@ begin
                     end if;
                 end loop;
 
-                -- Pop only if FIFO was already non-empty (avoids reading stale signal on same-cycle push)
+                -- pop only if FIFO was already not empty 
+                -- tis avoid reading bad signal on same cycle push
                 if count > 0 then
                     n_iteration <= fifo_iter(v_head);
                     addr_done   <= fifo_addr(v_head);

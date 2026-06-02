@@ -2,7 +2,7 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
--- Date        : Tue May 12 18:38:21 2026
+-- Date        : Tue Jun  2 10:41:16 2026
 -- Host        : LAPTOP-E00F6MUN running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/MA_LPSC/lpsc-malla-nicoloso/mandelbrot/scalp_zynqps/ip/scalp_zynqps_axi_gpio_switches_0/scalp_zynqps_axi_gpio_switches_0_sim_netlist.vhdl

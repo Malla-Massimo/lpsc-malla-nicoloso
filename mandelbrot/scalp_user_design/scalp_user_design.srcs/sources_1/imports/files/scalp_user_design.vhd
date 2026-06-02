@@ -625,20 +625,29 @@ begin
         -- regions declare
         signal region_x_init     : sfx_arr;
         signal region_y_init     : sfx_arr;
+
+        -- 1 bit ber region
+        -- when all bits are 1, frame is done
         signal region_done       : std_logic_vector(N_REGIONS-1 downto 0);
+        -- 1 bit per region to start computing
         signal frame_start       : std_logic := '0';
 
+        -- zoom window size from 3.0 to 0.05, step size of 0.01
         signal julia_range  : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
         signal julia_x_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
         signal julia_y_step : sfixed(3 downto -JULIA_NEGATIVE_DEPTH) := to_sfixed(0.0041666, 3, -JULIA_NEGATIVE_DEPTH);
+        -- constant step size for julia set
         signal julia_step_const : sfixed(3 downto -JULIA_NEGATIVE_DEPTH);
 
+        -- for raw step size
+        -- have to set the dont_touch attribute to keep 1 dispatch every 2 cycles
         signal julia_x_step_tmp : sfixed(4 downto -2*JULIA_NEGATIVE_DEPTH) := (others => '0');
         signal julia_y_step_tmp : sfixed(4 downto -2*JULIA_NEGATIVE_DEPTH) := (others => '0');
         attribute dont_touch : string;
         attribute dont_touch of julia_x_step_tmp : signal is "true";
         attribute dont_touch of julia_y_step_tmp : signal is "true";
 
+        -- increment each cycle in CALCULATE
         signal probe_in0: std_logic_vector(31 downto 0) := (others => '0');
         signal probe_out0: std_logic_vector(0 downto 0) := (others => '0');
         signal probe_counter: unsigned(31 downto 0) := (others => '0');
@@ -1214,105 +1223,67 @@ begin
             
             constant Y_MULT_LUT : y_offset_arr_t := init_y_lut;
 
-        begin  -- block ImGenxB
-
-            BramSDPMacro1xI : BRAM_SDP_MACRO
-                generic map (
-                    BRAM_SIZE           => "18Kb",
-                    DEVICE              => "7SERIES",
-                    WRITE_WIDTH         => 32,
-                    READ_WIDTH          => 32,
-                    DO_REG              => 0,
-                    INIT_FILE           => "NONE",
-                    SIM_COLLISION_CHECK => "ALL",
-                    SRVAL               => X"000000000000000000",
-                    write_mode          => "WRITE_FIRST",
-                    INIT                => X"000000000000000000")
-                port map (
-                    DO     => CDCPatternPortsxD(0).RegxD,
-                    DI     => PatternPortsxD(0).RegxD,
-                    RDADDR => BramAddrxD,
-                    RDCLK  => HdmiVgaClocksxC.VgaxC,
-                    RDEN   => '1',
-                    REGCE  => '0',
-                    RST    => '0',
-                    WE     => BramWexD,
-                    WRADDR => BramAddrxD,
-                    WRCLK  => ClpxNumRegsAxixD.ClockxC.ClkxC,
-                    WREN   => '1');
-
-            BramSDPMacro2xI : BRAM_SDP_MACRO
-                generic map (
-                    BRAM_SIZE           => "18Kb",
-                    DEVICE              => "7SERIES",
-                    WRITE_WIDTH         => 32,
-                    READ_WIDTH          => 32,
-                    DO_REG              => 0,
-                    INIT_FILE           => "NONE",
-                    SIM_COLLISION_CHECK => "ALL",
-                    SRVAL               => X"000000000000000000",
-                    write_mode          => "WRITE_FIRST",
-                    INIT                => X"000000000000000000")
-                port map (
-                    DO     => CDCPatternPortsxD(1).RegxD,
-                    DI     => PatternPortsxD(1).RegxD,
-                    RDADDR => BramAddrxD,
-                    RDCLK  => HdmiVgaClocksxC.VgaxC,
-                    RDEN   => '1',
-                    REGCE  => '0',
-                    RST    => '0',
-                    WE     => BramWexD,
-                    WRADDR => BramAddrxD,
-                    WRCLK  => ClpxNumRegsAxixD.ClockxC.ClkxC,
-                    WREN   => '1');
-                
+        begin  -- block ImGenxB                
            
             -- JULIA PROCESS PIPELINED AND PARRALELIZED     
             JuliaTopFSM : process(clk_100MHz)
             begin
+                -- convert SCREEN_STEP_SCALED to real value 1/720
                 julia_step_const <= to_sfixed(real(SCREEN_STEP_SCALED) / (2.0**JULIA_NEGATIVE_DEPTH), 3, -JULIA_NEGATIVE_DEPTH);
 
                 if rising_edge(clk_100MHz) then
+                    -- run only if the PLL is stable
                     if Clk125PllLockedxS = '1' then
                         case state is
                            when INIT_RANGE =>
                                 frame_start <= '0';
                                 
-                                -- Wait for the screen to finish drawing
+                                -- wait for the screen to finish drawing
                                 if v_sync_occurred = '1' then
-                                    -- Calculate new window range. 
+                                    -- calculate new window range if above 0.05
                                     if julia_range > to_sfixed(0.05, 3, -JULIA_NEGATIVE_DEPTH) then
-                                        -- Window step 0.01
+                                        -- zoom in by 0.01
                                         julia_range <= resize(julia_range - to_sfixed(0.01, 3, -JULIA_NEGATIVE_DEPTH), julia_range);
+                                    -- else reset to 3.0
                                     else
                                         -- Reset window range to 3x3
                                         julia_range <= to_sfixed(3.0, 3, -JULIA_NEGATIVE_DEPTH);
                                     end if;
                                     state <= INIT_STEP_TMP;
+                                    -- reset counter
                                     probe_counter <= (others => '0');
                                 end if;
-                                        
+                                       
+                            -- compute julia_range * (1/720)
                             when INIT_STEP_TMP =>
+                                -- hold the precision for now
                                 julia_x_step_tmp <= resize(julia_range * julia_step_const, julia_x_step_tmp);
                                 julia_y_step_tmp <= resize(julia_range * julia_step_const, julia_y_step_tmp);
                                 state <= INIT_STEP;
 
+                            -- resize to original width
                             when INIT_STEP =>
                                 -- 1/720 = 0.001388
                                 julia_x_step <= resize(julia_x_step_tmp, 3, -JULIA_NEGATIVE_DEPTH);
                                 julia_y_step <= resize(julia_y_step_tmp, 3, -JULIA_NEGATIVE_DEPTH);
                                 state <= INIT_COORD;
 
+                            -- get the top left corner of each region
                             when INIT_COORD =>
+                                -- for all regions
                                 for i in 0 to N_REGIONS-1 loop
                                     -- Center window in the middle of screen
                                     region_x_init(i) <= resize(to_sfixed(-360, 10, 0) * julia_x_step, 3, -JULIA_NEGATIVE_DEPTH);
+                                    -- depend on the region height, it start at different y
                                     region_y_init(i) <= resize(to_sfixed(i * REGION_HEIGHT - 360, 10, 0) * julia_y_step, 3, -JULIA_NEGATIVE_DEPTH);
                                 end loop;
                                 state <= CALCULATE;
 
                             when CALCULATE =>
+                                --  increment at each cycle
                                 probe_counter <= probe_counter + 1;
+
+                                -- if all the regions have finished
                                 if region_done = (region_done'range => '1') then
                                     frame_start <= '0';
                                     state <= DONE;
@@ -1320,6 +1291,7 @@ begin
                                     frame_start <= '1';
                                 end if;
 
+                            -- 1 cycle to send the counter value to the VIO and check the result
                             when DONE =>
                                 probe_in0 <= std_logic_vector(probe_counter);
                                 frame_start <= '0';
